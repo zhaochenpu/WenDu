@@ -13,10 +13,13 @@ import com.nightfeed.wendu.model.HuaBan
 import com.nightfeed.wendu.model.Lofter
 import com.nightfeed.wendu.net.URLs
 
-class LofterListAdapter (context: Context?, datas:List<Lofter>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class LofterListAdapter (context: Context?, datas:List<Lofter>,val onClickListener:OnClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private var mContext  =  context
     private var datas=datas
 
+    interface OnClickListener{
+        fun onClick(position:Int)
+    }
 
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
@@ -31,6 +34,7 @@ class LofterListAdapter (context: Context?, datas:List<Lofter>): RecyclerView.Ad
     override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
 
         Glide.with(mContext!!).load(datas[p1].imagesUrl).apply(RequestOptions.fitCenterTransform()).into( (p0 as MyViewHolder).iv)
+        p0.itemView.setOnClickListener { onClickListener.onClick(p1) }
     }
 
     fun  notifyDataChanged(list:List<Lofter> ){

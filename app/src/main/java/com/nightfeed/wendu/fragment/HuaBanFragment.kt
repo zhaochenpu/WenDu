@@ -91,7 +91,7 @@ class HuaBanFragment : BaseFragment() {
                         var huaBanListMore:ArrayList<HuaBan> = Gson().fromJson(pins, object : TypeToken<List<HuaBan>>() {}.type)
                         if (huaBanListMore.size>0) {
                             var start=huaBanList.size
-                            huaBanList.addAll(huaBanList)
+                            huaBanList.addAll(huaBanListMore)
                             mAdapter!!.notifyRangeInserted(huaBanList,start,huaBanListMore.size)
                         }
                     }

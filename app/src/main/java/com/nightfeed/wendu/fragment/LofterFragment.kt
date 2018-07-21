@@ -1,5 +1,6 @@
 package com.nightfeed.wendu.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
@@ -12,6 +13,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 import com.nightfeed.wendu.R
+import com.nightfeed.wendu.activity.LofterActivity
 import com.nightfeed.wendu.adapter.ImageListAdapter
 import com.nightfeed.wendu.adapter.LofterListAdapter
 import com.nightfeed.wendu.model.Lofter
@@ -40,6 +42,8 @@ class LofterFragment : BaseFragment() {
     private var label:String?=null
     private var page=1
     private var imageWidth=""
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -106,7 +110,14 @@ class LofterFragment : BaseFragment() {
                         lsit.forEach {it.imagesUrl= it.imagesUrl.replace("164y164",imageWidth) }
                         lofterList.addAll(lsit)
                         if (mAdapter == null) {
-                            mAdapter = LofterListAdapter(context, lofterList)
+                            mAdapter = LofterListAdapter(context, lofterList,object : LofterListAdapter.OnClickListener{
+                                override fun onClick(position: Int) {
+                                    val intent = Intent(context,LofterActivity::class.java)
+                                    //获取intent对象
+                                    intent.putExtra("url",URLs.LOFTER_DETAILS+lofterList.get(position).permalink)
+                                    startActivity(intent)
+                                }
+                            })
                             image_list.adapter = mAdapter
                         } else {
                             if(page==1){
