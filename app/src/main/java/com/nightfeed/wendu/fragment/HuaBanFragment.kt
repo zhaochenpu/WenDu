@@ -17,6 +17,7 @@ import com.nightfeed.wendu.model.HuaBan
 import com.nightfeed.wendu.net.MyJSON
 import com.nightfeed.wendu.net.RequestUtils
 import com.nightfeed.wendu.net.URLs
+import com.nightfeed.wendu.view.MyStaggeredGridLayoutManager
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.image_fragment.*
 import java.util.ArrayList
@@ -25,42 +26,49 @@ import java.util.ArrayList
 class HuaBanFragment : BaseFragment() {
 
     private var isPrepared=false
+    private var viewHuaban : View? =null
     private var mAdapter: ImageListAdapter?=null
     private var huaBanList :MutableList<HuaBan> = ArrayList<HuaBan>()
     private var lastVisibleItem: Int = 0
-    var mLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+    var mLayoutManager :StaggeredGridLayoutManager?= null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        isPrepared=true
-        return inflater.inflate(R.layout.image_fragment, container, false)
+        if(viewHuaban==null){
+            viewHuaban=inflater.inflate(R.layout.image_fragment, container, false)
+        }
+        return viewHuaban
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mLayoutManager.gapStrategy=StaggeredGridLayoutManager.GAP_HANDLING_NONE
+        if( image_list.layoutManager==null){
+            mLayoutManager = MyStaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            mLayoutManager?.gapStrategy=StaggeredGridLayoutManager.GAP_HANDLING_NONE
+            image_list.layoutManager=mLayoutManager
 
-        image_list.layoutManager=mLayoutManager
-
-        image_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                mLayoutManager.invalidateSpanAssignments()
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 2 >= mLayoutManager.itemCount&&huaBanList.size>0) {
-                    getListDataMore()
+            image_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+//                    mLayoutManager.invalidateSpanAssignments()
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 2 >= mLayoutManager!!.itemCount&&huaBanList.size>0) {
+                        getListDataMore()
+                    }
                 }
-            }
 
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
 
-                val positions = mLayoutManager.findLastVisibleItemPositions(null)
-                lastVisibleItem = Math.max(positions[0], positions[1])
-            }
-        })
+                    val positions = mLayoutManager!!.findLastVisibleItemPositions(null)
+                    lastVisibleItem = Math.max(positions[0], positions[1])
+                }
+            })
 
-        image_list_swipe_refresh.setOnRefreshListener { getListData() }
+            image_list_swipe_refresh.setOnRefreshListener { getListData() }
+
+        }
+        isPrepared=true
 
         lazyLoad()
     }

@@ -18,6 +18,8 @@ import com.nightfeed.wendu.model.Lofter
 import com.nightfeed.wendu.net.MyJSON
 import com.nightfeed.wendu.net.RequestUtils
 import com.nightfeed.wendu.net.URLs
+import com.nightfeed.wendu.utils.ScreenUtils
+import com.nightfeed.wendu.view.MyStaggeredGridLayoutManager
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.image_fragment.*
 import java.util.ArrayList
@@ -28,56 +30,69 @@ class LofterFragment : BaseFragment() {
 
     val instance by lazy { this }
 
+    private var viewHuaban: View? =null
     private var isPrepared=false
     private var mAdapter: LofterListAdapter?=null
     private var lofterList :MutableList<Lofter> = ArrayList<Lofter>()
     private var lastVisibleItem: Int = 0
-    private var mLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+    private var mLayoutManager : StaggeredGridLayoutManager?= null
 
     private var label:String?=null
     private var page=1
+    private var imageWidth=""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        isPrepared=true
-        return inflater.inflate(R.layout.image_fragment, container, false)
+        if(viewHuaban==null){
+            viewHuaban=inflater.inflate(R.layout.image_fragment, container, false)
+        }
+        return viewHuaban
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null&&savedInstanceState.getSerializable("label")!=null) {
+
             label = savedInstanceState.getSerializable("label") as String
         }
 
-        image_list.layoutManager=mLayoutManager
+        if(image_list.layoutManager==null){
+            mLayoutManager= MyStaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            mLayoutManager?.gapStrategy=StaggeredGridLayoutManager.GAP_HANDLING_NONE
+            image_list.layoutManager=mLayoutManager
 
-        image_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 2 >= mLayoutManager.itemCount&&lofterList.size>0) {
-                    getListData()
+            image_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 2 >= mLayoutManager!!.itemCount&&lofterList.size>0) {
+                        getListData()
+                    }
                 }
-            }
 
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
 
-                val positions = mLayoutManager.findLastVisibleItemPositions(null)
-                lastVisibleItem = Math.max(positions[0], positions[1])
-            }
-        })
+                    val positions = mLayoutManager!!.findLastVisibleItemPositions(null)
+                    lastVisibleItem = Math.max(positions[0], positions[1])
+                }
+            })
 
-        image_list_swipe_refresh.setOnRefreshListener {
-            page=1
-            lofterList.clear()
-            getListData() }
+            image_list_swipe_refresh.setOnRefreshListener {
+                page=1
+                lofterList.clear()
+                getListData() }
+
+        }
+        isPrepared=true
 
         lazyLoad()
     }
 
     public fun setLabel (l:String) :LofterFragment{
         label=l
+        val bundle = Bundle()
+        bundle.putSerializable("label", label)
         return instance
     }
 
@@ -88,6 +103,7 @@ class LofterFragment : BaseFragment() {
                 if (!TextUtils.isEmpty(value)) {
                    var lsit :ArrayList<Lofter> = Gson().fromJson(value, object : TypeToken<List<Lofter>>() {}.type)
                     if(lsit!=null&&lsit.size>0){
+                        lsit.forEach {it.imagesUrl= it.imagesUrl.replace("164y164",imageWidth) }
                         lofterList.addAll(lsit)
                         if (mAdapter == null) {
                             mAdapter = LofterListAdapter(context, lofterList)
@@ -99,7 +115,6 @@ class LofterFragment : BaseFragment() {
                                 mAdapter!!.notifyRangeInserted(lofterList,lofterList.size-lsit.size,lsit.size)
                             }
                         }
-
                         page++
                     }
                 }
@@ -107,7 +122,9 @@ class LofterFragment : BaseFragment() {
             }
 
             override fun onError() {
-                image_list_swipe_refresh.isRefreshing=false
+                if(image_list_swipe_refresh!=null){
+                    image_list_swipe_refresh.isRefreshing=false
+                }
             }
         })
     }
@@ -117,6 +134,11 @@ class LofterFragment : BaseFragment() {
         if (!isPrepared || !isVisible||lofterList.size>0) {
             return
         }
+        if(TextUtils.isEmpty(imageWidth)){
+           var width:Int=(ScreenUtils.getScreenWidth(context)-ScreenUtils.dip2px(context,30f))/2
+            imageWidth=width.toString()+"w"+width.toString()
+        }
+
         image_list_swipe_refresh.isRefreshing=true
         page=1
         getListData()

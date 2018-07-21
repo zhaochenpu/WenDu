@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".activity.Main3Activity">
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".activity.BrowsePictureActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -17,13 +19,15 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp">
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways">
             <ImageView
-                android:layout_width="36dp"
+                android:id="@+id/back"
+                android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
-                android:paddingRight="6dp"
+                android:paddingRight="10dp"
                 android:src="@drawable/back"/>
 
             <FrameLayout
@@ -50,9 +54,20 @@
                     android:textColorHint="@color/colorPrimaryDark"
                     android:textSize="@dimen/textSizeXL"
                     android:layout_gravity="center_vertical"
+                    android:maxLines="1"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
                     />
             </FrameLayout>
-
+            <ImageView
+                android:id="@+id/more"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_gravity="right"
+                android:paddingRight="10dp"
+                android:src="@drawable/more"/>
         </FrameLayout>
 
         <android.support.design.widget.TabLayout

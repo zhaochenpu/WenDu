@@ -7,12 +7,12 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
+import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v7.widget.PopupMenu
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.view.KeyEvent
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
@@ -20,23 +20,31 @@ import android.widget.TextView
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.fragment.HuaBanFragment
 import com.nightfeed.wendu.fragment.LofterFragment
+import com.nightfeed.wendu.model.PictureItem
 import com.nightfeed.wendu.net.MyJSON
 import com.nightfeed.wendu.net.RequestUtils
 import com.nightfeed.wendu.net.URLs
 import com.nightfeed.wendu.utils.ToastUtil
-import kotlinx.android.synthetic.main.activity_main3.*
+import kotlinx.android.synthetic.main.activity_browse_picture.*
+import org.litepal.LitePal
+import android.widget.Toast
+import android.support.v4.view.PagerAdapter
 
-class Main3Activity : AppCompatActivity() {
+
+
+
+class BrowsePictureActivity : AppCompatActivity() {
 
     val instance by lazy { this }
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var viewList=ArrayList<Fragment>()
     private var tabTitles= ArrayList<String>()
+    private var searchLabel=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main3)
+        setContentView(R.layout.activity_browse_picture)
 
         initView()
     }
@@ -48,6 +56,12 @@ class Main3Activity : AppCompatActivity() {
         viewList.add(LofterFragment().setLabel("女神"))
         tabTitles.add("女神")
 
+        LitePal.findAll(PictureItem::class.java).forEach {
+
+            viewList.add(LofterFragment().setLabel(it.name))
+            tabTitles.add(it.name)
+        }
+
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
         // Set up the ViewPager with the sections adapter.
@@ -58,17 +72,43 @@ class Main3Activity : AppCompatActivity() {
         tabs.setupWithViewPager(container)
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
-        search_image.setOnEditorActionListener(object : TextView.OnEditorActionListener {
-            override fun onEditorAction(p0: TextView?, p1: Int, p2: KeyEvent?): Boolean {
-                var label=search_image.text
-                if (!TextUtils.isEmpty(label)&&(p1 == EditorInfo.IME_ACTION_SEND || p2 != null && p2.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    searchLofterImage(label.toString().trim())
-                    return true
-                }
-                return false
+        search_image.setOnEditorActionListener(TextView.OnEditorActionListener { p0, p1, p2 ->
+            var label=search_image.text.toString()
+            if (!TextUtils.isEmpty(label)&&(p1 == EditorInfo.IME_ACTION_SEND || p2 != null && p2.getKeyCode() == KeyEvent.KEYCODE_ENTER)&&!TextUtils.equals(searchLabel,label)) {
+                searchLabel=label
+                searchLofterImage(label.trim())
+                return@OnEditorActionListener true
             }
+            false
         })
+
+        back.setOnClickListener {
+            finish()
+        }
+       more.setOnClickListener {
+            val popupMenu = PopupMenu(this, more)
+            //通过MenuInflater进行填充数据
+            val mInflater = popupMenu.getMenuInflater()
+            //把定义好的menuXML资源文件填充到popupMenu当中
+            mInflater.inflate(R.menu.main, popupMenu.getMenu())
+           popupMenu.setOnMenuItemClickListener(object:PopupMenu.OnMenuItemClickListener{
+               override fun onMenuItemClick(p0: MenuItem?): Boolean {
+                   when (p0?.itemId) {
+                       R.id.action_delete ->{
+                           LitePal.deleteAll(PictureItem::class.java, "name = ?",tabTitles.get(container.currentItem))
+                           tabTitles.removeAt(container.currentItem)
+                           viewList.removeAt(container.currentItem)
+                           mSectionsPagerAdapter?.notifyDataSetChanged()
+                           container.currentItem=0
+                       }
+                   }
+                   return true
+               }
+           })
+            popupMenu.show()
+        }
     }
+
 
     fun searchLofterImage(label:String){
         if (!TextUtils.isEmpty(label)){
@@ -80,13 +120,17 @@ class Main3Activity : AppCompatActivity() {
                         tabTitles.add(label)
                         mSectionsPagerAdapter?.notifyDataSetChanged()
                         container.currentItem=viewList.size-1
+                        val item = PictureItem(label, 1)
+                        item.save()
                     }else{
                         ToastUtil.showError(instance,"没有找到该标签...")
                     }
+                    searchLabel=""
                 }
 
                 override fun onError() {
                     ToastUtil.showError(instance,"槽糕，请求失败了...")
+                    searchLabel=""
                 }
             })
         }
@@ -97,7 +141,7 @@ class Main3Activity : AppCompatActivity() {
      * A [FragmentPagerAdapter] that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+    inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
         override fun getPageTitle(position: Int): CharSequence? {
             return tabTitles[position]
@@ -111,6 +155,11 @@ class Main3Activity : AppCompatActivity() {
         override fun getCount(): Int {
             // Show 3 total pages.
             return viewList.size
+        }
+
+        override fun getItemPosition(`object`: Any): Int {
+            // TODO Auto-generated method stub
+            return PagerAdapter.POSITION_NONE
         }
     }
 
