@@ -1,5 +1,7 @@
 package com.nightfeed.wendu.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
@@ -12,7 +14,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 import com.nightfeed.wendu.R
+import com.nightfeed.wendu.activity.HuaBanActivity
+import com.nightfeed.wendu.activity.LofterActivity
 import com.nightfeed.wendu.adapter.ImageListAdapter
+import com.nightfeed.wendu.adapter.LofterListAdapter
 import com.nightfeed.wendu.model.HuaBan
 import com.nightfeed.wendu.net.MyJSON
 import com.nightfeed.wendu.net.RequestUtils
@@ -21,6 +26,8 @@ import com.nightfeed.wendu.view.MyStaggeredGridLayoutManager
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.image_fragment.*
 import java.util.ArrayList
+import android.app.ActivityOptions
+import com.nightfeed.wendu.utils.ScreenUtils
 
 
 class HuaBanFragment : BaseFragment() {
@@ -30,7 +37,7 @@ class HuaBanFragment : BaseFragment() {
     private var mAdapter: ImageListAdapter?=null
     private var huaBanList :MutableList<HuaBan> = ArrayList<HuaBan>()
     private var lastVisibleItem: Int = 0
-    var mLayoutManager :StaggeredGridLayoutManager?= null
+    var mLayoutManager :MyStaggeredGridLayoutManager?= null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -95,9 +102,7 @@ class HuaBanFragment : BaseFragment() {
                             mAdapter!!.notifyRangeInserted(huaBanList,start,huaBanListMore.size)
                         }
                     }
-
                 }
-
                 override fun onError() {
                 }
             })
@@ -111,7 +116,18 @@ class HuaBanFragment : BaseFragment() {
                 if(!TextUtils.isEmpty(pins)){
                     huaBanList = Gson().fromJson(pins, object : TypeToken<List<HuaBan>>(){}.type)
                     if(mAdapter==null){
-                        mAdapter= ImageListAdapter(context, huaBanList)
+                        mAdapter= ImageListAdapter(context, huaBanList,false,object : ImageListAdapter.OnClickListener {
+                            override fun onClick(position: Int, v: View) {
+                                var huaban=huaBanList.get(position)
+                                val intent = Intent(context, HuaBanActivity::class.java)
+                                //获取intent对象
+                                intent.putExtra("pin_id",huaban.pin_id)
+                                intent.putExtra("key",huaban.file.key)
+                                intent.putExtra("raw_text",huaban.raw_text)
+                                intent.putExtra("height",ScreenUtils.getScreenWidth(context)*huaban.file.height/huaban.file.width)
+                                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(context as Activity, v, "huaban").toBundle())
+                            }
+                        })
                         image_list.adapter=mAdapter
                     }else{
                         mAdapter!!.notifyDataChanged(huaBanList)

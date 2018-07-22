@@ -72,11 +72,24 @@ class BrowsePictureActivity : AppCompatActivity() {
         tabs.setupWithViewPager(container)
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
+        search_source.setOnClickListener {
+            if(TextUtils.equals(search_source.text,"Lofter")){
+                search_source.text="图虫"
+            }else{
+                search_source.text="Lofter"
+            }
+        }
+
         search_image.setOnEditorActionListener(TextView.OnEditorActionListener { p0, p1, p2 ->
             var label=search_image.text.toString()
             if (!TextUtils.isEmpty(label)&&(p1 == EditorInfo.IME_ACTION_SEND || p2 != null && p2.getKeyCode() == KeyEvent.KEYCODE_ENTER)&&!TextUtils.equals(searchLabel,label)) {
                 searchLabel=label
-                searchLofterImage(label.trim())
+                if(TextUtils.equals(search_source.text,"Lofter")){
+                    searchLofterImage(label.trim())
+                }else{
+                    search_source.text="Lofter"
+                }
+
                 return@OnEditorActionListener true
             }
             false

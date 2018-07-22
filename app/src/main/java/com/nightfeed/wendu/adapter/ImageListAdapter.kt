@@ -13,15 +13,23 @@ import com.nightfeed.wendu.R
 import com.nightfeed.wendu.model.HuaBan
 import com.nightfeed.wendu.net.URLs
 
-class ImageListAdapter (context: Context?, datas:List<HuaBan>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class ImageListAdapter (context: Context?, datas:List<HuaBan>,val isRecommend:Boolean,val onClickListener: OnClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private var mContext  =  context
     private var datas=datas
-    private var  defaultH= TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150f,mContext!!.resources.displayMetrics)
+//    private var  defaultH= TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150f,mContext!!.resources.displayMetrics)
 
+    interface OnClickListener{
+        fun onClick(position:Int,view: View)
+    }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
 
-        return MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.grid_meizi_item, p0, false))
+        if(isRecommend){
+            return MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.grid_item, p0, false))
+        }else{
+            return MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.huaban_item, p0, false))
+
+        }
     }
 
     override fun getItemCount(): Int {
@@ -36,6 +44,10 @@ class ImageListAdapter (context: Context?, datas:List<HuaBan>): RecyclerView.Ada
             iv.layoutParams=layoutParams
         }
         Glide.with(mContext!!).load(URLs.HUA_BAN_IM+ datas[p1].file.key).into(iv)
+
+        p0.itemView.setOnClickListener {
+            onClickListener.onClick(p1,it)
+        }
     }
 
     fun  notifyDataChanged(list:List<HuaBan> ){

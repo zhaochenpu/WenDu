@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.image_fragment.*
 import java.util.ArrayList
 
 
-class LofterFragment : BaseFragment() {
+class TuChongFragment : BaseFragment() {
 
 
     val instance by lazy { this }
@@ -37,7 +37,7 @@ class LofterFragment : BaseFragment() {
     private var mAdapter: LofterListAdapter?=null
     private var lofterList :MutableList<Lofter> = ArrayList<Lofter>()
     private var lastVisibleItem: Int = 0
-    private var mLayoutManager : MyStaggeredGridLayoutManager?= null
+    private var mLayoutManager : StaggeredGridLayoutManager?= null
 
     private var label:String?=null
     private var page=1
@@ -70,7 +70,7 @@ class LofterFragment : BaseFragment() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
                     if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 2 >= mLayoutManager!!.itemCount&&lofterList.size>0) {
-                        getListData()
+//                        getListData()
                     }
                 }
 
@@ -85,7 +85,8 @@ class LofterFragment : BaseFragment() {
             image_list_swipe_refresh.setOnRefreshListener {
                 page=1
                 lofterList.clear()
-                getListData() }
+//                getListData()
+            }
 
         }
         isPrepared=true
@@ -93,21 +94,20 @@ class LofterFragment : BaseFragment() {
         lazyLoad()
     }
 
-    public fun setLabel (l:String) :LofterFragment{
+    public fun setLabel (l:String) :TuChongFragment{
         label=l
         val bundle = Bundle()
         bundle.putSerializable("label", label)
         return instance
     }
 
-    private fun getListData() {
-        RequestUtils.get(URLs.LOFTER_LEST + page+"&labelId="+label, object : RequestUtils.OnResultListener {
+    private fun getListData(url:String) {
+        RequestUtils.get(url, object : RequestUtils.OnResultListener {
             override fun onSuccess(result: String) {
-                var value = MyJSON.getString(result, "value")
+                var value = MyJSON.getString(result, "feedList")
                 if (!TextUtils.isEmpty(value)) {
                    var lsit :ArrayList<Lofter> = Gson().fromJson(value, object : TypeToken<List<Lofter>>() {}.type)
                     if(lsit!=null&&lsit.size>0){
-                        lsit.forEach {it.imagesUrl= it.imagesUrl.replace("164y164",imageWidth) }
                         lofterList.addAll(lsit)
                         if (mAdapter == null) {
                             mAdapter = LofterListAdapter(context, lofterList,object : LofterListAdapter.OnClickListener{
@@ -152,7 +152,7 @@ class LofterFragment : BaseFragment() {
 
         image_list_swipe_refresh.isRefreshing=true
         page=1
-        getListData()
+//        getListData()
     }
 
     override fun onDestroyView() {

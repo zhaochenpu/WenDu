@@ -9,9 +9,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.nightfeed.wendu.R
-import com.nightfeed.wendu.model.HuaBan
 import com.nightfeed.wendu.model.Lofter
-import com.nightfeed.wendu.net.URLs
 
 class LofterListAdapter (context: Context?, datas:List<Lofter>,val onClickListener:OnClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private var mContext  =  context
@@ -21,10 +19,9 @@ class LofterListAdapter (context: Context?, datas:List<Lofter>,val onClickListen
         fun onClick(position:Int)
     }
 
-
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
 
-        return MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.grid_meizi_item, p0, false))
+        return MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.grid_item, p0, false))
     }
 
     override fun getItemCount(): Int {
