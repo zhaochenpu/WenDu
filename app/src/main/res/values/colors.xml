@@ -9,4 +9,5 @@
     <color name="error">#ff5722</color>
     <color name="warning">#ffc107</color>
 
+    <color name="translucent_white_20">#ccffffff</color>
 </resources>

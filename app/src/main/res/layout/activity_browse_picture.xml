@@ -53,7 +53,7 @@
                     android:textColor="@color/textPrimary"
                     android:hint="少年，来搜索喜欢的图片吧"
                     android:textColorHint="@color/colorPrimaryDark"
-                    android:textSize="@dimen/textSizeXL"
+                    android:textSize="@dimen/textSizeL"
                     android:layout_gravity="center_vertical"
                     android:maxLines="1"
                     android:imeOptions="actionSearch"

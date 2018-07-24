@@ -17,6 +17,9 @@ class URLs {
         val TUCHONG_RECOMMEND="https://api.tuchong.com/feed-app?dpi="//400&resolution=1280*1000&page=1&type=refresh
         val TUCHONG_IMAGE="https://photo.tuchong.com/ "//+ user_id +/f/ + img_id
 
+        val ONE_NEW="http://v3.wufazhuce.com:8000/api/hp/idlist/0?version=3.5.0&platform=android"
+        val ONE_HP="http://v3.wufazhuce.com:8000/api/hp/detail/hp_id?version=4.0.2&platform=android"
+
 
         val HIMAWERI8_LATES="https://himawari8-dl.nict.go.jp/himawari8/img/D531106/latest.json?uid="
         val HIMAWERI8_IMAGE4="https://himawari8-dl.nict.go.jp/himawari8/img/D531106/2d/550/"//2018/07/02/120000_1_1.png

@@ -39,15 +39,19 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.ContentTransitions"
             android:launchMode="singleTask">
+        </activity>
+        <activity
+            android:name=".activity.HuaBanActivity"
+            android:theme="@style/AppTheme.ContentTransitions"></activity>
+
+        <activity android:name=".activity.ImageWordActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.HuaBanActivity"
-            android:theme="@style/AppTheme.ContentTransitions"></activity>
     </application>
 
 </manifest>

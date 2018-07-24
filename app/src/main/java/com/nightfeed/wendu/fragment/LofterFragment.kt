@@ -69,7 +69,7 @@ class LofterFragment : BaseFragment() {
             image_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 2 >= mLayoutManager!!.itemCount&&lofterList.size>0) {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 4 >= mLayoutManager!!.itemCount&&lofterList.size>0) {
                         getListData()
                     }
                 }

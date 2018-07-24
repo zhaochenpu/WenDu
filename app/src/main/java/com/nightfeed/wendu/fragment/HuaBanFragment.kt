@@ -59,7 +59,7 @@ class HuaBanFragment : BaseFragment() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
 //                    mLayoutManager.invalidateSpanAssignments()
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 2 >= mLayoutManager!!.itemCount&&huaBanList.size>0) {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 4 >= mLayoutManager!!.itemCount&&huaBanList.size>0) {
                         getListDataMore()
                     }
                 }
