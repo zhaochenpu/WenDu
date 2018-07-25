@@ -82,7 +82,7 @@ class HuaBanFragment : BaseFragment() {
 
 
     override fun lazyLoad() {
-        if (!isPrepared || !isVisible||huaBanList.size>0) {
+        if (!isPrepared || !isFragmentVisible||huaBanList.size>0) {
             return
         }
         image_list_swipe_refresh.isRefreshing=true

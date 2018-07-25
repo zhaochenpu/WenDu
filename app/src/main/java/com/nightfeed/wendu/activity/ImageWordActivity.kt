@@ -18,8 +18,7 @@ import com.nightfeed.wendu.utils.StatusBarUtil
 import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
 import com.bumptech.glide.Glide
-
-
+import com.nightfeed.wendu.fragment.MonoFragment
 
 
 class ImageWordActivity : AppCompatActivity() {
@@ -34,7 +33,7 @@ class ImageWordActivity : AppCompatActivity() {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var viewList=ArrayList<Fragment>()
-    private var tabTitles= arrayOf("一句")
+    private var tabTitles= arrayOf("一句","诗+歌")
     private var collapsingState=CollapsingToolbarLayoutState.EXPANDED
 
 
@@ -47,7 +46,7 @@ class ImageWordActivity : AppCompatActivity() {
 
     private fun initView() {
         viewList.add(OneSentenceFragment())
-
+        viewList.add(MonoFragment())
 
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 

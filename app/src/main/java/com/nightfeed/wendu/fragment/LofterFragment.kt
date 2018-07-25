@@ -142,7 +142,7 @@ class LofterFragment : BaseFragment() {
 
 
     override fun lazyLoad() {
-        if (!isPrepared || !isVisible||lofterList.size>0) {
+        if (!isPrepared || !isFragmentVisible||lofterList.size>0) {
             return
         }
         if(TextUtils.isEmpty(imageWidth)){

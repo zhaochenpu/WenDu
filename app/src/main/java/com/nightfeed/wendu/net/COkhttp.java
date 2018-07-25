@@ -63,8 +63,13 @@ public class COkhttp {
         return null;
     }
 
-    public static Call getCall(String url){
-        Request request = new Request.Builder().url(url).build();
+    public static Call getCall(String url,String[] header){
+        Request request;
+        if(header==null){
+            request = new Request.Builder().url(url).build();
+        }else {
+            request = new Request.Builder().header(header[0],header[1]).url(url).build();
+        }
 
         if(client==null){
             getInstance();

@@ -5,6 +5,7 @@ import android.os.Looper
 import android.text.TextUtils
 import okhttp3.Call
 import okhttp3.Callback
+import okhttp3.Headers
 import okhttp3.Response
 import java.io.IOException
 
@@ -16,8 +17,12 @@ class RequestUtils {
 
     companion object {
         fun get(url:String, onRequestListener:OnResultListener?){
+            get(url,null,onRequestListener)
+        }
+
+        fun get(url:String, header:Array<String>?, onRequestListener:OnResultListener?){
             val mHandler =  object : Handler(Looper.getMainLooper()){}
-            COkhttp.getCall(url).enqueue(object : Callback {
+            COkhttp.getCall(url,header).enqueue(object : Callback {
                 override fun onFailure(call: Call?, e: IOException?) {
                     if (onRequestListener!=null){
                         mHandler.post { onRequestListener.onError() }

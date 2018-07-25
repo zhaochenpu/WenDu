@@ -1,6 +1,8 @@
 package com.nightfeed.wendu.adapter
 
 import android.content.Context
+import android.graphics.Color
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -10,9 +12,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.nightfeed.wendu.R
-import com.nightfeed.wendu.model.OneSentence
+import com.nightfeed.wendu.model.Poetry
 
-class OneSentenceListAdapter (context: Context?, datas:List<OneSentence>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class PoetryListAdapter (context: Context?, datas:List<Poetry>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private var mContext  =  context
     private var datas=datas
 
@@ -21,7 +23,7 @@ class OneSentenceListAdapter (context: Context?, datas:List<OneSentence>): Recyc
         if(p1==0) {
             return TextViewHolder(LayoutInflater.from(mContext).inflate(R.layout.head_text_item, p0, false))
         }
-        return ImageTextViewHolder(LayoutInflater.from(mContext).inflate(R.layout.image_word_item, p0, false))
+        return ImageTextViewHolder(LayoutInflater.from(mContext).inflate(R.layout.poetry_item, p0, false))
 
     }
 
@@ -29,46 +31,37 @@ class OneSentenceListAdapter (context: Context?, datas:List<OneSentence>): Recyc
         return datas.size
     }
 
-    override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
-        var oneSentence=datas[p1]
-
-        if(p0 is ImageTextViewHolder){
-
-            if(!oneSentence.hp_content.contains("\n")){
-                p0.hp_content.text="\t\t"+oneSentence.hp_content
-            }else{
-                p0.hp_content.text=oneSentence.hp_content
-            }
-
-            p0.hp_authors.text="——"+oneSentence.text_authors
-
-            if(p1!=0&&!TextUtils.isEmpty(oneSentence.hp_img_url)){
-                p0.hp_iv.visibility=View.VISIBLE
-                Glide.with(mContext!!).load(oneSentence.hp_img_url).into(p0.hp_iv)
-            }else{
-                p0.hp_iv.visibility=View.GONE
-            }
-        }else if(p0 is TextViewHolder){
-            if(!oneSentence.hp_content.contains("\n")){
-                p0.hp_content.text="\t\t"+oneSentence.hp_content
-            }else{
-                p0.hp_content.text=oneSentence.hp_content
-            }
-
-            p0.hp_authors.text="——"+oneSentence.text_authors
-        }
-
-
-    }
-
     override fun getItemViewType(position: Int): Int {
-        if(position==0||TextUtils.isEmpty(datas.get(position).hp_img_url)){
+        if(position==0||TextUtils.isEmpty(datas.get(position).im_raw)){
             return 0
         }
         return 1
     }
 
-    fun notifyRangeInserted(list:List<OneSentence>,start:Int,count:Int){
+    override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
+        var poetry=datas[p1]
+
+        if(p0 is ImageTextViewHolder){
+            p0.hp_content.text=poetry.text
+            p0.hp_authors.text="——"+poetry.author
+
+            if(p1!=0&&!TextUtils.isEmpty(poetry.im_raw)){
+                p0.hp_iv.visibility=View.VISIBLE
+                Glide.with(mContext!!).load(poetry.im_raw).into(p0.hp_iv)
+            }else{
+                p0.hp_iv.visibility=View.GONE
+            }
+        }else if(p0 is TextViewHolder){
+            p0.hp_content.setTextColor(ContextCompat.getColor(mContext!!, R.color.textPrimary))
+            p0.hp_authors.setTextColor(ContextCompat.getColor(mContext!!, R.color.textSecondary))
+
+            p0.hp_content.text=poetry.text
+            p0.hp_authors.text="——"+poetry.author
+        }
+
+    }
+
+    fun notifyRangeInserted(list:List<Poetry>, start:Int, count:Int){
         datas=list
         notifyItemRangeInserted(start,count)
     }
@@ -84,7 +77,6 @@ class OneSentenceListAdapter (context: Context?, datas:List<OneSentence>): Recyc
             hp_content=view.findViewById(R.id.hp_content)
         }
     }
-
 
     class TextViewHolder:RecyclerView.ViewHolder{
         val hp_content :TextView

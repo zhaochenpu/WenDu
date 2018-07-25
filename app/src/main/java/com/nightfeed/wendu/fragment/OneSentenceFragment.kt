@@ -54,8 +54,7 @@ class OneSentenceFragment : BaseFragment() {
             image_word_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
-                    var l=lastVisibleItem+2
-                    var i=mLayoutManager!!.itemCount
+
                     if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 2 >= mLayoutManager!!.itemCount&&sentenceList.size>0) {
                         getItem()
                     }
@@ -67,11 +66,8 @@ class OneSentenceFragment : BaseFragment() {
                     lastVisibleItem = mLayoutManager!!.findLastVisibleItemPosition()
                 }
             })
-
-            isPrepared=true
         }
-
-
+        isPrepared=true
         lazyLoad()
     }
 
@@ -118,10 +114,10 @@ class OneSentenceFragment : BaseFragment() {
 
                     if(get==pageItem-1){
                         if(mAdapter==null){
-                            mAdapter= OneSentenceListAdapter(context,sentenceList)
-                            image_word_list.adapter=mAdapter
                             (context as ImageWordActivity).setHeadImage(sentenceList.get(0).hp_img_url)
 
+                            mAdapter= OneSentenceListAdapter(context,sentenceList)
+                            image_word_list.adapter=mAdapter
                         }else{
                             mAdapter!!.notifyRangeInserted(sentenceList,itemNow,sentenceList.size-itemNow)
                         }
@@ -147,7 +143,7 @@ class OneSentenceFragment : BaseFragment() {
 
 
     override fun lazyLoad() {
-        if (!isPrepared || !isVisible||sentenceList.size>0) {
+        if (!isPrepared || !isFragmentVisible) {
             return
         }
 
@@ -155,10 +151,12 @@ class OneSentenceFragment : BaseFragment() {
             (context as ImageWordActivity).setHeadImage(sentenceList.get(0).hp_img_url)
         }
 
-        if(newest==0){
-            getNewest()
-        }else{
-            getItem()
+        if(sentenceList.size<=0){
+            if(newest==0){
+                getNewest()
+            }else{
+                getItem()
+            }
         }
     }
 
