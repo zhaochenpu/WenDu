@@ -1,13 +1,14 @@
 package com.nightfeed.wendu.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebSettings
-import android.webkit.WebView
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.net.URLs
 import kotlinx.android.synthetic.main.activity_lofter.*
@@ -20,6 +21,9 @@ class LofterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lofter)
+
+        toolbar.title=intent.getStringExtra("label")
+        setSupportActionBar(toolbar)
         webUrl=intent.getStringExtra("url")
 
         val webSettings = lofter_webview.settings
@@ -30,19 +34,28 @@ class LofterActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
-        lofter_webview.addJavascriptInterface(MVPJSInterface(), "mb.m.meizu.g")
+        lofter_webview.addJavascriptInterface(MVPJSInterface(), "flymenews")
 
         lofter_webview.loadUrl(webUrl)
+
+        toolbar.setNavigationOnClickListener {startActivity(Intent(instance,BrowsePictureActivity::class.java))}
     }
 
 
     internal inner class MVPJSInterface {
         @JavascriptInterface
-        fun <T> goTagPage (text: T) {
+        public fun clickRecommendImage(paramString:String ) {
             val intent = Intent(instance,LofterActivity::class.java)
             //获取intent对象
-            intent.putExtra("url", text.toString())
+            intent.putExtra("url", paramString)
             startActivity(intent)
+        }
+
+        @JavascriptInterface
+        public fun jumpLabelDetail(paramString:String) {
+            Log.e("","jumpLabelDetail..."+paramString)
+            setResult(Activity.RESULT_OK,Intent().putExtra("label",paramString))
+            finish()
         }
     }
 }

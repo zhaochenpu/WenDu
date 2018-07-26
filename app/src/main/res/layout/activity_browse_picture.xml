@@ -40,11 +40,13 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:textColor="@color/textPrimary"
-                    android:textSize="16sp"
-                    android:text="Lofter"/>
+                    android:textSize="@dimen/textSizeL"
+                    android:text="Lofter"
+                    android:textStyle="bold"
+                    style="@style/button_background"/>
                 <EditText
                     android:id="@+id/search_image"
-                    style="@style/MyEditText"
+                    android:theme="@style/MyEditText"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"

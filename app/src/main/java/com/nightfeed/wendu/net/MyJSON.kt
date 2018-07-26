@@ -28,6 +28,17 @@ class MyJSON {
             return null
         }
 
+        fun getJSONObject(content: String?, content_title:String) : JSONObject? {
+            try {
+                if(!TextUtils.isEmpty(content)){
+                    return JSONObject(content).getJSONObject(content_title)
+                }
+            }catch (e: JSONException){
+
+            }
+            return null
+        }
+
 
         fun getJSONArray(content: String?, content_title:String) : JSONArray? {
             try {
@@ -39,5 +50,6 @@ class MyJSON {
             }
             return null
         }
+
     }
 }

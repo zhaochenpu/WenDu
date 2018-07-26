@@ -1,5 +1,6 @@
 package com.nightfeed.wendu.activity
 
+import android.content.Intent
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 
@@ -29,8 +30,7 @@ import kotlinx.android.synthetic.main.activity_browse_picture.*
 import org.litepal.LitePal
 import android.widget.Toast
 import android.support.v4.view.PagerAdapter
-
-
+import com.nightfeed.wendu.fragment.TuChongFragment
 
 
 class BrowsePictureActivity : AppCompatActivity() {
@@ -50,6 +50,8 @@ class BrowsePictureActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        viewList.add(TuChongFragment().setLabel("图虫"))
+        tabTitles.add("图虫")
         viewList.add(HuaBanFragment())
         tabTitles.add("花瓣")
 
@@ -57,9 +59,13 @@ class BrowsePictureActivity : AppCompatActivity() {
         tabTitles.add("女神")
 
         LitePal.findAll(PictureItem::class.java).forEach {
-
-            viewList.add(LofterFragment().setLabel(it.name))
-            tabTitles.add(it.name)
+            if(it.source==1){
+                viewList.add(LofterFragment().setLabel(it.name))
+                tabTitles.add(it.name)
+            }else{
+                viewList.add(TuChongFragment().setLabel(it.name))
+                tabTitles.add(it.name)
+            }
         }
 
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
@@ -67,8 +73,8 @@ class BrowsePictureActivity : AppCompatActivity() {
         // Set up the ViewPager with the sections adapter.
         container.adapter = mSectionsPagerAdapter
 
-        container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
-        tabs.tabMode = TabLayout.MODE_FIXED
+        container.addOnPageChangeListener(ViewpagerOnPageChangeListener(tabs))
+        tabs.tabMode = TabLayout.MODE_SCROLLABLE
         tabs.setupWithViewPager(container)
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
@@ -87,7 +93,7 @@ class BrowsePictureActivity : AppCompatActivity() {
                 if(TextUtils.equals(search_source.text,"Lofter")){
                     searchLofterImage(label.trim())
                 }else{
-                    search_source.text="Lofter"
+                    searchTuChongImage(label.trim())
                 }
 
                 return@OnEditorActionListener true
@@ -147,6 +153,32 @@ class BrowsePictureActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    fun searchTuChongImage(label:String){
+        if (!TextUtils.isEmpty(label)){
+            RequestUtils.get(URLs.TUCHONG_SEARCH+label+"&page=1",object :RequestUtils.OnResultListener{
+                override fun onSuccess(result: String) {
+                    var list=MyJSON.getJSONObject(result, "data")?.getJSONArray("post_list")
+                    if(list!=null&&list.length()>0){
+                        viewList.add(TuChongFragment().setLabel(label))
+                        tabTitles.add(label)
+                        mSectionsPagerAdapter?.notifyDataSetChanged()
+                        container.currentItem=viewList.size-1
+                        val item = PictureItem(label, 2)
+                        item.save()
+                    }else{
+                        ToastUtil.showError(instance,"没有找到该标签...")
+                    }
+                    searchLabel=""
+                }
+
+                override fun onError() {
+                    ToastUtil.showError(instance,"槽糕，请求失败了...")
+                    searchLabel=""
+                }
+            })
+        }
 
     }
 
@@ -176,4 +208,35 @@ class BrowsePictureActivity : AppCompatActivity() {
         }
     }
 
+    inner class ViewpagerOnPageChangeListener(tabs:TabLayout) : TabLayout.TabLayoutOnPageChangeListener(tabs){
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            if(viewList[position] is LofterFragment){
+                search_source.text="Lofter"
+            }else if(viewList[position] is TuChongFragment){
+                search_source.text="图虫"
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==1111&&resultCode==RESULT_OK&&data!=null){
+            var label=data.getStringExtra("label")
+            for ( i in 0..(viewList.size-1)){
+                var f=viewList[i]
+                if( f is LofterFragment&&TextUtils.equals(f.getLabel(),label)){
+                    container.currentItem=i
+                    return
+                }
+            }
+
+            viewList.add(LofterFragment().setLabel(label))
+            tabTitles.add(label)
+            mSectionsPagerAdapter?.notifyDataSetChanged()
+            container.currentItem=viewList.size-1
+            val item = PictureItem(label, 1)
+            item.save()
+        }
+    }
 }

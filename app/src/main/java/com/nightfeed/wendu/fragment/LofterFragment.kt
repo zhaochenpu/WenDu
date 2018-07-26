@@ -85,7 +85,11 @@ class LofterFragment : BaseFragment() {
             image_list_swipe_refresh.setOnRefreshListener {
                 page=1
                 lofterList.clear()
-                getListData() }
+                if(mAdapter!=null){
+                    mAdapter!!.notifyDataChanged(lofterList)
+                }
+                getListData()
+            }
 
         }
         isPrepared=true
@@ -98,6 +102,11 @@ class LofterFragment : BaseFragment() {
         val bundle = Bundle()
         bundle.putSerializable("label", label)
         return instance
+    }
+
+    public fun getLabel () :String?{
+
+        return label
     }
 
     private fun getListData() {
@@ -115,7 +124,8 @@ class LofterFragment : BaseFragment() {
                                     val intent = Intent(context,LofterActivity::class.java)
                                     //获取intent对象
                                     intent.putExtra("url",URLs.LOFTER_DETAILS+lofterList.get(position).permalink)
-                                    startActivity(intent)
+                                    intent.putExtra("label",label)
+                                    activity?.startActivityForResult(intent,1111)
                                 }
                             })
                             image_list.adapter = mAdapter

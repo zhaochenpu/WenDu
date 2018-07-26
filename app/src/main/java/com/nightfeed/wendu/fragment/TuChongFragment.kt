@@ -2,21 +2,19 @@ package com.nightfeed.wendu.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.activity.LofterActivity
-import com.nightfeed.wendu.adapter.ImageListAdapter
 import com.nightfeed.wendu.adapter.LofterListAdapter
+import com.nightfeed.wendu.adapter.TuChongListAdapter
 import com.nightfeed.wendu.model.Lofter
+import com.nightfeed.wendu.model.TuChong
 import com.nightfeed.wendu.net.MyJSON
 import com.nightfeed.wendu.net.RequestUtils
 import com.nightfeed.wendu.net.URLs
@@ -24,6 +22,7 @@ import com.nightfeed.wendu.utils.ScreenUtils
 import com.nightfeed.wendu.view.MyStaggeredGridLayoutManager
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.image_fragment.*
+import org.json.JSONArray
 import java.util.ArrayList
 
 
@@ -34,10 +33,10 @@ class TuChongFragment : BaseFragment() {
 
     private var viewHuaban: View? =null
     private var isPrepared=false
-    private var mAdapter: LofterListAdapter?=null
-    private var lofterList :MutableList<Lofter> = ArrayList<Lofter>()
+    private var mAdapter: TuChongListAdapter?=null
+    private var tuchongList :MutableList<TuChong> = ArrayList<TuChong>()
     private var lastVisibleItem: Int = 0
-    private var mLayoutManager : StaggeredGridLayoutManager?= null
+    private var mLayoutManager : MyStaggeredGridLayoutManager?= null
 
     private var label:String?=null
     private var page=1
@@ -69,8 +68,8 @@ class TuChongFragment : BaseFragment() {
             image_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 2 >= mLayoutManager!!.itemCount&&lofterList.size>0) {
-//                        getListData()
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 2 >= mLayoutManager!!.itemCount&&tuchongList.size>0) {
+                        getListData()
                     }
                 }
 
@@ -84,8 +83,11 @@ class TuChongFragment : BaseFragment() {
 
             image_list_swipe_refresh.setOnRefreshListener {
                 page=1
-                lofterList.clear()
-//                getListData()
+                tuchongList.clear()
+                if(mAdapter!=null){
+                    mAdapter!!.notifyDataChanged(tuchongList)
+                }
+                getListData()
             }
 
         }
@@ -101,32 +103,66 @@ class TuChongFragment : BaseFragment() {
         return instance
     }
 
-    private fun getListData(url:String) {
+    private fun getListData() {
+        var url=""
+        if(TextUtils.equals("图虫",label)){
+            url=URLs.TUCHONG_RECOMMEND+page
+            if(page==1){
+                url=url+"&type=refresh"
+            }else{
+                url=url+"&type=loadmore&post_id="+tuchongList.last().post_id
+            }
+        }else {
+            url=URLs.TUCHONG_SEARCH+label+"&page="+page
+        }
         RequestUtils.get(url, object : RequestUtils.OnResultListener {
             override fun onSuccess(result: String) {
-                var value = MyJSON.getString(result, "feedList")
-                if (!TextUtils.isEmpty(value)) {
-                   var lsit :ArrayList<Lofter> = Gson().fromJson(value, object : TypeToken<List<Lofter>>() {}.type)
-                    if(lsit!=null&&lsit.size>0){
-                        lofterList.addAll(lsit)
-                        if (mAdapter == null) {
-                            mAdapter = LofterListAdapter(context, lofterList,object : LofterListAdapter.OnClickListener{
-                                override fun onClick(position: Int) {
-                                    val intent = Intent(context,LofterActivity::class.java)
-                                    //获取intent对象
-                                    intent.putExtra("url",URLs.LOFTER_DETAILS+lofterList.get(position).permalink)
-                                    startActivity(intent)
-                                }
-                            })
-                            image_list.adapter = mAdapter
-                        } else {
-                            if(page==1){
-                                mAdapter!!.notifyDataChanged(lofterList)
-                            }else{
-                                mAdapter!!.notifyRangeInserted(lofterList,lofterList.size-lsit.size,lsit.size)
+                var value :JSONArray?
+                if(TextUtils.equals("图虫",label)){
+                    value = MyJSON.getJSONArray(result, "feedList")
+                }else{
+                    value = MyJSON.getJSONObject(result, "data")?.getJSONArray("post_list")
+                }
+
+                if (value!=null&&value.length()>0) {
+                    var i=0
+                    var additem=0
+                    while (i<value.length()){
+                        var images=value.getJSONObject(i).getJSONArray("images")
+                        if(images!=null&&images.length()>0){
+                            var ims= ArrayList<TuChong.image>()
+                            for(p in 0..(images.length()-1)){
+                                var im=images.getJSONObject(p)
+                                ims.add(TuChong.image(im.getString("user_id"), im.getString("img_id"), im.getInt("width"), im.getInt("height")))
                             }
+                            tuchongList.add(TuChong(value.getJSONObject(i).getString("post_id"),value.getJSONObject(i).getString("title"),ims))
+                            additem++
                         }
+                        i++
+                    }
+
+                    if (mAdapter == null) {
+                        mAdapter = TuChongListAdapter(context, tuchongList,object : TuChongListAdapter.OnClickListener{
+                            override fun onClick(position: Int) {
+//                                val intent = Intent(context,LofterActivity::class.java)
+                                //获取intent对象
+//                                intent.putExtra("url",URLs.LOFTER_DETAILS+tuchongList.get(position).permalink)
+//                                startActivity(intent)
+                            }
+                        })
+                        image_list.adapter = mAdapter
                         page++
+
+                    } else {
+                        if(page==1){
+                            mAdapter!!.notifyDataChanged(tuchongList)
+                            page++
+
+                        }else if(additem>0){
+                            mAdapter!!.notifyRangeInserted(tuchongList,tuchongList.size-additem,additem)
+                            page++
+
+                        }
                     }
                 }
                 image_list_swipe_refresh.isRefreshing=false
@@ -142,7 +178,7 @@ class TuChongFragment : BaseFragment() {
 
 
     override fun lazyLoad() {
-        if (!isPrepared || !isFragmentVisible||lofterList.size>0) {
+        if (!isPrepared || !isFragmentVisible||tuchongList.size>0) {
             return
         }
         if(TextUtils.isEmpty(imageWidth)){
@@ -152,7 +188,7 @@ class TuChongFragment : BaseFragment() {
 
         image_list_swipe_refresh.isRefreshing=true
         page=1
-//        getListData()
+        getListData()
     }
 
     override fun onDestroyView() {

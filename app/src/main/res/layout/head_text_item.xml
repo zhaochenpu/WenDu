@@ -24,6 +24,7 @@
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/textSizeM"
             android:lineSpacingExtra="6dp"
+            android:textIsSelectable="true"
             />
 
         <TextView
@@ -35,6 +36,7 @@
             android:gravity="right"
             android:textStyle="italic"
             android:layout_marginTop="6dp"
+            android:textIsSelectable="true"
             />
     </LinearLayout>
 </FrameLayout>
