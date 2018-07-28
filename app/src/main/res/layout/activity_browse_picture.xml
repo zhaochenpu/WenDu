@@ -41,7 +41,7 @@
                     android:gravity="center"
                     android:textColor="@color/textPrimary"
                     android:textSize="@dimen/textSizeL"
-                    android:text="Lofter"
+                    android:text="图虫"
                     android:textStyle="bold"
                     style="@style/button_background"/>
                 <EditText

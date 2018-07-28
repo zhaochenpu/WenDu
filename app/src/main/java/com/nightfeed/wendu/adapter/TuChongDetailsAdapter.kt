@@ -11,18 +11,17 @@ import com.bumptech.glide.request.RequestOptions
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.model.TuChong
 import com.nightfeed.wendu.net.URLs
+import com.nightfeed.wendu.utils.ScreenUtils
 
-class TuChongListAdapter (context: Context?, datas:List<TuChong>, val onClickListener:OnClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class TuChongDetailsAdapter (context: Context?, datas:List<TuChong.image>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private var mContext  =  context
     private var datas=datas
+    private var screenWidth=0
 
-    interface OnClickListener{
-        fun onClick(holder:RecyclerView.ViewHolder)
-    }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
 
-        return MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.grid_item, p0, false))
+        return MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.image_item, p0, false))
     }
 
     override fun getItemCount(): Int {
@@ -30,25 +29,33 @@ class TuChongListAdapter (context: Context?, datas:List<TuChong>, val onClickLis
     }
 
     override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
-
-        var image=datas[p1].images[0]
-        var url=""
-        if(image.width>image.height){
-            url=URLs.TUCHONG_IMAGE+image.user_id+"/m/"+image.img_id+".webp"
-        }else{
-            url=URLs.TUCHONG_IMAGE+image.user_id+"/ft640/"+image.img_id+".webp"
+        var iv=(p0 as MyViewHolder).iv
+        var image=datas[p1]
+        if(datas[p1].width!=0){
+            var layoutParams= iv.layoutParams
+            if(screenWidth==0){
+                screenWidth=ScreenUtils.getScreenWidth(mContext)
+            }
+            layoutParams.height=screenWidth*image.height/image.width
+            iv.layoutParams=layoutParams
         }
-        Glide.with(mContext!!).load(url).apply(RequestOptions.fitCenterTransform()).into( (p0 as MyViewHolder).iv)
-        p0.itemView.setOnClickListener { onClickListener.onClick(p0) }
+
+        if(p1==0){
+            iv.transitionName="tuchong"
+        }else{
+            iv.transitionName=""
+        }
+
+        Glide.with(mContext!!).load(URLs.TUCHONG_IMAGE+image.user_id+"/f/"+image.img_id+".webp").apply(RequestOptions.fitCenterTransform()).into( iv)
     }
 
-    fun  notifyDataChanged(list:List<TuChong> ){
+    fun  notifyDataChanged(list:List<TuChong.image> ){
         datas=list
         notifyDataSetChanged()
     }
 
 
-    fun notifyRangeInserted(list:List<TuChong>,start:Int,count:Int){
+    fun notifyRangeInserted(list:List<TuChong.image>,start:Int,count:Int){
         datas=list
         notifyItemRangeInserted(start,count)
     }

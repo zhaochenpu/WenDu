@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebSettings
@@ -22,7 +23,13 @@ class LofterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lofter)
 
-        toolbar.title=intent.getStringExtra("label")
+        var title=intent.getStringExtra("label")
+        if(TextUtils.isEmpty(title)){
+            toolbar.title=""
+        }else{
+            toolbar.title=intent.getStringExtra("label")
+        }
+
         setSupportActionBar(toolbar)
         webUrl=intent.getStringExtra("url")
 

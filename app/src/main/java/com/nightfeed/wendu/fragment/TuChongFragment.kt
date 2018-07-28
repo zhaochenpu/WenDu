@@ -1,5 +1,7 @@
 package com.nightfeed.wendu.fragment
 
+import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
@@ -10,7 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.nightfeed.wendu.R
+import com.nightfeed.wendu.activity.HuaBanActivity
 import com.nightfeed.wendu.activity.LofterActivity
+import com.nightfeed.wendu.activity.TuChongActivity
 import com.nightfeed.wendu.adapter.LofterListAdapter
 import com.nightfeed.wendu.adapter.TuChongListAdapter
 import com.nightfeed.wendu.model.Lofter
@@ -143,11 +147,12 @@ class TuChongFragment : BaseFragment() {
 
                     if (mAdapter == null) {
                         mAdapter = TuChongListAdapter(context, tuchongList,object : TuChongListAdapter.OnClickListener{
-                            override fun onClick(position: Int) {
-//                                val intent = Intent(context,LofterActivity::class.java)
-                                //获取intent对象
-//                                intent.putExtra("url",URLs.LOFTER_DETAILS+tuchongList.get(position).permalink)
-//                                startActivity(intent)
+                            override fun onClick(holder: RecyclerView.ViewHolder) {
+                                val intent = Intent(context, TuChongActivity::class.java)
+                                holder.itemView.transitionName="tuchong"
+                                intent.putExtra("bean",tuchongList[image_list.getChildAdapterPosition(holder.itemView)])
+                                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(context as Activity, holder.itemView, "tuchong").toBundle())
+
                             }
                         })
                         image_list.adapter = mAdapter

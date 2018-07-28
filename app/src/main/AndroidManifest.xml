@@ -48,6 +48,9 @@
         <activity
             android:name=".activity.HuaBanActivity"
             android:theme="@style/AppTheme.ContentTransitions"></activity>
+        <activity
+            android:name=".activity.TuChongActivity"
+            android:theme="@style/AppTheme.ContentTransitions"></activity>
 
         <activity android:name=".activity.ImageWordActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
