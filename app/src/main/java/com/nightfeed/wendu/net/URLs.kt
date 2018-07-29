@@ -24,6 +24,10 @@ class URLs {
         val MONO_POETRY="http://mmmono.com/api/v3/group/100051/content/kind/1"  //HTTP-AUTHORIZATION 2e5ccb3d7f5211e8a6e55254006fe942 需要加头
         val MONO_POETRY_MORE="http://mmmono.com/api/v3/group/100051/content/kind/1/?start="
 
+        val ZHIHU_LATEST="https://news-at.zhihu.com/api/4/news/latest"
+        val ZHIHU_BEFORE="https://news-at.zhihu.com/api/4/news/before/"//+日期
+        val ZHIHU_CONTENT="https://news-at.zhihu.com/api/4/news/"//+id
+
         val HIMAWERI8_LATES="https://himawari8-dl.nict.go.jp/himawari8/img/D531106/latest.json?uid="
         val HIMAWERI8_IMAGE4="https://himawari8-dl.nict.go.jp/himawari8/img/D531106/2d/550/"//2018/07/02/120000_1_1.png
 

@@ -120,13 +120,14 @@ class LofterFragment : BaseFragment() {
                         lofterList.addAll(lsit)
                         if (mAdapter == null) {
                             mAdapter = LofterListAdapter(context, lofterList,object : LofterListAdapter.OnClickListener{
-                                override fun onClick(position: Int) {
+                                override fun onClick(v: View) {
                                     val intent = Intent(context,LofterActivity::class.java)
                                     //获取intent对象
-                                    intent.putExtra("url",URLs.LOFTER_DETAILS+lofterList.get(position).permalink)
+                                    intent.putExtra("url",URLs.LOFTER_DETAILS+lofterList.get(image_list.getChildAdapterPosition(v)).permalink)
                                     intent.putExtra("label",label)
                                     activity?.startActivityForResult(intent,1111)
                                 }
+
                             })
                             image_list.adapter = mAdapter
                         } else {

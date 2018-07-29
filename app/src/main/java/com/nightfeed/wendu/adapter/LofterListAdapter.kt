@@ -16,7 +16,7 @@ class LofterListAdapter (context: Context?, datas:List<Lofter>,val onClickListen
     private var datas=datas
 
     interface OnClickListener{
-        fun onClick(position:Int)
+        fun onClick(v:View)
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
@@ -31,7 +31,7 @@ class LofterListAdapter (context: Context?, datas:List<Lofter>,val onClickListen
     override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
 
         Glide.with(mContext!!).load(datas[p1].imagesUrl).apply(RequestOptions.fitCenterTransform()).into( (p0 as MyViewHolder).iv)
-        p0.itemView.setOnClickListener { onClickListener.onClick(p1) }
+        p0.itemView.setOnClickListener { onClickListener.onClick(it) }
     }
 
     fun  notifyDataChanged(list:List<Lofter> ){

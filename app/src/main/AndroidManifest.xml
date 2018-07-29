@@ -29,21 +29,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activity.LofterActivity"></activity>
         <activity
             android:name=".activity.BrowsePictureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.ContentTransitions"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.HuaBanActivity"
@@ -54,8 +46,18 @@
 
         <activity android:name=".activity.ImageWordActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
         </activity>
+
+        <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.ZhiHuActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

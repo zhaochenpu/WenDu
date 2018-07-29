@@ -10,4 +10,5 @@
     <color name="warning">#ffc107</color>
 
     <color name="translucent_white_20">#ccffffff</color>
+    <color name="translucent_80">#33000000</color>
 </resources>

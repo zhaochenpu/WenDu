@@ -117,8 +117,8 @@ class HuaBanFragment : BaseFragment() {
                     huaBanList = Gson().fromJson(pins, object : TypeToken<List<HuaBan>>(){}.type)
                     if(mAdapter==null){
                         mAdapter= ImageListAdapter(context, huaBanList,false,object : ImageListAdapter.OnClickListener {
-                            override fun onClick(position: Int, v: View) {
-                                var huaban=huaBanList.get(position)
+                            override fun onClick( v: View) {
+                                var huaban=huaBanList.get(image_list.getChildAdapterPosition(v))
                                 val intent = Intent(context, HuaBanActivity::class.java)
                                 //获取intent对象
                                 intent.putExtra("pin_id",huaban.pin_id)

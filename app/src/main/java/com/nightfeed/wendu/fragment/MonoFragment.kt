@@ -3,20 +3,17 @@ package com.nightfeed.wendu.fragment
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.activity.ImageWordActivity
-import com.nightfeed.wendu.adapter.LofterListAdapter
 import com.nightfeed.wendu.adapter.PoetryListAdapter
 import com.nightfeed.wendu.model.Poetry
 import com.nightfeed.wendu.net.MyJSON
 import com.nightfeed.wendu.net.RequestUtils
 import com.nightfeed.wendu.net.URLs
-import com.nightfeed.wendu.view.MyStaggeredGridLayoutManager
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.image_word_fragment.*
 import java.util.ArrayList
@@ -79,7 +76,7 @@ class MonoFragment : BaseFragment() {
                     var i=0
                    while (i<meow_list.length()){
                        var meow=meow_list.getJSONObject(i)
-                       var poetry=Poetry(meow.getString("text"),meow.getString("create_time"),meow.getString("author"),meow.getJSONObject("thumb").getString("raw"))
+                       var poetry=Poetry(meow.getString("text"),meow.getString("create_time"),MyJSON.getString(meow,"author"),meow.getJSONObject("thumb").getString("raw"))
                        poetryList.add(poetry)
                        i++
                    }

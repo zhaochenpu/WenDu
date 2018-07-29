@@ -17,7 +17,7 @@ class TuChongListAdapter (context: Context?, datas:List<TuChong>, val onClickLis
     private var datas=datas
 
     interface OnClickListener{
-        fun onClick(holder:RecyclerView.ViewHolder)
+        fun onClick(v:View)
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
@@ -39,7 +39,7 @@ class TuChongListAdapter (context: Context?, datas:List<TuChong>, val onClickLis
             url=URLs.TUCHONG_IMAGE+image.user_id+"/ft640/"+image.img_id+".webp"
         }
         Glide.with(mContext!!).load(url).apply(RequestOptions.fitCenterTransform()).into( (p0 as MyViewHolder).iv)
-        p0.itemView.setOnClickListener { onClickListener.onClick(p0) }
+        p0.itemView.setOnClickListener { onClickListener.onClick(it) }
     }
 
     fun  notifyDataChanged(list:List<TuChong> ){

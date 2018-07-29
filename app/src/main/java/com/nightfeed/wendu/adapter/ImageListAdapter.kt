@@ -19,7 +19,7 @@ class ImageListAdapter (context: Context?, datas:List<HuaBan>,val isRecommend:Bo
 //    private var  defaultH= TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150f,mContext!!.resources.displayMetrics)
 
     interface OnClickListener{
-        fun onClick(position:Int,view: View)
+        fun onClick(view: View)
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
@@ -46,7 +46,7 @@ class ImageListAdapter (context: Context?, datas:List<HuaBan>,val isRecommend:Bo
         Glide.with(mContext!!).load(URLs.HUA_BAN_IM+ datas[p1].file.key).into(iv)
 
         p0.itemView.setOnClickListener {
-            onClickListener.onClick(p1,it)
+            onClickListener.onClick(it)
         }
     }
 

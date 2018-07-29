@@ -147,11 +147,11 @@ class TuChongFragment : BaseFragment() {
 
                     if (mAdapter == null) {
                         mAdapter = TuChongListAdapter(context, tuchongList,object : TuChongListAdapter.OnClickListener{
-                            override fun onClick(holder: RecyclerView.ViewHolder) {
+                            override fun onClick(v:View) {
                                 val intent = Intent(context, TuChongActivity::class.java)
-                                holder.itemView.transitionName="tuchong"
-                                intent.putExtra("bean",tuchongList[image_list.getChildAdapterPosition(holder.itemView)])
-                                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(context as Activity, holder.itemView, "tuchong").toBundle())
+                                v.transitionName="tuchong"
+                                intent.putExtra("bean",tuchongList[image_list.getChildAdapterPosition(v)])
+                                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(context as Activity, v, "tuchong").toBundle())
 
                             }
                         })

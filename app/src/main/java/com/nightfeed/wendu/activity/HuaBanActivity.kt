@@ -58,9 +58,9 @@ class HuaBanActivity : AppCompatActivity() {
                     var recommend: ArrayList<HuaBan> = Gson().fromJson(result, object : TypeToken<List<HuaBan>>() {}.type)
                     if (recommend.size>0) {
                         huaban_recommend.adapter= ImageListAdapter(instance, recommend,true,object : ImageListAdapter.OnClickListener {
-                            override fun onClick(position: Int, v: View) {
+                            override fun onClick(v: View) {
                                 v.transitionName="huaban_recommend"
-                                var huaban=recommend.get(position)
+                                var huaban=recommend.get(huaban_recommend.getChildAdapterPosition(v))
                                 val intent = Intent(instance, HuaBanActivity::class.java)
                                 //获取intent对象
                                 intent.putExtra("pin_id",huaban.pin_id)
