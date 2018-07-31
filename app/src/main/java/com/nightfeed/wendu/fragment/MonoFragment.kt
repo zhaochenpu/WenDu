@@ -112,10 +112,4 @@ class MonoFragment : BaseFragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        clearFindViewByIdCache()
-    }
-
-
 }

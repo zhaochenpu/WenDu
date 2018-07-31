@@ -31,22 +31,8 @@ class TuChongDetailsAdapter (context: Context?, datas:List<TuChong.image>): Recy
     override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
         var iv=(p0 as MyViewHolder).iv
         var image=datas[p1]
-        if(datas[p1].width!=0){
-            var layoutParams= iv.layoutParams
-            if(screenWidth==0){
-                screenWidth=ScreenUtils.getScreenWidth(mContext)
-            }
-            layoutParams.height=screenWidth*image.height/image.width
-            iv.layoutParams=layoutParams
-        }
-
-        if(p1==0){
-            iv.transitionName="tuchong"
-        }else{
-            iv.transitionName=""
-        }
-
         Glide.with(mContext!!).load(URLs.TUCHONG_IMAGE+image.user_id+"/f/"+image.img_id+".webp").apply(RequestOptions.fitCenterTransform()).into( iv)
+
     }
 
     fun  notifyDataChanged(list:List<TuChong.image> ){

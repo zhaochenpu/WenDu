@@ -12,12 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.nightfeed.wendu.R
-import com.nightfeed.wendu.activity.HuaBanActivity
-import com.nightfeed.wendu.activity.LofterActivity
 import com.nightfeed.wendu.activity.TuChongActivity
-import com.nightfeed.wendu.adapter.LofterListAdapter
 import com.nightfeed.wendu.adapter.TuChongListAdapter
-import com.nightfeed.wendu.model.Lofter
 import com.nightfeed.wendu.model.TuChong
 import com.nightfeed.wendu.net.MyJSON
 import com.nightfeed.wendu.net.RequestUtils
@@ -35,7 +31,7 @@ class TuChongFragment : BaseFragment() {
 
     val instance by lazy { this }
 
-    private var viewHuaban: View? =null
+    private var viewTuChong: View? =null
     private var isPrepared=false
     private var mAdapter: TuChongListAdapter?=null
     private var tuchongList :MutableList<TuChong> = ArrayList<TuChong>()
@@ -50,16 +46,16 @@ class TuChongFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        if(viewHuaban==null){
-            viewHuaban=inflater.inflate(R.layout.image_fragment, container, false)
+        if(viewTuChong==null){
+            viewTuChong=inflater.inflate(R.layout.image_fragment, container, false)
         }
-        return viewHuaban
+        return viewTuChong
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState != null&&savedInstanceState.getSerializable("label")!=null) {
+        if (savedInstanceState?.getSerializable("label") != null) {
 
             label = savedInstanceState.getSerializable("label") as String
         }
@@ -191,15 +187,14 @@ class TuChongFragment : BaseFragment() {
             imageWidth=width.toString()+"w"+width.toString()
         }
 
-        image_list_swipe_refresh.isRefreshing=true
+        image_list_swipe_refresh?.isRefreshing=true
         page=1
         getListData()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         clearFindViewByIdCache()
+
     }
-
-
 }

@@ -27,6 +27,8 @@ class URLs {
         val ZHIHU_LATEST="https://news-at.zhihu.com/api/4/news/latest"
         val ZHIHU_BEFORE="https://news-at.zhihu.com/api/4/news/before/"//+日期
         val ZHIHU_CONTENT="https://news-at.zhihu.com/api/4/news/"//+id
+        val ZHIHU_THEME="https://news-at.zhihu.com/api/4/theme/"//+id
+//        https://news-at.zhihu.com/api/4/theme/#{theme_id}/before/#{story_id}
 
         val HIMAWERI8_LATES="https://himawari8-dl.nict.go.jp/himawari8/img/D531106/latest.json?uid="
         val HIMAWERI8_IMAGE4="https://himawari8-dl.nict.go.jp/himawari8/img/D531106/2d/550/"//2018/07/02/120000_1_1.png

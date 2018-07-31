@@ -56,7 +56,7 @@ class LofterFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState != null&&savedInstanceState.getSerializable("label")!=null) {
+        if (savedInstanceState?.getSerializable("label") != null) {
 
             label = savedInstanceState.getSerializable("label") as String
         }
@@ -115,7 +115,7 @@ class LofterFragment : BaseFragment() {
                 var value = MyJSON.getString(result, "value")
                 if (!TextUtils.isEmpty(value)) {
                    var lsit :ArrayList<Lofter> = Gson().fromJson(value, object : TypeToken<List<Lofter>>() {}.type)
-                    if(lsit!=null&&lsit.size>0){
+                    if(lsit.size>0){
                         lsit.forEach {it.imagesUrl= it.imagesUrl.replace("164y164",imageWidth) }
                         lofterList.addAll(lsit)
                         if (mAdapter == null) {
@@ -161,14 +161,15 @@ class LofterFragment : BaseFragment() {
             imageWidth=width.toString()+"w"+width.toString()
         }
 
-        image_list_swipe_refresh.isRefreshing=true
+        image_list_swipe_refresh?.isRefreshing=true
         page=1
         getListData()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         clearFindViewByIdCache()
+
     }
 
 

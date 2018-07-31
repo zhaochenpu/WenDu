@@ -8,11 +8,20 @@
         android:id="@+id/duhua"
         style="@style/mean_text"
         android:layout_width="match_parent"
-        android:layout_marginTop="50dp"
-        android:text="读话"/>
+        android:layout_marginTop="90dp"
+        android:text="读话"
+        android:drawableLeft="@drawable/image_word"
+        />
     <TextView
         android:id="@+id/shangtu"
         style="@style/mean_text"
         android:layout_width="match_parent"
-        android:text="赏图"/>
+        android:text="赏图"
+        android:drawableLeft="@drawable/image"/>
+    <TextView
+        android:id="@+id/zhihu"
+        style="@style/mean_text"
+        android:layout_width="match_parent"
+        android:text="知乎"
+        android:drawableLeft="@drawable/text"/>
 </LinearLayout>

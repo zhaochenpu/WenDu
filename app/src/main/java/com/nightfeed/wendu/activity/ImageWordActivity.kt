@@ -18,24 +18,19 @@ import com.nightfeed.wendu.utils.StatusBarUtil
 import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.nightfeed.wendu.fragment.MonoFragment
+import com.nightfeed.wendu.utils.CollapsingToolbarLayoutState
 
 
 class ImageWordActivity : AppCompatActivity() {
 
     val instance by lazy { this }
 
-    private enum class CollapsingToolbarLayoutState {
-        EXPANDED,
-        COLLAPSED,
-        INTERNEDIATE
-    }
-
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var viewList=ArrayList<Fragment>()
     private var tabTitles= arrayOf("一句","诗+歌")
-    private var collapsingState=CollapsingToolbarLayoutState.EXPANDED
-
+    private var collapsingState= CollapsingToolbarLayoutState.EXPANDED
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,6 +121,6 @@ class ImageWordActivity : AppCompatActivity() {
     }
 
     public fun setHeadImage(url:String){
-        Glide.with(instance).load(url).into(imageview)
+        Glide.with(instance).load(url).transition(withCrossFade()).into(imageview)
     }
  }

@@ -85,7 +85,7 @@ class HuaBanFragment : BaseFragment() {
         if (!isPrepared || !isFragmentVisible||huaBanList.size>0) {
             return
         }
-        image_list_swipe_refresh.isRefreshing=true
+        image_list_swipe_refresh?.isRefreshing=true
         getListData()
     }
 
@@ -133,20 +133,18 @@ class HuaBanFragment : BaseFragment() {
                         mAdapter!!.notifyDataChanged(huaBanList)
                     }
                 }
-                image_list_swipe_refresh.isRefreshing=false
+                image_list_swipe_refresh?.isRefreshing=false
             }
 
             override fun onError() {
-                image_list_swipe_refresh.isRefreshing=false
+                image_list_swipe_refresh?.isRefreshing=false
             }
         })
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        clearFindViewByIdCache()
     }
-
 
 }
 

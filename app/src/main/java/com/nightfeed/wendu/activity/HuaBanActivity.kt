@@ -45,6 +45,7 @@ class HuaBanActivity : AppCompatActivity() {
 
         toolbar.setNavigationOnClickListener {
             startActivity(Intent(instance,BrowsePictureActivity::class.java))
+            finishAfterTransition()
         }
         Glide.with(instance).load(URLs.HUA_BAN_IM+intent.getStringExtra("key")).apply(RequestOptions.fitCenterTransform()).into(huaban_detail)
 

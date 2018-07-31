@@ -5,7 +5,7 @@
     android:layout_marginBottom="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginLeft="10dp"
-    android:minHeight="150dp">
+    android:minHeight="250dp">
     <ImageView
         android:id="@+id/hp_iv"
         android:layout_width="match_parent"

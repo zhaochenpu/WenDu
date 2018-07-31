@@ -1,6 +1,7 @@
 package com.nightfeed.wendu.adapter
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -32,6 +33,12 @@ class ZhiHuListAdapter (context: Context?, datas:List<ZhiHu>, val onClickListene
 
     override fun onBindViewHolder(p0:ZhiHuViewHolder, p1: Int) {
         var zhihu=datas[p1]
+
+        if(zhihu.read){
+            p0.zhihu_title.setTextColor(ContextCompat.getColor(mContext!!, R.color.textNotEnable))
+        }else{
+            p0.zhihu_title.setTextColor(ContextCompat.getColor(mContext!!, R.color.textPrimary))
+        }
 
         p0.zhihu_title.text=zhihu.title
 

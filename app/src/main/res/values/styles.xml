@@ -27,9 +27,10 @@
         <item name="colorControlActivated">#000000</item>
     </style>
 
-    <style name="toolbar_titlesize">
+    <style name="toolbar_title">
         <item name="android:textSize">@dimen/title</item>
-        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:maxLines">2</item>
+
     </style>
 
     <style name="toolbar_textColor">
@@ -52,17 +53,23 @@
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
-    <!--有边界的点击动画-->
+    <!--无边界的点击动画-->
     <style name="view_foreground" >
+        <item name="android:foreground">?android:attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <!--有边界的点击动画-->
+    <style name="view_foreground2" >
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="mean_text" >
         <item name="android:layout_height">56dp</item>
-        <item name="android:textSize">@dimen/textSizeM</item>
+        <item name="android:textSize">@dimen/title</item>
         <item name="android:color">@color/textPrimary</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingLeft">25dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:paddingLeft">30dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:drawablePadding">20dp</item>
     </style>
 </resources>

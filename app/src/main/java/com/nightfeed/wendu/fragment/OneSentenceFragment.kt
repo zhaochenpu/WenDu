@@ -160,11 +160,5 @@ class OneSentenceFragment : BaseFragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        clearFindViewByIdCache()
-    }
-
-
 }
 

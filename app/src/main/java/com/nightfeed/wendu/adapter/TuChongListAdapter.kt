@@ -38,7 +38,7 @@ class TuChongListAdapter (context: Context?, datas:List<TuChong>, val onClickLis
         }else{
             url=URLs.TUCHONG_IMAGE+image.user_id+"/ft640/"+image.img_id+".webp"
         }
-        Glide.with(mContext!!).load(url).apply(RequestOptions.fitCenterTransform()).into( (p0 as MyViewHolder).iv)
+        Glide.with(mContext!!).load(url).into( (p0 as MyViewHolder).iv)
         p0.itemView.setOnClickListener { onClickListener.onClick(it) }
     }
 

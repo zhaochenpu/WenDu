@@ -263,6 +263,8 @@ public class LeftDrawerLayout extends ViewGroup {
         mFlowingView.resetContent();
         mHelper.smoothSlideViewTo(menuView, -menuView.getWidth(), menuView.getTop());
         postInvalidate();
+
+        mBg.setOnClickListener(null);
     }
 
     public void openDrawer() {
@@ -271,6 +273,15 @@ public class LeftDrawerLayout extends ViewGroup {
         pointY = getHeight() / 2;
         mHelper.smoothSlideViewTo(menuView, 0, menuView.getTop());
         postInvalidate();
+
+        if(mBg!=null){
+            mBg.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    closeDrawer();
+                }
+            });
+        }
     }
 
     @Override
@@ -294,8 +305,16 @@ public class LeftDrawerLayout extends ViewGroup {
             LayoutParams lp =
                     new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             mContentView.addView(mBg, lp);
+
+            mBg.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    closeDrawer();
+                }
+            });
         }
         ViewHelper.setAlpha(mBg, per);
         mBg.setClickable(per > 0);
+
     }
 }
