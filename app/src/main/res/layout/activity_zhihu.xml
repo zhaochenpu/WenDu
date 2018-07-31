@@ -10,17 +10,16 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingtoolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
+            android:layout_height="220dp"
             app:contentScrim="@color/colorPrimary"
-            app:statusBarScrim="@android:color/transparent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            app:statusBarScrim="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways|snap">
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

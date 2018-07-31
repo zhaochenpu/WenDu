@@ -22,6 +22,7 @@ import com.nightfeed.wendu.model.ZhiHuDetail
 import com.nightfeed.wendu.net.RequestUtils
 import com.nightfeed.wendu.net.URLs
 import com.nightfeed.wendu.utils.CollapsingToolbarLayoutState
+import com.nightfeed.wendu.utils.ScreenUtils
 import com.nightfeed.wendu.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_zhihu.*
 
@@ -33,7 +34,7 @@ class ZhiHuActivity : AppCompatActivity() {
     private var id=""
     private var title=""
     var detail :ZhiHuDetail?=null
-
+    var distance=0
     var read=false
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -99,7 +100,11 @@ class ZhiHuActivity : AppCompatActivity() {
     }
 
     private fun setListener() {
+
         app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            if(distance==0){
+                distance=(app_bar.totalScrollRange-ScreenUtils.dip2px(instance,56f))
+            }
             if (verticalOffset == 0) {
                 if (collapsingState !== CollapsingToolbarLayoutState.EXPANDED) {
                     collapsingState = CollapsingToolbarLayoutState.EXPANDED//修改状态标记为展开
@@ -109,7 +114,7 @@ class ZhiHuActivity : AppCompatActivity() {
                     share.setImageResource(R.drawable.share_white)
                     StatusBarUtil.StatusBarDarkMode(instance)
                 }
-            } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
+            } else if (Math.abs(verticalOffset) >=distance ) {
                 if (collapsingState !== CollapsingToolbarLayoutState.COLLAPSED) {
                     collapsingState = CollapsingToolbarLayoutState.COLLAPSED//修改状态标记为折叠
 

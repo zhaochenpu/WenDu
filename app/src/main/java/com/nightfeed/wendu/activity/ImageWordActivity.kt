@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.nightfeed.wendu.fragment.MonoFragment
 import com.nightfeed.wendu.utils.CollapsingToolbarLayoutState
-
+import com.nightfeed.wendu.utils.ScreenUtils
 
 class ImageWordActivity : AppCompatActivity() {
 
@@ -31,6 +31,7 @@ class ImageWordActivity : AppCompatActivity() {
     private var viewList=ArrayList<Fragment>()
     private var tabTitles= arrayOf("一句","诗+歌")
     private var collapsingState= CollapsingToolbarLayoutState.EXPANDED
+    private var  distance=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +60,9 @@ class ImageWordActivity : AppCompatActivity() {
 
         app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (verticalOffset == 0) {
+                if(distance==0){
+                    distance=(app_bar.totalScrollRange- ScreenUtils.dip2px(instance,96f))
+                }
                 if (collapsingState !== CollapsingToolbarLayoutState.EXPANDED) {
                     collapsingState = CollapsingToolbarLayoutState.EXPANDED//修改状态标记为展开
 
@@ -68,7 +72,7 @@ class ImageWordActivity : AppCompatActivity() {
 
                     StatusBarUtil.StatusBarDarkMode(instance)
                 }
-            } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
+            } else if (Math.abs(verticalOffset) >= distance) {
                 if (collapsingState !== CollapsingToolbarLayoutState.COLLAPSED) {
                     collapsingState = CollapsingToolbarLayoutState.COLLAPSED//修改状态标记为折叠
 

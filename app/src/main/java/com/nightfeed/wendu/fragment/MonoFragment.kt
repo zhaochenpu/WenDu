@@ -76,9 +76,14 @@ class MonoFragment : BaseFragment() {
                     var i=0
                    while (i<meow_list.length()){
                        var meow=meow_list.getJSONObject(i)
-                       var poetry=Poetry(meow.getString("text"),meow.getString("create_time"),MyJSON.getString(meow,"author"),meow.getJSONObject("thumb").getString("raw"))
-                       poetryList.add(poetry)
-                       i++
+                       try {
+
+                           var poetry=Poetry(meow.getString("text"),meow.getString("create_time"),MyJSON.getString(meow,"author"),meow.getJSONObject("thumb").getString("raw"))
+                           poetryList.add(poetry)
+                           i++
+                       }catch (e:Exception){
+                           meow_list.remove(i)
+                       }
                    }
 
                     if(image_word_list.adapter==null){

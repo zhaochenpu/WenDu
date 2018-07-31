@@ -13,20 +13,19 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingtoolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="150dp"
+            android:layout_height="200dp"
             app:titleEnabled="false"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/colorPrimary"
-            app:statusBarScrim="@android:color/transparent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            app:statusBarScrim="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways|snap">
             <ImageView
                 android:id="@+id/imageview"
                 android:layout_width="match_parent"
@@ -51,12 +50,12 @@
                 app:title="读话"
                 app:navigationIcon="@drawable/back_white"
                 android:gravity="top"
-                app:titleMarginTop="15dp"
+                app:titleMarginTop="13dp"
                 />
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="40dp"
                 android:layout_gravity="bottom"
                 app:tabIndicatorColor="#000000"
                 />
