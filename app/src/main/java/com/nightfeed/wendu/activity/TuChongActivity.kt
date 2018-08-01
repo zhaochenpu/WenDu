@@ -1,12 +1,9 @@
 package com.nightfeed.wendu.activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.adapter.TuChongDetailsAdapter
 import com.nightfeed.wendu.model.TuChong
@@ -18,6 +15,8 @@ class TuChongActivity : AppCompatActivity() {
 
     val instance by lazy { this }
 
+    lateinit var firstImage:TuChong.image
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tuchong)
@@ -28,24 +27,21 @@ class TuChongActivity : AppCompatActivity() {
         var layoutParams= image1.layoutParams
         var  screenWidth= ScreenUtils.getScreenWidth(instance)
 
-        var image=tuchong.images.get(0)
+         firstImage=tuchong.images.get(0)
 
-        layoutParams.height=screenWidth*image.height/image.width
+        layoutParams.height=screenWidth*firstImage.height/firstImage.width
         image1.layoutParams=layoutParams
         var thumbnailurl=""
-        if(image.height>image.width){
-            thumbnailurl=URLs.TUCHONG_IMAGE+image.user_id+"/m/"+image.img_id+".webp"
+        if(firstImage.height>firstImage.width){
+            thumbnailurl=URLs.TUCHONG_IMAGE+firstImage.user_id+"/m/"+firstImage.img_id+".webp"
         }else{
-            thumbnailurl=URLs.TUCHONG_IMAGE+image.user_id+"/ft640/"+image.img_id+".webp"
+            thumbnailurl=URLs.TUCHONG_IMAGE+firstImage.user_id+"/ft640/"+firstImage.img_id+".webp"
         }
-        Glide.with(instance).load(URLs.TUCHONG_IMAGE+image.user_id+"/f/"+image.img_id+".webp").thumbnail(Glide.with(instance!!).load(thumbnailurl)).into( image1)
+        Glide.with(instance).load(URLs.TUCHONG_IMAGE+firstImage.user_id+"/f/"+firstImage.img_id+".webp").thumbnail(Glide.with(instance!!).load(thumbnailurl)).into( image1)
 
 
         toolbar.setNavigationOnClickListener {
-            if(scrollView.scrollY>image.height){
-                image1.transitionName=""
-            }
-            finishAfterTransition()
+            finishActivity()
 
         }
 
@@ -62,7 +58,14 @@ class TuChongActivity : AppCompatActivity() {
 
     }
 
-    override fun onBackPressed() {
+    private fun finishActivity() {
+        if (scrollView.scrollY > firstImage.height) {
+            image1.transitionName = ""
+        }
         finishAfterTransition()
+    }
+
+    override fun onBackPressed() {
+        finishActivity()
     }
 }

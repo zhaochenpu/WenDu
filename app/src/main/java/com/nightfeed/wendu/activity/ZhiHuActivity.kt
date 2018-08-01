@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
 import android.util.TypedValue
+import android.view.View
 import android.webkit.WebSettings
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -36,7 +37,7 @@ class ZhiHuActivity : AppCompatActivity() {
     var detail :ZhiHuDetail?=null
     var distance=0
     var read=false
-
+    var onOffsetChangedListenerby :AppBarLayout.OnOffsetChangedListener?=null
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +51,21 @@ class ZhiHuActivity : AppCompatActivity() {
                  detail= Gson().fromJson(result, ZhiHuDetail::class.java)
                 if(detail!=null){
                     if(TextUtils.isEmpty(detail!!.image)){
-                        app_bar.setExpanded(false)
-                        zhihu_webview.isNestedScrollingEnabled=false
+                        app_bar.removeOnOffsetChangedListener(onOffsetChangedListenerby)
+                        zhihu_title.setTextColor(ContextCompat.getColor(instance, R.color.textPrimary))
+                        toolbar.navigationIcon = getDrawable(R.drawable.back)
+                        share.setImageResource(R.drawable.share_black)
+                        StatusBarUtil.StatusBarLightMode(instance)
+
+                        var layoutParams=collapsingtoolbar_layout.layoutParams
+                        layoutParams.height=ScreenUtils.dip2px(instance,90f)
+                        collapsingtoolbar_layout.layoutParams=layoutParams
+
+                        collapsingtoolbar_layout.isNestedScrollingEnabled=false
+
+                        image_layout.visibility=View.INVISIBLE
+
+                        zhihu_title.text = title
                     }else{
                         Glide.with(instance).load(detail!!.image).into(imageview)
                         image_source.text=detail!!.image_source
@@ -83,7 +97,7 @@ class ZhiHuActivity : AppCompatActivity() {
         toolbar.title = ""
         setSupportActionBar(toolbar)
         title = intent.getStringExtra("title")
-        zhihu_title.text = title
+        zhihu_title2.text = title
 
         id = intent.getStringExtra("id")
 
@@ -100,8 +114,7 @@ class ZhiHuActivity : AppCompatActivity() {
     }
 
     private fun setListener() {
-
-        app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+        onOffsetChangedListenerby=AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if(distance==0){
                 distance=(app_bar.totalScrollRange-ScreenUtils.dip2px(instance,56f))
             }
@@ -109,19 +122,22 @@ class ZhiHuActivity : AppCompatActivity() {
                 if (collapsingState !== CollapsingToolbarLayoutState.EXPANDED) {
                     collapsingState = CollapsingToolbarLayoutState.EXPANDED//修改状态标记为展开
 
-                    zhihu_title.setTextColor(Color.WHITE)
+//                    zhihu_title.setTextColor(Color.WHITE)
                     toolbar.navigationIcon = getDrawable(R.drawable.back_white)
                     share.setImageResource(R.drawable.share_white)
                     StatusBarUtil.StatusBarDarkMode(instance)
+                    zhihu_title.text = ""
                 }
             } else if (Math.abs(verticalOffset) >=distance ) {
                 if (collapsingState !== CollapsingToolbarLayoutState.COLLAPSED) {
                     collapsingState = CollapsingToolbarLayoutState.COLLAPSED//修改状态标记为折叠
 
-                    zhihu_title.setTextColor(ContextCompat.getColor(instance, R.color.textPrimary))
+//                    zhihu_title.setTextColor(ContextCompat.getColor(instance, R.color.textPrimary))
                     toolbar.navigationIcon = getDrawable(R.drawable.back)
                     share.setImageResource(R.drawable.share_black)
                     StatusBarUtil.StatusBarLightMode(instance)
+
+                    zhihu_title.text = title
                 }
             } else {
                 if (collapsingState !== CollapsingToolbarLayoutState.INTERNEDIATE) {
@@ -129,7 +145,9 @@ class ZhiHuActivity : AppCompatActivity() {
                     collapsingState = CollapsingToolbarLayoutState.INTERNEDIATE//修改状态标记为中间
                 }
             }
-        })
+        }
+
+        app_bar.addOnOffsetChangedListener(onOffsetChangedListenerby)
 
         toolbar.setNavigationOnClickListener {
             finishActivity()
