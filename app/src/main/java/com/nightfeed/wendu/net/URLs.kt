@@ -33,7 +33,8 @@ class URLs {
         val HIMAWERI8_LATES="https://himawari8-dl.nict.go.jp/himawari8/img/D531106/latest.json?uid="
         val HIMAWERI8_IMAGE4="https://himawari8-dl.nict.go.jp/himawari8/img/D531106/2d/550/"//2018/07/02/120000_1_1.png
 
-
+        val YOUDAO_DAILY_SENTENCE="http://dict.youdao.com/infoline/style?client=mobile&style=daily&order=desc&size=15&keyfrom=mdict.7.7.5.android&screen=1080x2160&lastId="
+        val YOUDAO_DAILY_WORD="http://dict.youdao.com/infoline/style?client=mobile&style=youdaodaily%401632&order=desc&size=10&keyfrom=mdict.7.7.5.android&screen=1080x1920&lastId="
     }
 
 }

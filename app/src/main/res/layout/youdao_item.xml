@@ -11,21 +11,20 @@
     style="@style/view_foreground">
 
     <ImageView
-        android:id="@+id/zhihu_iv"
-        android:layout_width="80dp"
-        android:layout_height="60dp"
-        android:scaleType="centerCrop"
+        android:id="@+id/youdao_im"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:layout_marginLeft="15dp"/>
+        android:layout_marginLeft="10dp"/>
 
     <TextView
-        android:id="@+id/zhihu_title"
+        android:id="@+id/youdao_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:textColor="@color/textPrimary"
-        android:textSize="15sp"
+        android:textSize="@dimen/textSizeS"
         android:lineSpacingExtra="6dp"
         android:layout_gravity="center_vertical"
         />

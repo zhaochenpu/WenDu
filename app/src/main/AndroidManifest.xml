@@ -63,6 +63,10 @@
         <activity
             android:name=".activity.ZhiHuActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+
+        <activity
+            android:name=".activity.ENSentenceActivity"></activity>
+
     </application>
 
 </manifest>

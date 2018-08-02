@@ -19,7 +19,9 @@ import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.nightfeed.wendu.fragment.DailySentenceFragment
 import com.nightfeed.wendu.fragment.MonoFragment
+import com.nightfeed.wendu.net.URLs
 import com.nightfeed.wendu.utils.CollapsingToolbarLayoutState
 import com.nightfeed.wendu.utils.ScreenUtils
 
@@ -29,7 +31,7 @@ class ImageWordActivity : AppCompatActivity() {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var viewList=ArrayList<Fragment>()
-    private var tabTitles= arrayOf("一句","诗+歌")
+    private var tabTitles= arrayOf("一句","诗+歌","英句","单词")
     private var collapsingState= CollapsingToolbarLayoutState.EXPANDED
     private var  distance=0
 
@@ -43,6 +45,8 @@ class ImageWordActivity : AppCompatActivity() {
     private fun initView() {
         viewList.add(OneSentenceFragment())
         viewList.add(MonoFragment())
+        viewList.add(DailySentenceFragment().setURL(URLs.YOUDAO_DAILY_SENTENCE))
+        viewList.add(DailySentenceFragment().setURL(URLs.YOUDAO_DAILY_WORD))
 
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
