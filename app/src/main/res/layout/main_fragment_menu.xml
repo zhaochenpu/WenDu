@@ -19,9 +19,9 @@
         android:text="赏图"
         android:drawableLeft="@drawable/image"/>
     <TextView
-        android:id="@+id/zhihu"
+        android:id="@+id/jiandan"
         style="@style/mean_text"
         android:layout_width="match_parent"
-        android:text="知乎"
+        android:text="煎蛋"
         android:drawableLeft="@drawable/text"/>
 </LinearLayout>

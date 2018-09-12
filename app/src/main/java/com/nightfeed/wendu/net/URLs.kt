@@ -35,6 +35,9 @@ class URLs {
 
         val YOUDAO_DAILY_SENTENCE="http://dict.youdao.com/infoline/style?client=mobile&style=daily&order=desc&size=15&keyfrom=mdict.7.7.5.android&screen=1080x2160&lastId="
         val YOUDAO_DAILY_WORD="http://dict.youdao.com/infoline/style?client=mobile&style=youdaodaily%401632&order=desc&size=10&keyfrom=mdict.7.7.5.android&screen=1080x1920&lastId="
+
+        val JIANDAN_HOT="http://api.moyu.today/jandan/hot?category="// picture无聊图 joke段子 ooxx妹子
+
     }
 
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.nightfeed.wendu.R;
 import com.nightfeed.wendu.activity.BrowsePictureActivity;
 import com.nightfeed.wendu.activity.ImageWordActivity;
+import com.nightfeed.wendu.activity.JianDanActivity;
 import com.nightfeed.wendu.view.flowingdrawer.MenuFragment;
 
 
@@ -43,6 +44,13 @@ public class MainMenuFragment extends MenuFragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), BrowsePictureActivity.class));
+            }
+        });
+
+        view.findViewById(R.id.jiandan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), JianDanActivity.class));
             }
         });
     }
