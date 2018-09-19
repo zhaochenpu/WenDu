@@ -1,5 +1,6 @@
 package com.nightfeed.wendu.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.nightfeed.wendu.R
+import com.nightfeed.wendu.net.URLs
+import com.nightfeed.wendu.view.ImagePopUpWindow
 
 
 /**
@@ -39,6 +42,11 @@ class JianDanListAdapter (context: Context?,type:Int,datas:List<String>): Recycl
             p0.tv.text=datas[p1]
         }else if(p0 is JianDanImageViewHolder){
             Glide.with(mContext!!).load(datas[p1]).apply(RequestOptions.fitCenterTransform()).into( (p0.iv))
+
+            p0.iv.setOnLongClickListener { v ->
+                ImagePopUpWindow((mContext as Activity?)!!,v!!, datas[p1])
+                true
+            }
         }
     }
 

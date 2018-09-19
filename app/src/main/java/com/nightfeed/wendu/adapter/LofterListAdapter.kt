@@ -1,5 +1,6 @@
 package com.nightfeed.wendu.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.model.Lofter
+import com.nightfeed.wendu.view.ImagePopUpWindow
 
 class LofterListAdapter (context: Context?, datas:List<Lofter>,val onClickListener:OnClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private var mContext  =  context
@@ -32,6 +34,11 @@ class LofterListAdapter (context: Context?, datas:List<Lofter>,val onClickListen
 
         Glide.with(mContext!!).load(datas[p1].imagesUrl).apply(RequestOptions.fitCenterTransform()).into( (p0 as MyViewHolder).iv)
         p0.itemView.setOnClickListener { onClickListener.onClick(it) }
+
+        p0.iv.setOnLongClickListener { v ->
+            ImagePopUpWindow((mContext as Activity?)!!,v!!, datas[p1].imagesUrl)
+            true
+        }
     }
 
     fun  notifyDataChanged(list:List<Lofter> ){

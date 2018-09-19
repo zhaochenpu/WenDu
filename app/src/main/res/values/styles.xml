@@ -72,4 +72,10 @@
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:drawablePadding">20dp</item>
     </style>
+
+
+    <style name="pop_anim_style">
+        <item name="android:windowEnterAnimation">@anim/popup_show</item><!-- 指定显示的动画xml -->
+        <item name="android:windowExitAnimation">@anim/popup_hide</item><!-- 指定消失的动画xml -->
+    </style>
 </resources>

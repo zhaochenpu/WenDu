@@ -21,6 +21,7 @@ import com.nightfeed.wendu.net.MyJSON
 import com.nightfeed.wendu.net.RequestUtils
 import com.nightfeed.wendu.net.URLs
 import com.nightfeed.wendu.utils.ScreenUtils
+import com.nightfeed.wendu.view.ImagePopUpWindow
 import kotlinx.android.synthetic.main.activity_hua_ban.*
 import java.util.ArrayList
 
@@ -48,6 +49,11 @@ class HuaBanActivity : AppCompatActivity() {
             finishAfterTransition()
         }
         Glide.with(instance).load(URLs.HUA_BAN_IM+intent.getStringExtra("key")).apply(RequestOptions.fitCenterTransform()).into(huaban_detail)
+
+        huaban_detail.setOnLongClickListener { v ->
+            ImagePopUpWindow(instance,v!!, URLs.HUA_BAN_IM+intent.getStringExtra("key"))
+            true
+        }
 
         huaban_recommend.layoutManager=StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 

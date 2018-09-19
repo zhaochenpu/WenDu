@@ -1,5 +1,6 @@
 package com.nightfeed.wendu.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
@@ -8,12 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.model.HuaBan
 import com.nightfeed.wendu.net.URLs
+import com.nightfeed.wendu.view.ImagePopUpWindow
 
-class ImageListAdapter (context: Context?, datas:List<HuaBan>,val isRecommend:Boolean,val onClickListener: OnClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class ImageListAdapter (context: Activity?, datas:List<HuaBan>,val isRecommend:Boolean,val onClickListener: OnClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private var mContext  =  context
     private var datas=datas
 //    private var  defaultH= TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150f,mContext!!.resources.displayMetrics)
@@ -47,6 +48,11 @@ class ImageListAdapter (context: Context?, datas:List<HuaBan>,val isRecommend:Bo
 
         p0.itemView.setOnClickListener {
             onClickListener.onClick(it)
+        }
+
+        iv.setOnLongClickListener { v ->
+            ImagePopUpWindow(mContext!!,v!!,URLs.HUA_BAN_IM+ datas[p1].file.key)
+            true
         }
     }
 

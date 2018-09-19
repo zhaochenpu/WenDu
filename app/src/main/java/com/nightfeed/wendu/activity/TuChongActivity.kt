@@ -9,6 +9,7 @@ import com.nightfeed.wendu.adapter.TuChongDetailsAdapter
 import com.nightfeed.wendu.model.TuChong
 import com.nightfeed.wendu.net.URLs
 import com.nightfeed.wendu.utils.ScreenUtils
+import com.nightfeed.wendu.view.ImagePopUpWindow
 import kotlinx.android.synthetic.main.activity_tuchong.*
 
 class TuChongActivity : AppCompatActivity() {
@@ -39,6 +40,10 @@ class TuChongActivity : AppCompatActivity() {
         }
         Glide.with(instance).load(URLs.TUCHONG_IMAGE+firstImage.user_id+"/f/"+firstImage.img_id+".webp").thumbnail(Glide.with(instance!!).load(thumbnailurl)).into( image1)
 
+        image1.setOnLongClickListener { v ->
+            ImagePopUpWindow(instance,v!!, URLs.TUCHONG_IMAGE+firstImage.user_id+"/f/"+firstImage.img_id+".jpg")
+            true
+        }
 
         toolbar.setNavigationOnClickListener {
             finishActivity()

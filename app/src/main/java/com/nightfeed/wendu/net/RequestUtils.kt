@@ -1,12 +1,12 @@
 package com.nightfeed.wendu.net
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.Headers
-import okhttp3.Response
+import com.nightfeed.wendu.utils.SystemUtil
+import okhttp3.*
 import java.io.IOException
 
 class RequestUtils {
@@ -93,6 +93,42 @@ class RequestUtils {
                 }
             })
         }
+
+        fun getPic(url: String, onRequestListener:OnResultListener?) {
+            val mHandler =  object : Handler(Looper.getMainLooper()){}
+
+            //获取okHttp对象get请求
+            try {
+
+                COkhttp.getCall(url,null).enqueue(object :Callback{
+                    override fun onFailure(call: Call?, e: IOException?) {
+                        if (onRequestListener!=null){
+                            mHandler.post { onRequestListener.onError() }
+                        }
+                    }
+
+                    override fun onResponse(call: Call?, response: Response?) {
+
+                        var path= SystemUtil.saveBitmap(BitmapFactory.decodeStream(response!!.body()!!.byteStream()),System.currentTimeMillis().toString())!!.path
+                        if(!TextUtils.isEmpty(path)){
+                            if (onRequestListener!=null){
+                                mHandler.post { onRequestListener.onSuccess(path) }
+                            }
+                        }else{
+                            if (onRequestListener!=null){
+                                mHandler.post { onRequestListener.onError() }
+                            }
+                        }
+                    }
+                })
+            } catch (e: Exception) {
+                e.printStackTrace()
+                if (onRequestListener!=null){
+                    mHandler.post { onRequestListener.onError() }
+                }
+            }
+        }
     }
+
 
 }

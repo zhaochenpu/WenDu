@@ -1,5 +1,6 @@
 package com.nightfeed.wendu.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.model.TuChong
 import com.nightfeed.wendu.net.URLs
+import com.nightfeed.wendu.view.ImagePopUpWindow
 
 class TuChongListAdapter (context: Context?, datas:List<TuChong>, val onClickListener:OnClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private var mContext  =  context
@@ -40,6 +42,11 @@ class TuChongListAdapter (context: Context?, datas:List<TuChong>, val onClickLis
         }
         Glide.with(mContext!!).load(url).into( (p0 as MyViewHolder).iv)
         p0.itemView.setOnClickListener { onClickListener.onClick(it) }
+
+        p0.iv.setOnLongClickListener { v ->
+            ImagePopUpWindow((mContext as Activity?)!!,v!!, URLs.TUCHONG_IMAGE+image.user_id+"/f/"+image.img_id+".jpg")
+            true
+        }
     }
 
     fun  notifyDataChanged(list:List<TuChong> ){

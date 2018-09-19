@@ -24,6 +24,19 @@ class ToastUtil{
             }
         }
 
+        fun showSuccess(context:Context?,text:String){
+            if(context!=null) {
+                var toast = Toast(context)
+                toast.view = LayoutInflater.from(context).inflate(R.layout.toast, null)
+                var textview = toast.view.findViewById(R.id.toast) as TextView
+                textview.text = text
+                textview.setTextColor(Color.WHITE)
+                toast.view.setBackgroundResource(R.drawable.toast_success)
+                toast.duration = Toast.LENGTH_SHORT
+                toast.show()
+            }
+        }
+
         fun showShort(context:Context?,text:String){
             if(context!=null){
                 Toast.makeText(context,text,Toast.LENGTH_SHORT).show()

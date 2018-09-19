@@ -1,5 +1,6 @@
 package com.nightfeed.wendu.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.nightfeed.wendu.R
 import com.nightfeed.wendu.model.TuChong
 import com.nightfeed.wendu.net.URLs
 import com.nightfeed.wendu.utils.ScreenUtils
+import com.nightfeed.wendu.view.ImagePopUpWindow
 
 class TuChongDetailsAdapter (context: Context?, datas:List<TuChong.image>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private var mContext  =  context
@@ -32,6 +34,11 @@ class TuChongDetailsAdapter (context: Context?, datas:List<TuChong.image>): Recy
         var iv=(p0 as MyViewHolder).iv
         var image=datas[p1]
         Glide.with(mContext!!).load(URLs.TUCHONG_IMAGE+image.user_id+"/f/"+image.img_id+".webp").apply(RequestOptions.fitCenterTransform()).into( iv)
+
+        p0.iv.setOnLongClickListener { v ->
+            ImagePopUpWindow((mContext as Activity?)!!,v!!, URLs.TUCHONG_IMAGE+image.user_id+"/f/"+image.img_id+".jpg")
+            true
+        }
 
     }
 
