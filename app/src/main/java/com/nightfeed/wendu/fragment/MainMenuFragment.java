@@ -1,5 +1,6 @@
 package com.nightfeed.wendu.fragment;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,21 +37,21 @@ public class MainMenuFragment extends MenuFragment {
         view.findViewById(R.id.duhua).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), ImageWordActivity.class));
+                startActivity(new Intent(getContext(), ImageWordActivity.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
         });
 
         view.findViewById(R.id.shangtu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), BrowsePictureActivity.class));
+                startActivity(new Intent(getContext(), BrowsePictureActivity.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
         });
 
         view.findViewById(R.id.jiandan).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), JianDanActivity.class));
+                startActivity(new Intent(getContext(), JianDanActivity.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
         });
     }

@@ -56,7 +56,8 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
 
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"
+            android:theme="@style/AppTheme.ContentTransitions">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -65,7 +66,7 @@
         </activity>
         <activity
             android:name=".activity.ZhiHuActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/AppTheme.ContentTransitions"></activity>
 
         <activity
             android:name=".activity.JianDanActivity"></activity>

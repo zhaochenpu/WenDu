@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.PagerAdapter
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import android.transition.Explode
 import android.view.View
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.fragment.JianDanFragment
@@ -41,6 +42,9 @@ class JianDanActivity : AppCompatActivity() {
         tabs.setupWithViewPager(container)
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
+        var explode= Explode()
+        explode.duration=300
+        window.enterTransition = explode
 
         setListener()
 
@@ -49,7 +53,7 @@ class JianDanActivity : AppCompatActivity() {
     private fun setListener() {
 
         toolbar.setNavigationOnClickListener {
-            finish()
+            finishAfterTransition()
         }
 
     }
@@ -71,7 +75,6 @@ class JianDanActivity : AppCompatActivity() {
         }
 
         override fun getItemPosition(`object`: Any): Int {
-            // TODO Auto-generated method stub
             return PagerAdapter.POSITION_NONE
         }
     }

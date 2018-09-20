@@ -11,6 +11,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.widget.TextViewCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import android.transition.Explode
+import android.transition.Fade
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -26,6 +28,8 @@ import com.nightfeed.wendu.utils.CollapsingToolbarLayoutState
 import com.nightfeed.wendu.utils.ScreenUtils
 import com.nightfeed.wendu.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_zhihu.*
+
+
 
 class ZhiHuActivity : AppCompatActivity() {
 
@@ -170,10 +174,11 @@ class ZhiHuActivity : AppCompatActivity() {
     }
 
     fun finishActivity(){
+
         if (read){
             setResult(Activity.RESULT_OK)
         }
-        finish()
+        finishAfterTransition()
     }
 
 }

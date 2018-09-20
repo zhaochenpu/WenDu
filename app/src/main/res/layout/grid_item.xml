@@ -1,4 +1,5 @@
 <ImageView xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/iv"
     android:layout_margin="5dp"
     android:layout_width="match_parent"
@@ -7,5 +8,5 @@
     android:adjustViewBounds="true"
     android:scaleType="fitCenter"
     android:background="#ffffff"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/view_foreground2"
     />

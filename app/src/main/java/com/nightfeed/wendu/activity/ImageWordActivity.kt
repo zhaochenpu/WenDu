@@ -1,7 +1,9 @@
 package com.nightfeed.wendu.activity
 
+import android.animation.Animator
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v4.app.Fragment
@@ -17,8 +19,17 @@ import com.nightfeed.wendu.fragment.OneSentenceFragment
 import com.nightfeed.wendu.utils.StatusBarUtil
 import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
+import android.text.TextUtils
+import android.transition.Explode
+import android.view.View
+import android.view.ViewAnimationUtils
+import android.view.animation.AccelerateDecelerateInterpolator
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.nightfeed.wendu.fragment.DailySentenceFragment
 import com.nightfeed.wendu.fragment.MonoFragment
 import com.nightfeed.wendu.net.URLs
@@ -34,6 +45,8 @@ class ImageWordActivity : AppCompatActivity() {
     private var tabTitles= arrayOf("一句","诗+歌","英句","单词")
     private var collapsingState= CollapsingToolbarLayoutState.EXPANDED
     private var  distance=0
+    private var lastImage=""
+    private var lastPosition=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +72,7 @@ class ImageWordActivity : AppCompatActivity() {
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
         toolbar.setNavigationOnClickListener {
-            finish()
+            finishAfterTransition()
         }
 
         app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
@@ -94,6 +107,9 @@ class ImageWordActivity : AppCompatActivity() {
             }
         })
 
+        var explode= Explode()
+        explode.duration=300
+        window.enterTransition = explode
     }
 
     /**
@@ -117,7 +133,6 @@ class ImageWordActivity : AppCompatActivity() {
         }
 
         override fun getItemPosition(`object`: Any): Int {
-            // TODO Auto-generated method stub
             return PagerAdapter.POSITION_NONE
         }
     }
@@ -125,10 +140,52 @@ class ImageWordActivity : AppCompatActivity() {
     inner class ViewpagerOnPageChangeListener(tabs:TabLayout) : TabLayout.TabLayoutOnPageChangeListener(tabs){
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
+            lastPosition=position
         }
     }
 
     public fun setHeadImage(url:String){
-        Glide.with(instance).load(url).transition(withCrossFade()).into(imageview)
+        if(!TextUtils.isEmpty(lastImage)){
+            imageview.visibility=View.VISIBLE
+            Glide.with(instance).load(lastImage).into(imageview)
+        }else{
+            imageview2.visibility= View.VISIBLE
+        }
+
+        Glide.with(instance).load(url).listener(object : RequestListener<Drawable> {
+            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                return false
+            }
+
+            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                lastImage=url
+
+                 var finalRadius : Float = Math.hypot(imageview.getWidth().toDouble(), imageview.getHeight().toDouble()).toFloat()
+                var centerX=0
+                if(lastPosition>container.currentItem){
+                    centerX=imageview.width
+                }
+
+                var anim = ViewAnimationUtils.createCircularReveal(imageview2,centerX,imageview.height, (imageview.width/4).toFloat(), finalRadius)
+                anim.setDuration(300L)
+                anim.setInterpolator( AccelerateDecelerateInterpolator())
+                anim.addListener(object :Animator.AnimatorListener{
+                    override fun onAnimationRepeat(animation: Animator?) {
+                    }
+
+                    override fun onAnimationEnd(animation: Animator?) {
+                        imageview.visibility=View.GONE
+                    }
+
+                    override fun onAnimationCancel(animation: Animator?) {
+                    }
+
+                    override fun onAnimationStart(animation: Animator?) {
+                    }
+                })
+                anim.start()
+                return false
+            }
+        }).into(imageview2)
     }
  }

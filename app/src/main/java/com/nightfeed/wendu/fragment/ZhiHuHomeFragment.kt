@@ -1,7 +1,12 @@
 package com.nightfeed.wendu.fragment
 
+import android.app.ActivityOptions
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
+import android.support.transition.Explode
+import android.support.transition.Transition
+import android.support.transition.TransitionManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
@@ -162,6 +167,7 @@ class ZhiHuHomeFragment : BaseFragment() {
         if (mAdapter == null) {
             mAdapter= ZhiHuListAdapter(context, zhihuList, object : ZhiHuListAdapter.OnClickListener {
                 override fun onClick(v: ZhiHuListAdapter.ZhiHuViewHolder) {
+
                     clickPosition=image_list.getChildAdapterPosition(v.itemView)
 
                     var zhihu = zhihuList.get(clickPosition)
@@ -169,6 +175,7 @@ class ZhiHuHomeFragment : BaseFragment() {
 
                     toDetail.putExtra("id", zhihu.id)
                     toDetail.putExtra("title", zhihu.title)
+
                     activity!!.startActivityForResult(toDetail,122)
                 }
 

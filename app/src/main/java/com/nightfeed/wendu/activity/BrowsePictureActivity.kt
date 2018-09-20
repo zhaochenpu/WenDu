@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.activity_browse_picture.*
 import org.litepal.LitePal
 import android.widget.Toast
 import android.support.v4.view.PagerAdapter
+import android.transition.Explode
 import com.nightfeed.wendu.fragment.TuChongFragment
 
 
@@ -102,7 +103,7 @@ class BrowsePictureActivity : AppCompatActivity() {
         })
 
         back.setOnClickListener {
-            finish()
+            finishAfterTransition()
         }
        more.setOnClickListener {
             val popupMenu = PopupMenu(this, more)
@@ -126,6 +127,10 @@ class BrowsePictureActivity : AppCompatActivity() {
            })
             popupMenu.show()
         }
+
+        var explode= Explode()
+        explode.duration=300
+        window.enterTransition = explode
     }
 
 
@@ -203,7 +208,6 @@ class BrowsePictureActivity : AppCompatActivity() {
         }
 
         override fun getItemPosition(`object`: Any): Int {
-            // TODO Auto-generated method stub
             return PagerAdapter.POSITION_NONE
         }
     }
