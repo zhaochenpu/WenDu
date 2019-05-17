@@ -184,7 +184,6 @@ class BrowsePictureActivity : AppCompatActivity() {
                 }
             })
         }
-
     }
 
     /**
@@ -223,23 +222,45 @@ class BrowsePictureActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==1111&&resultCode==RESULT_OK&&data!=null){
-            var label=data.getStringExtra("label")
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if(requestCode==1111&&resultCode==RESULT_OK&&data!=null){
+//            var label=data.getStringExtra("label")
+//            for ( i in 0..(viewList.size-1)){
+//                var f=viewList[i]
+//                if( f is LofterFragment&&TextUtils.equals(f.getLabel(),label)){
+//                    container.currentItem=i
+//                    return
+//                }
+//            }
+//
+//            viewList.add(LofterFragment().setLabel(label))
+//            tabTitles.add(label)
+//            mSectionsPagerAdapter?.notifyDataSetChanged()
+//            container.currentItem=viewList.size-1
+//            val item = PictureItem(label, 1)
+//            item.save()
+//        }
+//    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        var newLabel= intent?.getStringExtra("label")
+        if(!TextUtils.isEmpty(newLabel)){
             for ( i in 0..(viewList.size-1)){
                 var f=viewList[i]
-                if( f is LofterFragment&&TextUtils.equals(f.getLabel(),label)){
+                if( f is LofterFragment&&TextUtils.equals(f.getLabel(),newLabel)){
                     container.currentItem=i
                     return
                 }
             }
 
-            viewList.add(LofterFragment().setLabel(label))
-            tabTitles.add(label)
+            viewList.add(LofterFragment().setLabel(newLabel!!))
+            tabTitles.add(newLabel)
             mSectionsPagerAdapter?.notifyDataSetChanged()
             container.currentItem=viewList.size-1
-            val item = PictureItem(label, 1)
+            val item = PictureItem(newLabel, 1)
             item.save()
         }
     }

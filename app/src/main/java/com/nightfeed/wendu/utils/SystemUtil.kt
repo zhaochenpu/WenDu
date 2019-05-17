@@ -25,16 +25,16 @@ class SystemUtil{
             share_intent.type = "image/*"   //设置分享内容的类型
             share_intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-            share_intent.putExtra(Intent.EXTRA_STREAM,url)
+            share_intent.putExtra(Intent.EXTRA_STREAM,FileProvider.getUriForFile(activity, "com.nightfeed.wendu.fileprovider",File(url.toString())))
             activity.startActivity(share_intent)
         }
 
-        fun shareBitmap(activity: Activity,bm: Bitmap){
+        fun shareBitmap(activity: Activity,bm: Bitmap,type :String){
             var share_intent =  Intent()
             share_intent.action = Intent.ACTION_SEND //设置分享行为
             share_intent.type = "image/*"   //设置分享内容的类型
             share_intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            var f=saveBitmap(bm,"img")
+            var f=saveBitmap(bm,"img",type)
 
             if(f!=null){
                 share_intent.putExtra(Intent.EXTRA_STREAM,FileProvider.getUriForFile(activity, "com.nightfeed.wendu.fileprovider",f))
@@ -44,9 +44,9 @@ class SystemUtil{
 
 
         /** * 将图片存到本地 */
-        fun  saveBitmap(bm: Bitmap,picName :String): File? {
+        fun  saveBitmap(bm: Bitmap,picName :String,type :String): File? {
             try {
-                var f =  File(Environment.getExternalStorageDirectory().absolutePath +"/wendu/"+picName+".jpg")
+                var f =  File(Environment.getExternalStorageDirectory().absolutePath +"/wendu/"+picName+"."+type)
                 if (!f.exists()) {
                     f.parentFile.mkdirs()
                     f.createNewFile()
@@ -64,5 +64,9 @@ class SystemUtil{
             return null
         }
 
+//        fun saveGif( imgUrl:String,  context:Context,  finalImagePath:String) {
+//
+//            copyFile(Glide.with(context).load(imgUrl).get().getAbsolutePath(), finalImagePath)
+//        }
     }
 }

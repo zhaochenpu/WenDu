@@ -11,6 +11,7 @@ import com.nightfeed.wendu.R;
 import com.nightfeed.wendu.activity.BrowsePictureActivity;
 import com.nightfeed.wendu.activity.ImageWordActivity;
 import com.nightfeed.wendu.activity.JianDanActivity;
+import com.nightfeed.wendu.activity.WeiBoActivity;
 import com.nightfeed.wendu.view.flowingdrawer.MenuFragment;
 
 
@@ -54,5 +55,15 @@ public class MainMenuFragment extends MenuFragment {
                 startActivity(new Intent(getContext(), JianDanActivity.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
         });
+
+        view.findViewById(R.id.weibo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), WeiBoActivity.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
+
     }
+
+
 }

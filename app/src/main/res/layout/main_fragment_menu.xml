@@ -24,4 +24,11 @@
         android:layout_width="match_parent"
         android:text="煎蛋"
         android:drawableLeft="@drawable/text"/>
+    <TextView
+        android:id="@+id/weibo"
+        style="@style/mean_text"
+        android:layout_width="match_parent"
+        android:text="微博"
+        android:drawableLeft="@drawable/image_word"
+        />
 </LinearLayout>

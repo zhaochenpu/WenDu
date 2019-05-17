@@ -192,9 +192,9 @@ class TuChongFragment : BaseFragment() {
         getListData()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        clearFindViewByIdCache()
-
-    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        clearFindViewByIdCache()
+//
+//    }
 }

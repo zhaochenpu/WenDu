@@ -31,6 +31,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.nightfeed.wendu.fragment.DailySentenceFragment
+import com.nightfeed.wendu.fragment.JuDuFragment
 import com.nightfeed.wendu.fragment.MonoFragment
 import com.nightfeed.wendu.net.URLs
 import com.nightfeed.wendu.utils.CollapsingToolbarLayoutState
@@ -42,7 +43,7 @@ class ImageWordActivity : AppCompatActivity() {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var viewList=ArrayList<Fragment>()
-    private var tabTitles= arrayOf("一句","诗+歌","英句","单词")
+    private var tabTitles= arrayOf("一句","诗+歌","句读","句推","英句","单词")
     private var collapsingState= CollapsingToolbarLayoutState.EXPANDED
     private var  distance=0
     private var lastImage=""
@@ -58,6 +59,8 @@ class ImageWordActivity : AppCompatActivity() {
     private fun initView() {
         viewList.add(OneSentenceFragment())
         viewList.add(MonoFragment())
+        viewList.add(JuDuFragment().setLabel(0))
+        viewList.add(JuDuFragment().setLabel(1))
         viewList.add(DailySentenceFragment().setURL(URLs.YOUDAO_DAILY_SENTENCE))
         viewList.add(DailySentenceFragment().setURL(URLs.YOUDAO_DAILY_WORD))
 
@@ -140,7 +143,6 @@ class ImageWordActivity : AppCompatActivity() {
     inner class ViewpagerOnPageChangeListener(tabs:TabLayout) : TabLayout.TabLayoutOnPageChangeListener(tabs){
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
-            lastPosition=position
         }
     }
 
@@ -165,6 +167,8 @@ class ImageWordActivity : AppCompatActivity() {
                 if(lastPosition>container.currentItem){
                     centerX=imageview.width
                 }
+
+                lastPosition=container.currentItem
 
                 var anim = ViewAnimationUtils.createCircularReveal(imageview2,centerX,imageview.height, (imageview.width/4).toFloat(), finalRadius)
                 anim.setDuration(300L)

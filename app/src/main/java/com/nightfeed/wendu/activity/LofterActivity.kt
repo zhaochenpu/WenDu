@@ -60,8 +60,9 @@ class LofterActivity : AppCompatActivity() {
 
         @JavascriptInterface
         public fun jumpLabelDetail(paramString:String) {
-            Log.e("","jumpLabelDetail..."+paramString)
-            setResult(Activity.RESULT_OK,Intent().putExtra("label",paramString))
+            val intent = Intent(instance,BrowsePictureActivity::class.java)
+            intent.putExtra("label",paramString)
+            startActivity(intent)
             finish()
         }
     }

@@ -47,26 +47,26 @@
     </style>
 
     <!--无边界的点击动画-->
-    <style name="button_background" >
+    <style name="button_background">
         <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
     </style>
 
     <!--有边界的点击动画-->
-    <style name="button_background2" >
+    <style name="button_background2">
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
     <!--无边界的点击动画-->
-    <style name="view_foreground" >
+    <style name="view_foreground">
         <item name="android:foreground">?android:attr/selectableItemBackgroundBorderless</item>
     </style>
 
     <!--有边界的点击动画-->
-    <style name="view_foreground2" >
+    <style name="view_foreground2">
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
-    <style name="mean_text" >
+    <style name="mean_text">
         <item name="android:layout_height">56dp</item>
         <item name="android:textSize">@dimen/title</item>
         <item name="android:color">@color/textPrimary</item>

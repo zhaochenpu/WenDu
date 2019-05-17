@@ -17,46 +17,46 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <!-- 访问网络，网络定位需要上网 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- SD卡读取权限，用户写入离线定位数据 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
-        android:label="问读"
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:label="问读"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="n">
 
-        <!--适配全面屏-->
-        <meta-data android:name="android.max_aspect" android:value="2.1" />
+        <!-- 适配全面屏 -->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
 
-        <activity
-            android:name=".activity.LofterActivity"></activity>
+        <activity android:name=".activity.LofterActivity" />
         <activity
             android:name=".activity.BrowsePictureActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.ContentTransitions"
-            android:launchMode="singleTask">
-
-        </activity>
+            android:theme="@style/AppTheme.ContentTransitions"></activity>
         <activity
             android:name=".activity.HuaBanActivity"
-            android:theme="@style/AppTheme.ContentTransitions"></activity>
+            android:theme="@style/AppTheme.ContentTransitions" />
         <activity
             android:name=".activity.TuChongActivity"
-            android:theme="@style/AppTheme.ContentTransitions"></activity>
-
-        <activity android:name=".activity.ImageWordActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
-
-        <activity android:name=".activity.MainActivity"
+            android:theme="@style/AppTheme.ContentTransitions" />
+        <activity
+            android:name=".activity.ImageWordActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity
+            android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.ContentTransitions">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -66,14 +66,9 @@
         </activity>
         <activity
             android:name=".activity.ZhiHuActivity"
-            android:theme="@style/AppTheme.ContentTransitions"></activity>
-
-        <activity
-            android:name=".activity.JianDanActivity"></activity>
-
-        <activity
-            android:name=".activity.ENSentenceActivity"></activity>
-
+            android:theme="@style/AppTheme.ContentTransitions" />
+        <activity android:name=".activity.JianDanActivity" />
+        <activity android:name=".activity.ENSentenceActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -84,6 +79,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <activity
+            android:name=".activity.WeiBoActivity"
+            android:label="@string/title_activity_wei_bo"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
