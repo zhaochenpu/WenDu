@@ -112,7 +112,7 @@ class JianDanFragment : BaseFragment() {
     private fun updateList(type :Int) {
         if (mAdapter == null) {
             mAdapter= JianDanListAdapter(context,type, jiandanList)
-            image_list.adapter=mAdapter
+            image_list?.adapter=mAdapter
         } else {
             mAdapter!!.notifyDataSetChanged()
         }

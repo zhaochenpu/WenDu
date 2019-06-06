@@ -3,29 +3,43 @@ package com.nightfeed.wendu.activity
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
-import android.support.v4.view.PagerAdapter
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import com.nightfeed.wendu.R
+import com.nightfeed.wendu.adapter.ZhiHuListAdapter
 import com.nightfeed.wendu.fragment.MainMenuFragment
-import com.nightfeed.wendu.fragment.ZhiHuHomeFragment
-import com.nightfeed.wendu.fragment.ZhiHuThemesFragment
+import com.nightfeed.wendu.model.ZhiHu
+import com.nightfeed.wendu.model.ZhiHuDB
+import com.nightfeed.wendu.net.MyJSON
+import com.nightfeed.wendu.net.RequestUtils
+import com.nightfeed.wendu.net.URLs
 import com.nightfeed.wendu.view.flowingdrawer.FlowingView
 import com.nightfeed.wendu.view.flowingdrawer.LeftDrawerLayout
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONArray
+import org.json.JSONObject
+import org.litepal.LitePal
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
 
     val instance by lazy { this }
     var mLeftDrawerLayout: LeftDrawerLayout?=null
-    private var viewList=ArrayList<Fragment>()
-    private var tabTitles= arrayOf("首页","推荐","设计","财经","电影","心理学","大公司","不许无聊","互联网安全")
+    private var mLayoutManager : LinearLayoutManager?= null
+    private var lastVisibleItem: Int = 0
+    var calendar = GregorianCalendar.getInstance()
+    private var lastDate = Date()
+    var dateFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
+    private var zhihuList :MutableList<ZhiHu> = ArrayList<ZhiHu>()
+    private var mAdapter: ZhiHuListAdapter?=null
+    private var clickPosition=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,59 +53,138 @@ class MainActivity : AppCompatActivity() {
         mLeftDrawerLayout!!.setFluidView(mFlowingView)
         mLeftDrawerLayout!!.setMenuFragment(mMenuFragment)
 
-        viewList.add(ZhiHuHomeFragment())
-        viewList.add(ZhiHuThemesFragment().setThemes(12))
-        viewList.add(ZhiHuThemesFragment().setThemes(4))
-        viewList.add(ZhiHuThemesFragment().setThemes(6))
-        viewList.add(ZhiHuThemesFragment().setThemes(3))
-        viewList.add(ZhiHuThemesFragment().setThemes(13))
-        viewList.add(ZhiHuThemesFragment().setThemes(5))
-        viewList.add(ZhiHuThemesFragment().setThemes(11))
-        viewList.add(ZhiHuThemesFragment().setThemes(10))
-
-       var mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
-
-        // Set up the ViewPager with the sections adapter.
-        container.adapter = mSectionsPagerAdapter
-
-        container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
-        tabs.tabMode = TabLayout.MODE_SCROLLABLE
-        tabs.setupWithViewPager(container)
-        tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
-
+        mLayoutManager=LinearLayoutManager(instance)
+        image_list.layoutManager=mLayoutManager
 
         setListener()
 
+        list_swipe_refresh.isRefreshing=true
+        getLatest()
     }
 
     private fun setListener() {
 
         toolbar.setNavigationOnClickListener { mLeftDrawerLayout!!.toggle() }
 
+        image_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 2 >= mLayoutManager!!.itemCount&&zhihuList.size>0) {
+                    getBefore()
+                }
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                lastVisibleItem = mLayoutManager!!.findLastVisibleItemPosition()
+            }
+        })
+
+        list_swipe_refresh.setOnRefreshListener {
+            zhihuList.clear()
+            if(mAdapter!=null){
+                mAdapter?.notifyDataSetChanged()
+            }
+            getLatest()
+        }
     }
 
-    inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+    private fun getLatest() {
+        RequestUtils.get(URLs.ZHIHU_LATEST, object : RequestUtils.OnResultListener {
+            override fun onSuccess(result: String) {
 
-        override fun getPageTitle(position: Int): CharSequence? {
-            return tabTitles[position]
-        }
-        override fun getItem(position: Int): Fragment {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return viewList[position]
-        }
+                if (!TextUtils.isEmpty(result)) {
+                    var jsonObject = JSONObject(result)
+                    lastDate=dateFormat.parse(MyJSON.getString(jsonObject, "date"))
+                    var list = jsonObject.getJSONArray("stories")
+                    if (list != null && list.length() > 0) {
+                        for (i in 0..(list.length() - 1)) {
+                            var z = list.getJSONObject(i)
+                            var ims = MyJSON.getJSONArray(z, "images")
+                            var im = ""
+                            if (ims != null && ims.length() > 0) {
+                                im = ims.getString(0)
+                            }
 
-        override fun getCount(): Int {
-            // Show 3 total pages.
-            return viewList.size
-        }
+                            var id=z.getString("id")
 
-        override fun getItemPosition(`object`: Any): Int {
-            // TODO Auto-generated method stub
-            return PagerAdapter.POSITION_NONE
-        }
+                            zhihuList.add(ZhiHu(id, z.getString("title"), im, LitePal.where("zid like ?", id).find(ZhiHuDB::class.java).size>0))
+                        }
+                        if(list.length()<8){
+                            getBefore()
+                            return
+                        }
+                        updateList(list)
+                    }
+                }
+                list_swipe_refresh.isRefreshing=false
+            }
+
+            override fun onError() {
+                list_swipe_refresh.isRefreshing=false
+            }
+        })
     }
 
+
+    private fun getBefore() {
+        calendar.setTime(lastDate)
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 1)
+
+        RequestUtils.get(URLs.ZHIHU_BEFORE+dateFormat.format(calendar.time), object : RequestUtils.OnResultListener {
+            override fun onSuccess(result: String) {
+
+                if (!TextUtils.isEmpty(result)) {
+                    var jsonObject = JSONObject(result)
+                    lastDate=dateFormat.parse(MyJSON.getString(jsonObject, "date"))
+                    var list = jsonObject.getJSONArray("stories")
+                    if (list != null && list.length() > 0) {
+                        for (i in 0..(list.length() - 1)) {
+                            var z = list.getJSONObject(i)
+                            var ims = MyJSON.getJSONArray(z, "images")
+                            var im = ""
+                            if (ims != null && ims.length() > 0) {
+                                im = ims.getString(0)
+                            }
+                            var id=z.getString("id")
+                            zhihuList.add(ZhiHu(id, z.getString("title"), im, LitePal.where("zid like ?", id).find(ZhiHuDB::class.java).size>0))
+                        }
+                        updateList(list)
+                    }
+                }
+                list_swipe_refresh?.isRefreshing=false
+            }
+
+            override fun onError() {
+                list_swipe_refresh?.isRefreshing=false
+            }
+        })
+    }
+
+    private fun updateList(list: JSONArray) {
+        if (mAdapter == null) {
+            mAdapter= ZhiHuListAdapter(instance, zhihuList, object : ZhiHuListAdapter.OnClickListener {
+                override fun onClick(v: ZhiHuListAdapter.ZhiHuViewHolder) {
+
+                    clickPosition=image_list.getChildAdapterPosition(v.itemView)
+
+                    var zhihu = zhihuList.get(clickPosition)
+                    var toDetail = Intent(instance, ZhiHuActivity::class.java)
+
+                    toDetail.putExtra("id", zhihu.id)
+                    toDetail.putExtra("title", zhihu.title)
+
+                    startActivityForResult(toDetail,122)
+                }
+
+            })
+            image_list.adapter=mAdapter
+        } else {
+            mAdapter!!.notifyRangeInserted(zhihuList, zhihuList.size - list.length(), list.length())
+        }
+    }
 
     override fun onBackPressed() {
 
@@ -105,13 +198,13 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==122&&resultCode==RESULT_OK){
-            var f=viewList[container.currentItem]
-            if(f is ZhiHuHomeFragment){
-                f.setRead()
-            }else if(f is ZhiHuThemesFragment){
-                f.setRead()
-            }
+            setRead()
         }
+    }
+
+    public fun setRead(){
+        zhihuList.get(clickPosition).read=true
+        mAdapter!!.notifyItemChanged(clickPosition)
     }
 }
 

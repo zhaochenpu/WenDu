@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nightfeed.wendu.R
-import com.nightfeed.wendu.activity.ENSentenceActivity
+import com.nightfeed.wendu.activity.WebActivity
 import com.nightfeed.wendu.activity.ImageWordActivity
 import com.nightfeed.wendu.adapter.ENSentenceListAdapter
 import com.nightfeed.wendu.model.ENSentence
@@ -93,7 +93,7 @@ class DailySentenceFragment : BaseFragment() {
                         if(TextUtils.equals(url,URLs.YOUDAO_DAILY_WORD)){
                             mAdapter?.setOnClickListener(object : ENSentenceListAdapter.OnClickListener{
                                 override fun onClick(v: View) {
-                                    val intent = Intent(context, ENSentenceActivity::class.java)
+                                    val intent = Intent(context, WebActivity::class.java)
                                     //获取intent对象
                                     intent.putExtra("url",sentenceList.get(image_word_list.getChildAdapterPosition(v)).url)
                                     startActivity(intent)

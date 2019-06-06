@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.nightfeed.wendu.R;
 import com.nightfeed.wendu.activity.BrowsePictureActivity;
+import com.nightfeed.wendu.activity.FinancialMActivity;
 import com.nightfeed.wendu.activity.ImageWordActivity;
 import com.nightfeed.wendu.activity.JianDanActivity;
 import com.nightfeed.wendu.activity.WeiBoActivity;
+import com.nightfeed.wendu.activity.WoShiPMActivity;
 import com.nightfeed.wendu.view.flowingdrawer.MenuFragment;
 
 
@@ -60,6 +62,21 @@ public class MainMenuFragment extends MenuFragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), WeiBoActivity.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
+
+
+        view.findViewById(R.id.pm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), WoShiPMActivity.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
+
+        view.findViewById(R.id.financial).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), FinancialMActivity.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
         });
 

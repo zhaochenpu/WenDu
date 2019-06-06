@@ -18,12 +18,26 @@
         android:layout_width="match_parent"
         android:text="赏图"
         android:drawableLeft="@drawable/image"/>
+
+    <TextView
+        android:id="@+id/pm"
+        style="@style/mean_text"
+        android:layout_width="match_parent"
+        android:text="产品"
+        android:drawableLeft="@drawable/image_word"/>
+    <TextView
+        android:id="@+id/financial"
+        style="@style/mean_text"
+        android:layout_width="match_parent"
+        android:text="财经"
+        android:drawableLeft="@drawable/text"
+        />
     <TextView
         android:id="@+id/jiandan"
         style="@style/mean_text"
         android:layout_width="match_parent"
         android:text="煎蛋"
-        android:drawableLeft="@drawable/text"/>
+        android:drawableLeft="@drawable/image"/>
     <TextView
         android:id="@+id/weibo"
         style="@style/mean_text"

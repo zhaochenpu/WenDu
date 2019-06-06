@@ -44,7 +44,7 @@ public class COkhttp {
         return client;
     }
 
-    public static String get(String url){
+    public  String get(String url){
         try {
         Request request = new Request.Builder().url(url).build();
 
@@ -64,7 +64,7 @@ public class COkhttp {
     }
 
 
-    public static Call getCall(String url,String[] header){
+    public  Call getCall(String url,String[] header){
         Request request;
         if(header==null){
             request = new Request.Builder().url(url).build();
@@ -78,7 +78,7 @@ public class COkhttp {
         return client.newCall(request);
     }
 
-    public static String get(String url, int timeout){
+    public  String get(String url, int timeout){
         try {
             OkHttpClient clone= client.newBuilder().connectTimeout(timeout, TimeUnit.MILLISECONDS).readTimeout(timeout, TimeUnit.MILLISECONDS).build();
             Request request = new Request.Builder().url(url).build();
@@ -96,17 +96,8 @@ public class COkhttp {
         return null;
     }
 
-    public static Call postCall(OkHttpClient mClient, String url, JSONObject JSON){
 
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),JSON.toString());
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-        return mClient.newCall(request);
-    }
-
-    public static Call postCall(String url, Map<String, String> params){
+    public Call postCall(String url, Map<String, String> params){
         FormBody.Builder builder = new FormBody.Builder();
         addParams(builder,params);
         Request request = new Request.Builder()
@@ -116,38 +107,7 @@ public class COkhttp {
         return client.newCall(request);
     }
 
-    public static String post(String url, JSONObject JSON, long timeout){
-        OkHttpClient clone= client.newBuilder().connectTimeout(timeout, TimeUnit.MILLISECONDS).readTimeout(timeout, TimeUnit.MILLISECONDS).build();
-        try {
-            Response response = postCall(clone,url,JSON).execute();
-            if (response.isSuccessful()) {
-                return response.body().string();
-            } else {
-                throw new IOException("Unexpected code " + response);
-            }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static String post(String url, JSONObject JSON){
-        try {
-            Response response = postCall(client,url,JSON).execute();
-            if (response.isSuccessful()) {
-                return response.body().string();
-            } else {
-                throw new IOException("Unexpected code " + response);
-            }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static String post(String url, Map<String, String> params){
+    public  String post(String url, Map<String, String> params){
         try {
             FormBody.Builder builder = new FormBody.Builder();
             addParams(builder,params);
@@ -179,4 +139,12 @@ public class COkhttp {
         }
     }
 
+    public Call postCall(String url, JSONObject JSON){
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),JSON.toString());
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        return client.newCall(request);
+    }
 }

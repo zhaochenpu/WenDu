@@ -43,6 +43,14 @@ class URLs {
 
         val JU_DU="https://judouapp.com/api/v6/op/sentences/daily?page=1&per_page=30&timestamp=1543877307&app_key=2a438661-92c0-4a2d-b32e-3fd0c47a0a3c&platform=android&channel=ch_wandoujia&version_code=480&version=v3.7.1&system_version=23&device_type=A0001&device_id=61ddb2437c596909&signature=246288337e359948bc518d4adaa6e34d"
         val JU_TUI="https://judouapp.com/api/v6/op/channels/11?per_page=20&timestamp=1543877518&app_key=2a438661-92c0-4a2d-b32e-3fd0c47a0a3c&platform=android&channel=ch_wandoujia&version_code=480&version=v3.7.1&system_version=23&device_type=A0001&device_id=61ddb2437c596909&signature=6a93cdddfacab16c4eac58cc74107856&page=1"
+
+        val WOSHIPM_HOME="http://api.woshipm.com/news/v4/index/timeline.html?PN=1&PS=20&LTime=&_CS=0&_cT=Android&_cV=4.1.6&_cP=1080*1920&_cA=PM"
+        val WOSHIPM_WEEKHOT="http://api.woshipm.com/news/v4/hotList.html?type=7&PS=20&_cT=Android&_cV=4.1.6&_cP=1080*1920&_cA=PM&PN="
+        val WOSHIPM_MONTHHOT="http://api.woshipm.com/news/v4/hotList.html?type=30&PS=20&_cT=Android&_cV=4.1.6&_cP=1080*1920&_cA=PM&PN="
+
+        val FINANCIAL_NEWS="https://emdcnewsapp.eastmoney.com/infoService"
+        val FINANCIAL_OPTIONAL=" https://emdcadvise.eastmoney.com/infoAdviseService"
+        val FINANCIAL_DETAIL="https://emwap.eastmoney.com/info/detail/"
     }
 
 }

@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat
 import android.text.TextUtils
 import com.nightfeed.wendu.utils.SystemUtil
 import okhttp3.*
+import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -31,7 +32,7 @@ class RequestUtils {
 
         fun get(url:String, header:Array<String>?, onRequestListener:OnResultListener?){
             val mHandler =  object : Handler(Looper.getMainLooper()){}
-            COkhttp.getCall(url,header).enqueue(object : Callback {
+            COkhttp.getInstance().getCall(url,header).enqueue(object : Callback {
                 override fun onFailure(call: Call?, e: IOException?) {
                     if (onRequestListener!=null){
                         mHandler.post { onRequestListener.onError() }
@@ -68,7 +69,44 @@ class RequestUtils {
 
         fun post(url:String,params:Map<String, String>, onRequestListener:OnResultListener?){
             val mHandler =  object : Handler(Looper.getMainLooper()){}
-            COkhttp.postCall(url,params).enqueue(object : Callback {
+            COkhttp.getInstance().postCall(url,params).enqueue(object : Callback {
+                override fun onFailure(call: Call?, e: IOException?) {
+                    if (onRequestListener!=null){
+                        mHandler.post { onRequestListener.onError() }
+                    }
+                }
+
+                override fun onResponse(call: Call?, response: Response?) {
+                    try {
+                        if (response!!.isSuccessful) {
+                            val result=response.body()!!.string()
+                            if(TextUtils.isEmpty(result)){
+                                if (onRequestListener!=null){
+                                    mHandler.post { onRequestListener.onError() }
+                                }
+                            }else{
+                                if (onRequestListener!=null){
+                                    mHandler.post { onRequestListener.onSuccess(result) }
+                                }
+                            }
+                        }else{
+                            if (onRequestListener!=null){
+                                mHandler.post { onRequestListener.onError() }
+                            }
+                        }
+                    }catch (e:Throwable){
+                        if (onRequestListener!=null){
+                            mHandler.post { onRequestListener.onError() }
+                        }
+                    }
+
+                }
+            })
+        }
+
+        fun post(url:String, body: JSONObject, onRequestListener:OnResultListener?){
+            val mHandler =  object : Handler(Looper.getMainLooper()){}
+            COkhttp.getInstance().postCall(url,body).enqueue(object : Callback {
                 override fun onFailure(call: Call?, e: IOException?) {
                     if (onRequestListener!=null){
                         mHandler.post { onRequestListener.onError() }
@@ -109,7 +147,7 @@ class RequestUtils {
             //获取okHttp对象get请求
             try {
 
-                COkhttp.getCall(url,null).enqueue(object :Callback{
+                COkhttp.getInstance().getCall(url,null).enqueue(object :Callback{
                     override fun onFailure(call: Call?, e: IOException?) {
                         if (onRequestListener!=null){
                             mHandler.post { onRequestListener.onError() }
@@ -149,7 +187,7 @@ class RequestUtils {
             //获取okHttp对象get请求
             try {
 
-                COkhttp.getCall(url,null).enqueue(object :Callback{
+                COkhttp.getInstance().getCall(url,null).enqueue(object :Callback{
                     override fun onFailure(call: Call?, e: IOException?) {
                         mHandler.post { onRequestListener.onError() }
                     }
