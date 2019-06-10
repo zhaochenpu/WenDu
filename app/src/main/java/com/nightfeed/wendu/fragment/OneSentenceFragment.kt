@@ -19,7 +19,9 @@ import com.nightfeed.wendu.net.URLs
 import com.nightfeed.wendu.utils.ToastUtil
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.image_word_fragment.*
-import java.util.ArrayList
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class OneSentenceFragment : BaseFragment() {
@@ -29,11 +31,16 @@ class OneSentenceFragment : BaseFragment() {
     private var isPrepared=false
     private var mAdapter: OneSentenceListAdapter?=null
     private var sentenceList :MutableList<OneSentence> = ArrayList<OneSentence>()
+    private var newList :MutableList<OneSentence> = ArrayList<OneSentence>()
     private var lastVisibleItem: Int = 0
     private var mLayoutManager : LinearLayoutManager?= null
-    private var newest:Int=0
+//    private var newest:Int=0
     private val pageItem=10
     private var get=0
+//    private var itemNow=0
+    var dateFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
+    private var lastDate = Date()
+    var calendar = GregorianCalendar.getInstance()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -71,55 +78,55 @@ class OneSentenceFragment : BaseFragment() {
         lazyLoad()
     }
 
-    private fun getNewest() {
-        RequestUtils.get(URLs.ONE_NEW, object : RequestUtils.OnResultListener {
-            override fun onSuccess(result: String) {
-                var value = MyJSON.getJSONArray(result, "data")
-                if(value!=null&&value.length()>0){
-                    try {
-                        newest=Integer.parseInt(value.getString(0))
-                        getItem()
-                    }catch (e :Exception ){
-
-                    }
-                }
-            }
-
-            override fun onError() {
-
-            }
-        })
-    }
+//    private fun getNewest() {
+//        RequestUtils.get(URLs.ONE_NEW, object : RequestUtils.OnResultListener {
+//            override fun onSuccess(result: String) {
+//                var value = MyJSON.getJSONArray(result, "data")
+//                if(value!=null&&value.length()>0){
+//                    try {
+//                        newest=Integer.parseInt(value.getString(0))
+//                        getItem()
+//                    }catch (e :Exception ){
+//
+//                    }
+//                }
+//            }
+//
+//            override fun onError() {
+//
+//            }
+//        })
+//    }
 
     private fun getItem() {
         var i=0
-        var itemNow=sentenceList.size
+//        itemNow=itemNow+pageItem
+
+//        calendar.setTime(lastDate)
+
         while( i< pageItem) {
-            var hp_id=newest-itemNow-i
-            if(hp_id==1){
-                get=pageItem-2
-            }else if(hp_id<1){
-                ToastUtil.showShort(context,"厉害了！都被你看完了")
-            }
-            RequestUtils.get(URLs.ONE_HP.replace("hp_id",(newest-itemNow-i).toString()), object : RequestUtils.OnResultListener {
+
+            RequestUtils.get(URLs.ONE_HP.replace("TIME",dateFormat.format(calendar.time)), object : RequestUtils.OnResultListener {
                 override fun onSuccess(result: String) {
                     get++
                     var data = MyJSON.getString(result, "data")
                     if(!TextUtils.isEmpty(data)){
                         var oneSentence= Gson().fromJson(data,OneSentence::class.java)
                         if(oneSentence!=null){
-                            sentenceList.add(oneSentence)
+                            newList.add(oneSentence)
                         }
                     }
 
                     if(get==pageItem-1){
+                        sentenceList.addAll(newList)
+
                         if(mAdapter==null){
-                            (context as ImageWordActivity).setHeadImage(sentenceList.get(0).hp_img_url)
+                            (context as ImageWordActivity).setHeadImage(sentenceList.get(0).img_url)
 
                             mAdapter= OneSentenceListAdapter(context,sentenceList)
                             image_word_list.adapter=mAdapter
                         }else{
-                            mAdapter!!.notifyRangeInserted(sentenceList,itemNow,sentenceList.size-itemNow)
+                            mAdapter!!.notifyRangeInserted(sentenceList,sentenceList.size-newList.size,newList.size)
                         }
                         get=0
                     }
@@ -131,14 +138,18 @@ class OneSentenceFragment : BaseFragment() {
                             mAdapter= OneSentenceListAdapter(context,sentenceList)
                             image_word_list.adapter=mAdapter
                         }else{
-                            mAdapter!!.notifyRangeInserted(sentenceList,itemNow,sentenceList.size-itemNow)
+                            mAdapter!!.notifyRangeInserted(sentenceList,sentenceList.size-newList.size,newList.size)
                         }
                         get=0
                     }
                 }
             })
+
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE)-1)
+
             i++
         }
+        lastDate=calendar.time
     }
 
 
@@ -148,15 +159,11 @@ class OneSentenceFragment : BaseFragment() {
         }
 
         if(context!=null&&sentenceList.size>0){
-            (context as ImageWordActivity).setHeadImage(sentenceList.get(0).hp_img_url)
+            (context as ImageWordActivity).setHeadImage(sentenceList.get(0).img_url)
         }
 
         if(sentenceList.size<=0){
-            if(newest==0){
-                getNewest()
-            }else{
-                getItem()
-            }
+            getItem()
         }
     }
 

@@ -34,35 +34,35 @@ class OneSentenceListAdapter (context: Context?, datas:List<OneSentence>): Recyc
 
         if(p0 is ImageTextViewHolder){
 
-            if(!oneSentence.hp_content.contains("\n")){
-                p0.hp_content.text="\t\t"+oneSentence.hp_content
+            if(!oneSentence.forward.contains("\n")){
+                p0.hp_content.text="\t\t"+oneSentence.forward
             }else{
-                p0.hp_content.text=oneSentence.hp_content
+                p0.hp_content.text=oneSentence.forward
             }
 
-            p0.hp_authors.text="——"+oneSentence.text_authors
+            p0.hp_authors.text="——"+oneSentence.words_info
 
-            if(p1!=0&&!TextUtils.isEmpty(oneSentence.hp_img_url)){
+            if(p1!=0&&!TextUtils.isEmpty(oneSentence.img_url)){
                 p0.hp_iv.visibility=View.VISIBLE
-                Glide.with(mContext!!).load(oneSentence.hp_img_url).into(p0.hp_iv)
+                Glide.with(mContext!!).load(oneSentence.img_url).into(p0.hp_iv)
             }else{
                 p0.hp_iv.visibility=View.GONE
             }
         }else if(p0 is TextViewHolder){
-            if(!oneSentence.hp_content.contains("\n")){
-                p0.hp_content.text="\t\t"+oneSentence.hp_content
+            if(!oneSentence.forward.contains("\n")){
+                p0.hp_content.text="\t\t"+oneSentence.forward
             }else{
-                p0.hp_content.text=oneSentence.hp_content
+                p0.hp_content.text=oneSentence.forward
             }
 
-            p0.hp_authors.text="——"+oneSentence.text_authors
+            p0.hp_authors.text="——"+oneSentence.words_info
         }
 
 
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(position==0||TextUtils.isEmpty(datas.get(position).hp_img_url)){
+        if(position==0||TextUtils.isEmpty(datas.get(position).img_url)){
             return 0
         }
         return 1

@@ -1,3 +1,3 @@
 package com.nightfeed.wendu.model
 
-data class OneSentence (var hp_img_url : String, var hp_content:String, var text_authors:String)
+data class OneSentence (var img_url : String, var forward:String, var words_info:String)

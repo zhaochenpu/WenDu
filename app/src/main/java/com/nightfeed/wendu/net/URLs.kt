@@ -18,8 +18,9 @@ class URLs {
         val TUCHONG_IMAGE="https://photo.tuchong.com/"//+ user_id +/f/ + img_id+.webp
         val TUCHONG_SEARCH="https://tuchong.com/rest/search/posts?count=20&query="//&page=2  m小图 f大图
 
-        val ONE_NEW="http://v3.wufazhuce.com:8000/api/hp/idlist/0?version=3.5.0&platform=android"
-        val ONE_HP="http://v3.wufazhuce.com:8000/api/hp/detail/hp_id?version=4.0.2&platform=android"
+//        val ONE_NEW="http://v3.wufazhuce.com:8000/api/hp/idlist/0?version=3.5.0&platform=android"
+        var ONE_HP="http://v3.wufazhuce.com:8000/api/hp/bydate/TIME?channel=mx&sign=f6b71effc73b6cec54a4643e54aaaafd&version=4.5.9&uuid=ffffffff-80e5-ca46-a71d-832d0033c587&platform=android"
+//        val ONE_HP="http://v3.wufazhuce.com:8000/api/hp/detail/hp_id?version=4.0.2&platform=android"
 
         val MONO_POETRY="http://mmmono.com/api/v3/group/100051/content/kind/1"  //HTTP-AUTHORIZATION 2e5ccb3d7f5211e8a6e55254006fe942 需要加头
         val MONO_POETRY_MORE="http://mmmono.com/api/v3/group/100051/content/kind/1/?start="
