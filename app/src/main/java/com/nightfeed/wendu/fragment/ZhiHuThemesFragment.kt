@@ -8,17 +8,14 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.gson.Gson
 import com.nightfeed.wendu.R
-import com.nightfeed.wendu.activity.ZhiHuActivity
+import com.nightfeed.wendu.activity.ZhiHuContentActivity
 import com.nightfeed.wendu.adapter.ZhiHuListAdapter
 import com.nightfeed.wendu.model.ZhiHu
 import com.nightfeed.wendu.model.ZhiHuDB
 import com.nightfeed.wendu.net.MyJSON
 import com.nightfeed.wendu.net.RequestUtils
 import com.nightfeed.wendu.net.URLs
-import com.nightfeed.wendu.utils.ToastUtil
-import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.image_fragment.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -133,7 +130,7 @@ class ZhiHuThemesFragment : BaseFragment() {
                     clickPosition=image_list.getChildAdapterPosition(v.itemView)
 
                     var zhihu = zhihuList.get(clickPosition)
-                    var toDetail = Intent(context, ZhiHuActivity::class.java)
+                    var toDetail = Intent(context, ZhiHuContentActivity::class.java)
 
                     toDetail.putExtra("id", zhihu.id)
                     toDetail.putExtra("title", zhihu.title)

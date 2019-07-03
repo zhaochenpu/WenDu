@@ -37,6 +37,10 @@ class ToastUtil{
             }
         }
 
+        fun showNetError(context:Context){
+            showError(context,"OMG~加载异常，请检查网络连接")
+        }
+
         fun showShort(context:Context?,text:String){
             if(context!=null){
                 Toast.makeText(context,text,Toast.LENGTH_SHORT).show()

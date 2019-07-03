@@ -21,7 +21,7 @@ class JianDanActivity : AppCompatActivity() {
 
     val instance by lazy { this }
     private var viewList=ArrayList<Fragment>()
-    private var tabTitles= arrayOf("无聊图","段子","妹子")
+    private var tabTitles= arrayOf("无聊图","妹子")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,6 @@ class JianDanActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         viewList.add(JianDanFragment().setThemes("picture"))
-        viewList.add(JianDanFragment().setThemes("joke"))
         viewList.add(JianDanFragment().setThemes("ooxx"))
 
        var mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)

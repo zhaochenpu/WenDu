@@ -50,9 +50,11 @@ class MyJSON {
             }
             return null
         }
-        fun getJSONArray(content: JSONObject, content_title:String) : JSONArray? {
+        fun getJSONArray(content: JSONObject?, content_title:String) : JSONArray? {
             try {
-                return content.getJSONArray(content_title)
+                if (content != null) {
+                    return content.getJSONArray(content_title)
+                }
             }catch (e: JSONException){
 
             }

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,20 +11,12 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.activity.WebActivity
-import com.nightfeed.wendu.activity.ZhiHuActivity
 import com.nightfeed.wendu.adapter.PMListAdapter
-import com.nightfeed.wendu.adapter.ZhiHuListAdapter
-import com.nightfeed.wendu.model.JuDu
 import com.nightfeed.wendu.model.WoShiPM
-import com.nightfeed.wendu.model.ZhiHu
-import com.nightfeed.wendu.model.ZhiHuDB
 import com.nightfeed.wendu.net.MyJSON
 import com.nightfeed.wendu.net.RequestUtils
 import com.nightfeed.wendu.net.URLs
 import kotlinx.android.synthetic.main.image_fragment.*
-import org.json.JSONArray
-import org.json.JSONObject
-import org.litepal.LitePal
 import java.util.*
 
 

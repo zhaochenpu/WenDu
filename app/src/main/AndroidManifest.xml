@@ -63,9 +63,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts">
+
+            </meta-data>
         </activity>
+
+        <activity android:name=".activity.ZhiHuActivity" />
         <activity
-            android:name=".activity.ZhiHuActivity"
+            android:name=".activity.ZhiHuContentActivity"
             android:theme="@style/AppTheme.ContentTransitions" />
         <activity android:name=".activity.JianDanActivity" />
         <activity android:name=".activity.WebActivity" />
@@ -93,4 +100,8 @@
 
     </application>
 
+    <meta-data
+        android:name="com.baidu.lbsapi.API_KEY"
+        android:value="DF:2F:BE:CA:33:75:87:F1:29:F7:29:C3:69:F4:B5:C7:CB:4E:23:77;com.nightfeed.wendu" >
+    </meta-data>
 </manifest>

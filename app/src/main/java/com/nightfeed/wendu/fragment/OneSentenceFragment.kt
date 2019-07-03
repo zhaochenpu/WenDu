@@ -62,7 +62,7 @@ class OneSentenceFragment : BaseFragment() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
 
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 2 >= mLayoutManager!!.itemCount&&sentenceList.size>0) {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 3  >= mLayoutManager!!.itemCount&&sentenceList.size>0) {
                         getItem()
                     }
                 }
@@ -128,18 +128,21 @@ class OneSentenceFragment : BaseFragment() {
                         }else{
                             mAdapter!!.notifyRangeInserted(sentenceList,sentenceList.size-newList.size,newList.size)
                         }
+                        newList.clear()
                         get=0
                     }
                 }
                 override fun onError() {
                     get++
                     if(get==pageItem-1){
+                        sentenceList.addAll(newList)
                         if(mAdapter==null){
                             mAdapter= OneSentenceListAdapter(context,sentenceList)
                             image_word_list.adapter=mAdapter
                         }else{
                             mAdapter!!.notifyRangeInserted(sentenceList,sentenceList.size-newList.size,newList.size)
                         }
+                        newList.clear()
                         get=0
                     }
                 }

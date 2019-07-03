@@ -1,28 +1,17 @@
 package com.nightfeed.wendu.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.nightfeed.wendu.R
-import com.nightfeed.wendu.activity.ZhiHuActivity
 import com.nightfeed.wendu.adapter.JianDanListAdapter
-import com.nightfeed.wendu.adapter.ZhiHuListAdapter
-import com.nightfeed.wendu.model.ZhiHu
-import com.nightfeed.wendu.model.ZhiHuDB
-import com.nightfeed.wendu.net.MyJSON
 import com.nightfeed.wendu.net.RequestUtils
 import com.nightfeed.wendu.net.URLs
 import kotlinx.android.synthetic.main.image_fragment.*
-import org.json.JSONArray
 import org.json.JSONObject
-import org.litepal.LitePal
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 

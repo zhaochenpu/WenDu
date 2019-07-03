@@ -1,0 +1,83 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="duhua"
+        android:enabled="true"
+        android:icon="@drawable/image_word"
+        android:shortcutLongLabel="@string/duhua"
+        android:shortcutShortLabel="@string/duhua">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.nightfeed.wendu"
+            android:targetClass="com.nightfeed.wendu.activity.ImageWordActivity" />
+        <categories android:name="android.shortcut.conversation"/>
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="image"
+        android:enabled="true"
+        android:icon="@drawable/image"
+        android:shortcutLongLabel="@string/browse_picture"
+        android:shortcutShortLabel="@string/browse_picture">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.nightfeed.wendu"
+            android:targetClass="com.nightfeed.wendu.activity.BrowsePictureActivity" />
+        <categories android:name="android.shortcut.conversation"/>
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="zhihu"
+        android:enabled="true"
+        android:icon="@drawable/text"
+        android:shortcutLongLabel="@string/zhihu"
+        android:shortcutShortLabel="@string/zhihu">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.nightfeed.wendu"
+            android:targetClass="com.nightfeed.wendu.activity.ZhiHuActivity" />
+        <categories android:name="android.shortcut.conversation"/>
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="jiandan"
+        android:enabled="true"
+        android:icon="@drawable/image"
+        android:shortcutLongLabel="@string/jiandan"
+        android:shortcutShortLabel="@string/jiandan">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.nightfeed.wendu"
+            android:targetClass="com.nightfeed.wendu.activity.JianDanActivity" />
+        <categories android:name="android.shortcut.conversation"/>
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="pm"
+        android:enabled="true"
+        android:icon="@drawable/image_word"
+        android:shortcutLongLabel="@string/pm"
+        android:shortcutShortLabel="@string/pm">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.nightfeed.wendu"
+            android:targetClass="com.nightfeed.wendu.activity.WoShiPMActivity" />
+        <categories android:name="android.shortcut.conversation"/>
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="financial"
+        android:enabled="true"
+        android:icon="@drawable/text"
+        android:shortcutLongLabel="@string/financial"
+        android:shortcutShortLabel="@string/financial">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.nightfeed.wendu"
+            android:targetClass="com.nightfeed.wendu.activity.FinancialMActivity" />
+        <categories android:name="android.shortcut.conversation"/>
+    </shortcut>
+
+
+
+
+</shortcuts>

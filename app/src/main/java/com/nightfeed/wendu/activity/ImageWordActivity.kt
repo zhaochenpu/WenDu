@@ -15,7 +15,6 @@ import com.nightfeed.wendu.R
 import com.nightfeed.wendu.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_image_word.*
 import android.support.v4.view.PagerAdapter
-import com.nightfeed.wendu.fragment.OneSentenceFragment
 import com.nightfeed.wendu.utils.StatusBarUtil
 import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
@@ -30,9 +29,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.nightfeed.wendu.fragment.DailySentenceFragment
-import com.nightfeed.wendu.fragment.JuDuFragment
-import com.nightfeed.wendu.fragment.MonoFragment
+import com.nightfeed.wendu.fragment.*
 import com.nightfeed.wendu.net.URLs
 import com.nightfeed.wendu.utils.CollapsingToolbarLayoutState
 import com.nightfeed.wendu.utils.ScreenUtils
@@ -43,7 +40,7 @@ class ImageWordActivity : AppCompatActivity() {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var viewList=ArrayList<Fragment>()
-    private var tabTitles= arrayOf("一句","诗+歌","句读","句推","英句","单词")
+    private var tabTitles= arrayOf("一句","飞地","诗+歌","句读","句推","英句","单词")
     private var collapsingState= CollapsingToolbarLayoutState.EXPANDED
     private var  distance=0
     private var lastImage=""
@@ -58,6 +55,7 @@ class ImageWordActivity : AppCompatActivity() {
 
     private fun initView() {
         viewList.add(OneSentenceFragment())
+        viewList.add(FeiDiFragment())
         viewList.add(MonoFragment())
         viewList.add(JuDuFragment().setLabel(0))
         viewList.add(JuDuFragment().setLabel(1))
@@ -70,7 +68,7 @@ class ImageWordActivity : AppCompatActivity() {
         container.adapter = mSectionsPagerAdapter
 
         container.addOnPageChangeListener(ViewpagerOnPageChangeListener(tabs))
-        tabs.tabMode = TabLayout.MODE_FIXED
+        tabs.tabMode = TabLayout.MODE_SCROLLABLE
         tabs.setupWithViewPager(container)
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 

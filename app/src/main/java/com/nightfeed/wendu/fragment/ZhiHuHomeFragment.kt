@@ -1,32 +1,21 @@
 package com.nightfeed.wendu.fragment
 
-import android.app.ActivityOptions
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
-import android.support.transition.Explode
-import android.support.transition.Transition
-import android.support.transition.TransitionManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.gson.Gson
 import com.nightfeed.wendu.R
-import com.nightfeed.wendu.activity.ImageWordActivity
-import com.nightfeed.wendu.activity.ZhiHuActivity
-import com.nightfeed.wendu.adapter.OneSentenceListAdapter
+import com.nightfeed.wendu.activity.ZhiHuContentActivity
 import com.nightfeed.wendu.adapter.ZhiHuListAdapter
-import com.nightfeed.wendu.model.OneSentence
 import com.nightfeed.wendu.model.ZhiHu
 import com.nightfeed.wendu.model.ZhiHuDB
 import com.nightfeed.wendu.net.MyJSON
 import com.nightfeed.wendu.net.RequestUtils
 import com.nightfeed.wendu.net.URLs
-import com.nightfeed.wendu.utils.ToastUtil
-import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.image_fragment.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -171,7 +160,7 @@ class ZhiHuHomeFragment : BaseFragment() {
                     clickPosition=image_list.getChildAdapterPosition(v.itemView)
 
                     var zhihu = zhihuList.get(clickPosition)
-                    var toDetail = Intent(context, ZhiHuActivity::class.java)
+                    var toDetail = Intent(context, ZhiHuContentActivity::class.java)
 
                     toDetail.putExtra("id", zhihu.id)
                     toDetail.putExtra("title", zhihu.title)

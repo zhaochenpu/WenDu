@@ -1,184 +1,195 @@
 package com.nightfeed.wendu.activity
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
-import android.support.v4.content.ContextCompat
-import android.support.v4.widget.TextViewCompat
+import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
-import android.transition.Explode
-import android.transition.Fade
-import android.util.Log
-import android.util.TypedValue
 import android.view.View
-import android.webkit.WebSettings
-import com.bumptech.glide.Glide
-import com.google.gson.Gson
 import com.nightfeed.wendu.R
+import com.nightfeed.wendu.adapter.ZhiHuListAdapter
+import com.nightfeed.wendu.fragment.MainMenuFragment
+import com.nightfeed.wendu.model.ZhiHu
 import com.nightfeed.wendu.model.ZhiHuDB
-import com.nightfeed.wendu.model.ZhiHuDetail
+import com.nightfeed.wendu.net.MyJSON
 import com.nightfeed.wendu.net.RequestUtils
 import com.nightfeed.wendu.net.URLs
-import com.nightfeed.wendu.utils.CollapsingToolbarLayoutState
-import com.nightfeed.wendu.utils.ScreenUtils
-import com.nightfeed.wendu.utils.StatusBarUtil
+import com.nightfeed.wendu.utils.PermissionUtil
+import com.nightfeed.wendu.view.flowingdrawer.FlowingView
+import com.nightfeed.wendu.view.flowingdrawer.LeftDrawerLayout
 import kotlinx.android.synthetic.main.activity_zhihu.*
-
+import org.json.JSONArray
+import org.json.JSONObject
+import org.litepal.LitePal
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ZhiHuActivity : AppCompatActivity() {
 
     val instance by lazy { this }
+    private var mLayoutManager : LinearLayoutManager?= null
+    private var lastVisibleItem: Int = 0
+    var calendar = GregorianCalendar.getInstance()
+    private var lastDate = Date()
+    var dateFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
+    private var zhihuList :MutableList<ZhiHu> = ArrayList<ZhiHu>()
+    private var mAdapter: ZhiHuListAdapter?=null
+    private var clickPosition=0
 
-    private var collapsingState= CollapsingToolbarLayoutState.EXPANDED
-    private var id=""
-    private var title=""
-    var detail :ZhiHuDetail?=null
-    var distance=0
-    var read=false
-    var onOffsetChangedListenerby :AppBarLayout.OnOffsetChangedListener?=null
-    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_zhihu)
-        initView()
+        setSupportActionBar(toolbar)
+
+        mLayoutManager=LinearLayoutManager(instance)
+        image_list.layoutManager=mLayoutManager
 
         setListener()
 
-        RequestUtils.get(URLs.ZHIHU_CONTENT+id,object :RequestUtils.OnResultListener{
-            override fun onSuccess(result: String) {
-                 detail= Gson().fromJson(result, ZhiHuDetail::class.java)
-                if(detail!=null){
-                    if(TextUtils.isEmpty(detail!!.image)){
-                        app_bar.removeOnOffsetChangedListener(onOffsetChangedListenerby)
-                        zhihu_title.setTextColor(ContextCompat.getColor(instance, R.color.textPrimary))
-                        toolbar.navigationIcon = getDrawable(R.drawable.back)
-                        share.setImageResource(R.drawable.share_black)
-                        StatusBarUtil.StatusBarLightMode(instance)
+        list_swipe_refresh.isRefreshing=true
+        getLatest()
+    }
 
-                        var layoutParams=collapsingtoolbar_layout.layoutParams
-                        layoutParams.height=ScreenUtils.dip2px(instance,90f)
-                        collapsingtoolbar_layout.layoutParams=layoutParams
+    private fun setListener() {
 
-                        collapsingtoolbar_layout.isNestedScrollingEnabled=false
+        toolbar.setNavigationOnClickListener {     finishAfterTransition() }
 
-                        image_layout.visibility=View.INVISIBLE
+        image_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
 
-                        zhihu_title.text = title
-                    }else{
-                        Glide.with(instance).load(detail!!.image).into(imageview)
-                        image_source.text=detail!!.image_source
-                    }
-
-                    if(TextUtils.isEmpty(detail!!.body)){
-                        zhihu_webview.loadUrl(detail!!.share_url)
-                    }else{
-                        val css = "<link rel=\"stylesheet\" href=\"file:///android_asset/news.css\" type=\"text/css\">"
-                        var html = "<html><head>" + css + "</head><body>" + detail!!.body + "</body></html>"
-                        html = html.replace("<div class=\"img-place-holder\">", "")
-                        zhihu_webview.loadDataWithBaseURL("x-data://base", html, "text/html", "UTF-8", null)
-                    }
-
-                    ZhiHuDB(id).save()
-                    read=true
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 2 >= mLayoutManager!!.itemCount&&zhihuList.size>0) {
+                    getBefore()
                 }
             }
 
-            override fun onError() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
 
+                lastVisibleItem = mLayoutManager!!.findLastVisibleItemPosition()
+            }
+        })
+
+        list_swipe_refresh.setOnRefreshListener {
+            zhihuList.clear()
+            if(mAdapter!=null){
+                mAdapter?.notifyDataSetChanged()
+            }
+            getLatest()
+        }
+    }
+
+    private fun getLatest() {
+        RequestUtils.get(URLs.ZHIHU_LATEST, object : RequestUtils.OnResultListener {
+            override fun onSuccess(result: String) {
+
+                if (!TextUtils.isEmpty(result)) {
+                    var jsonObject = JSONObject(result)
+                    lastDate=dateFormat.parse(MyJSON.getString(jsonObject, "date"))
+                    var list = jsonObject.getJSONArray("stories")
+                    if (list != null && list.length() > 0) {
+                        for (i in 0..(list.length() - 1)) {
+                            var z = list.getJSONObject(i)
+                            var ims = MyJSON.getJSONArray(z, "images")
+                            var im = ""
+                            if (ims != null && ims.length() > 0) {
+                                im = ims.getString(0)
+                            }
+
+                            var id=z.getString("id")
+
+                            zhihuList.add(ZhiHu(id, z.getString("title"), im, LitePal.where("zid like ?", id).find(ZhiHuDB::class.java).size>0))
+                        }
+                        if(list.length()<8){
+                            getBefore()
+                            return
+                        }
+                        updateList(list)
+                    }
+                }
+                list_swipe_refresh.isRefreshing=false
+            }
+
+            override fun onError() {
+                list_swipe_refresh.isRefreshing=false
             }
         })
     }
 
-    private fun initView() {
-        StatusBarUtil.transparencyBar(instance)
 
-        toolbar.title = ""
-        setSupportActionBar(toolbar)
-        title = intent.getStringExtra("title")
-        zhihu_title2.text = title
+    private fun getBefore() {
+        calendar.setTime(lastDate)
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 1)
 
-        id = intent.getStringExtra("id")
+        RequestUtils.get(URLs.ZHIHU_BEFORE+dateFormat.format(calendar.time), object : RequestUtils.OnResultListener {
+            override fun onSuccess(result: String) {
 
-        val webSettings = zhihu_webview.settings
-        webSettings.javaScriptEnabled = true// enable navigator.geolocation
-        webSettings.domStorageEnabled = true
-        webSettings.setAppCacheEnabled(true)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-        }
-
-        TextViewCompat.setAutoSizeTextTypeWithDefaults(zhihu_title, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM)
-        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(zhihu_title, 14, 18, 1, TypedValue.COMPLEX_UNIT_DIP)
-    }
-
-    private fun setListener() {
-        onOffsetChangedListenerby=AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-            if(distance==0){
-                distance=(app_bar.totalScrollRange-ScreenUtils.dip2px(instance,56f))
-            }
-            if (verticalOffset == 0) {
-                if (collapsingState !== CollapsingToolbarLayoutState.EXPANDED) {
-                    collapsingState = CollapsingToolbarLayoutState.EXPANDED//修改状态标记为展开
-
-//                    zhihu_title.setTextColor(Color.WHITE)
-                    toolbar.navigationIcon = getDrawable(R.drawable.back_white)
-                    share.setImageResource(R.drawable.share_white)
-                    StatusBarUtil.StatusBarDarkMode(instance)
-                    zhihu_title.text = ""
+                if (!TextUtils.isEmpty(result)) {
+                    var jsonObject = JSONObject(result)
+                    lastDate=dateFormat.parse(MyJSON.getString(jsonObject, "date"))
+                    var list = jsonObject.getJSONArray("stories")
+                    if (list != null && list.length() > 0) {
+                        for (i in 0..(list.length() - 1)) {
+                            var z = list.getJSONObject(i)
+                            var ims = MyJSON.getJSONArray(z, "images")
+                            var im = ""
+                            if (ims != null && ims.length() > 0) {
+                                im = ims.getString(0)
+                            }
+                            var id=z.getString("id")
+                            zhihuList.add(ZhiHu(id, z.getString("title"), im, LitePal.where("zid like ?", id).find(ZhiHuDB::class.java).size>0))
+                        }
+                        updateList(list)
+                    }
                 }
-            } else if (Math.abs(verticalOffset) >=distance ) {
-                if (collapsingState !== CollapsingToolbarLayoutState.COLLAPSED) {
-                    collapsingState = CollapsingToolbarLayoutState.COLLAPSED//修改状态标记为折叠
-
-//                    zhihu_title.setTextColor(ContextCompat.getColor(instance, R.color.textPrimary))
-                    toolbar.navigationIcon = getDrawable(R.drawable.back)
-                    share.setImageResource(R.drawable.share_black)
-                    StatusBarUtil.StatusBarLightMode(instance)
-
-                    zhihu_title.text = title
-                }
-            } else {
-                if (collapsingState !== CollapsingToolbarLayoutState.INTERNEDIATE) {
-
-                    collapsingState = CollapsingToolbarLayoutState.INTERNEDIATE//修改状态标记为中间
-                }
+                list_swipe_refresh?.isRefreshing=false
             }
-        }
 
-        app_bar.addOnOffsetChangedListener(onOffsetChangedListenerby)
-
-        toolbar.setNavigationOnClickListener {
-            finishActivity()
-        }
-
-        share.setOnClickListener {
-            if(detail!=null) {
-                val intent1 = Intent(Intent.ACTION_SEND)
-
-                intent1.putExtra(Intent.EXTRA_TEXT, title+"\n"+detail!!.share_url)
-                intent1.type = "text/plain"
-                startActivity(Intent.createChooser(intent1, title))
+            override fun onError() {
+                list_swipe_refresh?.isRefreshing=false
             }
+        })
+    }
+
+    private fun updateList(list: JSONArray) {
+        if (mAdapter == null) {
+            mAdapter= ZhiHuListAdapter(instance, zhihuList, object : ZhiHuListAdapter.OnClickListener {
+                override fun onClick(v: ZhiHuListAdapter.ZhiHuViewHolder) {
+
+                    clickPosition=image_list.getChildAdapterPosition(v.itemView)
+
+                    var zhihu = zhihuList.get(clickPosition)
+                    var toDetail = Intent(instance, ZhiHuContentActivity::class.java)
+
+                    toDetail.putExtra("id", zhihu.id)
+                    toDetail.putExtra("title", zhihu.title)
+
+                    startActivityForResult(toDetail,122)
+                }
+
+            })
+            image_list.adapter=mAdapter
+        } else {
+            mAdapter!!.notifyRangeInserted(zhihuList, zhihuList.size - list.length(), list.length())
         }
     }
 
-
-    override fun onBackPressed() {
-        finishActivity()
-    }
-
-    fun finishActivity(){
-
-        if (read){
-            setResult(Activity.RESULT_OK)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==122&&resultCode==RESULT_OK){
+            setRead()
         }
-        finishAfterTransition()
     }
 
+    public fun setRead(){
+        zhihuList.get(clickPosition).read=true
+        mAdapter!!.notifyItemChanged(clickPosition)
+    }
 }
+
+
