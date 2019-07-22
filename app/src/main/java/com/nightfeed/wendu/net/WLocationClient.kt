@@ -50,7 +50,6 @@ public class WLocationClient private constructor() {
                         val latitude = location.getLatitude()    //获取纬度信息
                         val longitude = location.getLongitude()    //获取经度信息
                         val radius = location.getRadius()    //获取定位精度，默认值为0.0f
-
                         val addr = location.addrStr    //获取详细地址信息
                         val country = location.country    //获取国家
                         val province = location.province    //获取省份

@@ -53,7 +53,7 @@ class URLs {
         val FINANCIAL_OPTIONAL=" https://emdcadvise.eastmoney.com/infoAdviseService"
         val FINANCIAL_DETAIL="https://emwap.eastmoney.com/info/detail/"
 
-        val WEATHER="https://mpv2.weather.com.cn/v2/?lat="//40.00968668619792&lng=116.35044596354167
+        val WEATHER_HUAFENG="https://mpv2.weather.com.cn/v2/?lat="//40.00968668619792&lng=116.35044596354167
         val FEI_DI="https://app.enclavebooks.cn/v1_1/sign?page="
     }
 
