@@ -34,7 +34,6 @@ class OneSentenceFragment : BaseFragment() {
     private var newList :MutableList<OneSentence> = ArrayList<OneSentence>()
     private var lastVisibleItem: Int = 0
     private var mLayoutManager : LinearLayoutManager?= null
-//    private var newest:Int=0
     private val pageItem=10
     private var get=0
 //    private var itemNow=0
@@ -78,31 +77,9 @@ class OneSentenceFragment : BaseFragment() {
         lazyLoad()
     }
 
-//    private fun getNewest() {
-//        RequestUtils.get(URLs.ONE_NEW, object : RequestUtils.OnResultListener {
-//            override fun onSuccess(result: String) {
-//                var value = MyJSON.getJSONArray(result, "data")
-//                if(value!=null&&value.length()>0){
-//                    try {
-//                        newest=Integer.parseInt(value.getString(0))
-//                        getItem()
-//                    }catch (e :Exception ){
-//
-//                    }
-//                }
-//            }
-//
-//            override fun onError() {
-//
-//            }
-//        })
-//    }
 
     private fun getItem() {
         var i=0
-//        itemNow=itemNow+pageItem
-
-//        calendar.setTime(lastDate)
 
         while( i< pageItem) {
 

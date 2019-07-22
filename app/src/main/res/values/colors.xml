@@ -11,6 +11,9 @@
     <color name="warning">#ffc107</color>
     <color name="success">#43b244</color>
 
+    <color name="text33">#333333</color>
+    <color name="textAA">#AAAAAA</color>
+    <color name="normally_gray">#E6E6E6</color>
 
     <color name="translucent_white_20">#ccffffff</color>
     <color name="translucent_80">#33000000</color>

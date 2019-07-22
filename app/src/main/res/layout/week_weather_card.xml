@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="十五天预报"
+        android:textSize="14sp"
+        android:textColor="@color/text33"
+        android:layout_marginLeft="14.33dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        />
+    <com.nowcasting.view.CHorizontalScrollView
+        android:id="@+id/weekly_hscroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="22dp">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/weekly_recycler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
+                >
+            </android.support.v7.widget.RecyclerView>
+
+            <com.nightfeed.wendu.view.WeekTemperatureView
+                android:layout_width="match_parent"
+                android:layout_height="92dp"
+                android:id="@+id/week_temp_line"
+                android:layout_marginBottom="26.33dp"
+                android:layout_gravity="bottom"
+                />
+        </FrameLayout>
+
+    </com.nowcasting.view.CHorizontalScrollView>
+</merge>
+

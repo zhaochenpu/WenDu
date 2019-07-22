@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/weekdaily"
+    >
+    <TextView
+        android:id="@+id/wday_name"
+        android:textSize="14sp"
+        android:textColor="#333333"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <TextView
+        android:id="@+id/wday_day"
+        android:textSize="12dp"
+        android:textColor="@color/textAA"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <ImageView
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="18dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/day_skycon"
+        >
+    </ImageView>
+    <com.nowcasting.view.AQITextView
+        android:id="@+id/daily_aqi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="9.8dp"
+        android:layout_toRightOf="@+id/day1"
+        android:layout_marginTop="110dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:paddingTop="2.1dp"
+        android:paddingBottom="2.1dp"
+        android:paddingLeft="0.5dp"
+        android:paddingRight="0.5dp"
+        android:gravity="center"
+        />
+</LinearLayout>
