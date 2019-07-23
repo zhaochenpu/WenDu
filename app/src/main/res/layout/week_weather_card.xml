@@ -13,7 +13,7 @@
         android:textStyle="bold"
         android:gravity="center"
         />
-    <com.nowcasting.view.CHorizontalScrollView
+    <HorizontalScrollView
         android:id="@+id/weekly_hscroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,6 +42,6 @@
                 />
         </FrameLayout>
 
-    </com.nowcasting.view.CHorizontalScrollView>
+    </HorizontalScrollView>
 </merge>
 

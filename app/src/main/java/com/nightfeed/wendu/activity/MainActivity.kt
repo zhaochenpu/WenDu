@@ -11,10 +11,13 @@ import android.view.View
 import com.baidu.location.BDLocation
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.fragment.MainMenuFragment
+import com.nightfeed.wendu.model.Weather
 import com.nightfeed.wendu.net.RequestUtils
 import com.nightfeed.wendu.net.URLs
 import com.nightfeed.wendu.utils.PermissionUtil
 import com.nightfeed.wendu.net.WLocationClient
+import com.nightfeed.wendu.net.WeatherRequest
+import com.nightfeed.wendu.utils.ToastUtil
 import com.nightfeed.wendu.view.flowingdrawer.FlowingView
 import com.nightfeed.wendu.view.flowingdrawer.LeftDrawerLayout
 import kotlinx.android.synthetic.main.activity_main.*
@@ -94,14 +97,18 @@ class MainActivity : AppCompatActivity() {
             override fun onSuccess(location: BDLocation) {
 //                var s=location.district
                 supportActionBar!!.title=location.district
-                RequestUtils.get(URLs.WEATHER+location.latitude+"&lng="+location.longitude,object:RequestUtils.OnResultListener{
-                    override fun onSuccess(result: String) {
-                        Log.e("weather",result)
-
+                WeatherRequest.get(location.latitude,location.longitude,object:WeatherRequest.OnResultListener{
+                    override fun onSuccess(weather: Weather) {
+                        realtime_temp.text=weather.realtimeWeather.temperature+"°"
+                        realtime_weather_des.text=weather.realtimeWeather.weatherDes
+                        realtime_wind.text=weather.realtimeWeather.windDirection+" "+weather.realtimeWeather.windLevel
+                        realtime_humidity.text="湿度"+weather.realtimeWeather.humidity
                     }
 
                     override fun onError() {
+                        ToastUtil.showNetError(instance)
                     }
+
                 })
             }
 

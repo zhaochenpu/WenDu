@@ -47,25 +47,26 @@
                         android:orientation="vertical">
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:background="#ffffff">
                             <TextView
                                 android:id="@+id/realtime_temp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="50dp"
+                                android:textSize="60dp"
                                 android:layout_marginLeft="18dp"
-                                android:text="38°"
+
                                 />
                             <TextView
                                 android:id="@+id/realtime_weather_des"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="20dp"
+                                android:textSize="25dp"
                                 android:layout_toRightOf="@+id/realtime_temp"
                                 android:layout_marginLeft="10dp"
                                 android:layout_alignBottom="@+id/realtime_temp"
-                                android:layout_marginBottom="11.5dp"
-                                android:text="晴"/>
+                                android:layout_marginBottom="14dp"
+                                />
 
                             <TextView
                                 android:id="@+id/today_temp"
@@ -82,14 +83,14 @@
                                 android:textSize="15dp"
                                 android:layout_below="@+id/realtime_temp"
                                 android:layout_toRightOf="@+id/today_temp"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginLeft="15dp"
                                 />
                             <TextView
                                 android:id="@+id/realtime_wind"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="15dp"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_below="@+id/today_temp"
                                 android:layout_alignLeft="@+id/realtime_temp"
                                 />
@@ -98,15 +99,15 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="15dp"
-                                android:layout_below="@+id/today_temp"
+                                android:layout_alignBottom="@+id/realtime_wind"
                                 android:layout_toRightOf="@+id/realtime_wind"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginLeft="15dp"
                                 />
                         </RelativeLayout>
-                        <com.nightfeed.wendu.view.WeekWeatherCard
-                            android:id="@+id/week_weather_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                        <!--<com.nightfeed.wendu.view.WeekWeatherCard-->
+                            <!--android:id="@+id/week_weather_layout"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"/>-->
                     </LinearLayout>
                 </android.support.v4.widget.NestedScrollView>
             </android.support.v4.widget.SwipeRefreshLayout>
