@@ -8,9 +8,11 @@ import org.json.JSONObject
 class MyJSON {
 
     companion object {
-        fun getString(content: JSONObject, content_title:String) : String {
+        fun getString(content: JSONObject?, content_title:String) : String {
             try {
-                return content.getString(content_title)
+                if(content!=null) {
+                    return content.getString(content_title)
+                }
             }catch (e: JSONException){
 
             }
@@ -39,6 +41,16 @@ class MyJSON {
             return null
         }
 
+        fun getJSONObject(content: JSONObject?, content_title:String) : JSONObject? {
+            try {
+                if(content!=null){
+                    return content.getJSONObject(content_title)
+                }
+            }catch (e: JSONException){
+
+            }
+            return null
+        }
 
         fun getJSONArray(content: String?, content_title:String) : JSONArray? {
             try {

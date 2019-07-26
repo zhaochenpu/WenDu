@@ -99,10 +99,15 @@ class MainActivity : AppCompatActivity() {
                 supportActionBar!!.title=location.district
                 WeatherRequest.get(location.latitude,location.longitude,object:WeatherRequest.OnResultListener{
                     override fun onSuccess(weather: Weather) {
+
                         realtime_temp.text=weather.realtimeWeather.temperature+"°"
                         realtime_weather_des.text=weather.realtimeWeather.weatherDes
+
+                        today_temp.text= weather.fifteenDailyWeather!!.dailies[1].dayWeather+"~"+ weather.fifteenDailyWeather!!.dailies[1].nightWeather
+
                         realtime_wind.text=weather.realtimeWeather.windDirection+" "+weather.realtimeWeather.windLevel
                         realtime_humidity.text="湿度"+weather.realtimeWeather.humidity
+
                     }
 
                     override fun onError() {

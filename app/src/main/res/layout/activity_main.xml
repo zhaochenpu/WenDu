@@ -72,7 +72,7 @@
                                 android:id="@+id/today_temp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="15dp"
+                                android:textSize="14dp"
                                 android:layout_below="@+id/realtime_temp"
                                 android:layout_alignLeft="@+id/realtime_temp"
                                 />
@@ -80,7 +80,7 @@
                                 android:id="@+id/sensible_temp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="15dp"
+                                android:textSize="14dp"
                                 android:layout_below="@+id/realtime_temp"
                                 android:layout_toRightOf="@+id/today_temp"
                                 android:layout_marginLeft="15dp"
@@ -89,7 +89,7 @@
                                 android:id="@+id/realtime_wind"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="15dp"
+                                android:textSize="14dp"
                                 android:layout_marginTop="15dp"
                                 android:layout_below="@+id/today_temp"
                                 android:layout_alignLeft="@+id/realtime_temp"
@@ -98,10 +98,19 @@
                                 android:id="@+id/realtime_humidity"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="15dp"
+                                android:textSize="14dp"
                                 android:layout_alignBottom="@+id/realtime_wind"
                                 android:layout_toRightOf="@+id/realtime_wind"
                                 android:layout_marginLeft="15dp"
+                                />
+                            <TextView
+                                android:id="@+id/rain_tips"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="18dp"
+                                android:layout_alignBottom="@+id/realtime_humidity"
+                                android:layout_margin="15dp"
+                                android:gravity="center"
                                 />
                         </RelativeLayout>
                         <!--<com.nightfeed.wendu.view.WeekWeatherCard-->
