@@ -45,6 +45,13 @@
         android:text="知乎"
         android:drawableLeft="@drawable/image_word"
         />
+    <TextView
+        android:id="@+id/ocr"
+        style="@style/mean_text"
+        android:layout_width="match_parent"
+        android:text="OCR"
+        android:drawableLeft="@drawable/image"
+        />
     <!--<TextView-->
         <!--android:id="@+id/weibo"-->
         <!--style="@style/mean_text"-->

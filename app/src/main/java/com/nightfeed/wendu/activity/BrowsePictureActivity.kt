@@ -31,7 +31,9 @@ import org.litepal.LitePal
 import android.widget.Toast
 import android.support.v4.view.PagerAdapter
 import android.transition.Explode
+import com.nightfeed.wendu.fragment.TuChongCourseFragment
 import com.nightfeed.wendu.fragment.TuChongFragment
+import com.nightfeed.wendu.model.TuChongCourse
 
 
 class BrowsePictureActivity : AppCompatActivity() {
@@ -53,6 +55,8 @@ class BrowsePictureActivity : AppCompatActivity() {
     private fun initView() {
         viewList.add(TuChongFragment().setLabel("图虫"))
         tabTitles.add("图虫")
+        viewList.add(TuChongCourseFragment())
+        tabTitles.add("教程")
         viewList.add(HuaBanFragment())
         tabTitles.add("花瓣")
 

@@ -39,11 +39,11 @@ class WeatherRequest {
                         var day=dailyResult.getJSONObject(it)
                         var dayTemp=day.getJSONArray("temperature")
                         var dayWeatherDes=day.getJSONArray("weatherDescription")
-                        var sun=day.getJSONObject("sun")
+                        var sun=MyJSON.getJSONObject(day,"sun")
                         var air=MyJSON.getJSONObject(day,"air")
 
                         dailyWeather.add(FifteenDailyWeather.DailyWeather(dayTemp.getString(0),dayTemp.getString(1),dayWeatherDes.getString(0),dayWeatherDes.getString(1)
-                        ,MyJSON.getString(day,"dayofweek"),MyJSON.getString(day,"shortday"),sun.getString("rise"),sun.getString("set")
+                        ,MyJSON.getString(day,"dayofweek"),MyJSON.getString(day,"shortday"),MyJSON.getString(sun,"rise"),MyJSON.getString(sun,"set")
                         ,MyJSON.getString(air,"aqi"),MyJSON.getString(air,"aqic")))
                     }
 

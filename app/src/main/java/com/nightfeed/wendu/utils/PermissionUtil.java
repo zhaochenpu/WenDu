@@ -24,9 +24,13 @@ public class PermissionUtil {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,
     };
 
     public static final String[] PERMISSION_LOCATION= new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
+
+    public static final String[] PERMISSION_CAMERA= new String[]{Manifest.permission.CAMERA};
+
 
     public PermissionUtil(Context context) {
         mContext = context.getApplicationContext();

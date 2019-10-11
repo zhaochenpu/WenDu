@@ -24,11 +24,12 @@
     <!-- SD卡读取权限，用户写入离线定位数据 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="问读"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -71,6 +72,14 @@
         </activity>
 
         <activity android:name=".activity.ZhiHuActivity" />
+        <activity android:name=".activity.OCRActivity"
+            android:label="文字提取">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.ZhiHuContentActivity"
             android:theme="@style/AppTheme.ContentTransitions" />

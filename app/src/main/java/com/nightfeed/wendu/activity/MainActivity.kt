@@ -6,17 +6,15 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import com.baidu.location.BDLocation
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.fragment.MainMenuFragment
 import com.nightfeed.wendu.model.Weather
-import com.nightfeed.wendu.net.RequestUtils
-import com.nightfeed.wendu.net.URLs
+import com.nightfeed.wendu.net.*
 import com.nightfeed.wendu.utils.PermissionUtil
-import com.nightfeed.wendu.net.WLocationClient
-import com.nightfeed.wendu.net.WeatherRequest
 import com.nightfeed.wendu.utils.ToastUtil
 import com.nightfeed.wendu.view.flowingdrawer.FlowingView
 import com.nightfeed.wendu.view.flowingdrawer.LeftDrawerLayout
@@ -73,9 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-//        if(requestCode==122&&resultCode==RESULT_OK){
-//            setRead()
-//        }
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -103,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                         realtime_temp.text=weather.realtimeWeather.temperature+"°"
                         realtime_weather_des.text=weather.realtimeWeather.weatherDes
 
-                        today_temp.text= weather.fifteenDailyWeather!!.dailies[1].dayWeather+"~"+ weather.fifteenDailyWeather!!.dailies[1].nightWeather
+                        today_temp.text= weather.fifteenDailyWeather!!.dailies[1].tempMin+"°/"+ weather.fifteenDailyWeather!!.dailies[1].tempMax+"°"
 
                         realtime_wind.text=weather.realtimeWeather.windDirection+" "+weather.realtimeWeather.windLevel
                         realtime_humidity.text="湿度"+weather.realtimeWeather.humidity

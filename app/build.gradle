@@ -67,6 +67,8 @@ dependencies {
     implementation 'org.litepal.android:core:2.0.0'
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.sina.weibo.sdk:core:4.3.6:openDefaultRelease@aar'
+    api files('libs/ocr-sdk.jar')
+    compile project(path: ':ocr_ui')
 }
 
 apply plugin: 'kotlin-android'

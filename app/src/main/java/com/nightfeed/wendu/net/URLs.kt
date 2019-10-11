@@ -15,6 +15,8 @@ class URLs {
 //        post_id：如果是第一页则不需要添加该字段。否则，需要加上该字段，该字段的值为上一页最后一个 json 中的 post_id 值
 //        type：如果是第一页则是 refresh，如果是加载更多，则是 loadmore。可为空
         val TUCHONG_RECOMMEND="https://api.tuchong.com/feed-app?page="//1&type=refresh
+       //图虫热门 https://api.tuchong.com/discover/-4/category?language=zh&resolution=1080*1920&device_type=A0001&device_platform=android&os_api=23&device_brand=ONEPLUS&openudid=61ddb2437c596909&_rticket=1565335276064&version_code=5090&version_name=5.9.0&ac=wifi&aid=1130&dpi=480&iid=82124606830&page=1&uuid=864587029916013&device_id=42110213649&count=20&ssmix=a&before_timestamp=0&os_version=6.0.1&channel=tuchong&app_name=tuchong&update_version_code=5090&manifest_version_code=5090
+       val TUCHONG_COURSE="https://tuchong.com/rest/sites/1615439,1615432,1615443,1615461,1615437/posts?count=10&page="
         val TUCHONG_IMAGE="https://photo.tuchong.com/"//+ user_id +/f/ + img_id+.webp
         val TUCHONG_SEARCH="https://tuchong.com/rest/search/posts?count=20&query="//&page=2  m小图 f大图
 

@@ -7,14 +7,18 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.baidu.ocr.ui.camera.CameraActivity;
 import com.nightfeed.wendu.R;
 import com.nightfeed.wendu.activity.BrowsePictureActivity;
 import com.nightfeed.wendu.activity.FinancialMActivity;
 import com.nightfeed.wendu.activity.ImageWordActivity;
 import com.nightfeed.wendu.activity.JianDanActivity;
+import com.nightfeed.wendu.activity.OCRActivity;
 import com.nightfeed.wendu.activity.WeiBoActivity;
 import com.nightfeed.wendu.activity.WoShiPMActivity;
 import com.nightfeed.wendu.activity.ZhiHuActivity;
+import com.nightfeed.wendu.utils.SystemUtil;
 import com.nightfeed.wendu.view.flowingdrawer.MenuFragment;
 
 
@@ -80,6 +84,14 @@ public class MainMenuFragment extends MenuFragment {
             }
         });
 
+        view.findViewById(R.id.ocr).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), OCRActivity.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+
+            }
+
+        });
     }
 
 
