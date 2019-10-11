@@ -39,15 +39,15 @@
     </shortcut>
 
     <shortcut
-        android:shortcutId="jiandan"
+        android:shortcutId="funny"
         android:enabled="true"
         android:icon="@drawable/image"
-        android:shortcutLongLabel="@string/jiandan"
-        android:shortcutShortLabel="@string/jiandan">
+        android:shortcutLongLabel="@string/funny"
+        android:shortcutShortLabel="@string/funny">
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.nightfeed.wendu"
-            android:targetClass="com.nightfeed.wendu.activity.JianDanActivity" />
+            android:targetClass="com.nightfeed.wendu.activity.FunnyActivity" />
         <categories android:name="android.shortcut.conversation"/>
     </shortcut>
 

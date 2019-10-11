@@ -83,7 +83,7 @@
         <activity
             android:name=".activity.ZhiHuContentActivity"
             android:theme="@style/AppTheme.ContentTransitions" />
-        <activity android:name=".activity.JianDanActivity" />
+        <activity android:name=".activity.FunnyActivity" />
         <activity android:name=".activity.WebActivity" />
 
         <provider

@@ -12,24 +12,25 @@ import android.text.TextUtils
 import android.transition.Explode
 import android.view.View
 import com.nightfeed.wendu.R
+import com.nightfeed.wendu.fragment.GamerSkyFragment
 import com.nightfeed.wendu.fragment.JianDanFragment
-import com.nightfeed.wendu.view.flowingdrawer.LeftDrawerLayout
-import kotlinx.android.synthetic.main.activity_jiandan.*
+import kotlinx.android.synthetic.main.activity_funny.*
 
 
-class JianDanActivity : AppCompatActivity() {
+class FunnyActivity : AppCompatActivity() {
 
     val instance by lazy { this }
     private var viewList=ArrayList<Fragment>()
-    private var tabTitles= arrayOf("无聊图","妹子")
+    private var tabTitles= arrayOf("无聊图","妹子","游民囧图")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_jiandan)
+        setContentView(R.layout.activity_funny)
         setSupportActionBar(toolbar)
 
         viewList.add(JianDanFragment().setThemes("picture"))
         viewList.add(JianDanFragment().setThemes("ooxx"))
+        viewList.add(GamerSkyFragment())
 
        var mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 

@@ -33,10 +33,10 @@
         android:drawableLeft="@drawable/text"
         />
     <TextView
-        android:id="@+id/jiandan"
+        android:id="@+id/funny"
         style="@style/mean_text"
         android:layout_width="match_parent"
-        android:text="煎蛋"
+        android:text="搞笑"
         android:drawableLeft="@drawable/image"/>
     <TextView
         android:id="@+id/zhihu_daily"

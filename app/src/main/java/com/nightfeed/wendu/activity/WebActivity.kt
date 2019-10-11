@@ -40,7 +40,9 @@ class WebActivity : AppCompatActivity() {
 
         lofter_webview.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-
+                if(url.contains("gamersky://")){
+                    return true
+                }
                 if (Build.VERSION.SDK_INT < 26) {
                     lofter_webview.loadUrl(url)
                     return true

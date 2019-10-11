@@ -57,6 +57,9 @@ class URLs {
 
         val WEATHER_HUAFENG="https://mpv2.weather.com.cn/v2/?lat="//40.00968668619792&lng=116.35044596354167
         val FEI_DI="https://app.enclavebooks.cn/v1_1/sign?page="
+
+        val GAMESKY_FUNNY="http://appapi2.gamersky.com/v2/AllChannelList"
+        val GAMESKY_FUNNY_CONTENT="https://wap.gamersky.com/news/Content-"
     }
 
 }
