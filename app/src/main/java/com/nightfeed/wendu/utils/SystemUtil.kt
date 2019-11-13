@@ -11,8 +11,8 @@ import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.support.v4.content.FileProvider
 import android.text.TextUtils
+import androidx.core.content.FileProvider
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -28,7 +28,7 @@ class SystemUtil{
             share_intent.type = "image/*"   //设置分享内容的类型
             share_intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-            share_intent.putExtra(Intent.EXTRA_STREAM,FileProvider.getUriForFile(activity, "com.nightfeed.wendu.fileprovider",File(url.toString())))
+            share_intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(activity, "com.nightfeed.wendu.fileprovider",File(url.toString())))
             activity.startActivity(share_intent)
         }
 

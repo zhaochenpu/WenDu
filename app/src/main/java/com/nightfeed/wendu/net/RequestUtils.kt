@@ -1,13 +1,10 @@
 package com.nightfeed.wendu.net
 
-import android.app.Notification
-import android.app.PendingIntent
-import android.graphics.Bitmap
+
 import android.graphics.BitmapFactory
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
-import android.support.v4.app.NotificationCompat
 import android.text.TextUtils
 import com.nightfeed.wendu.utils.SystemUtil
 import okhttp3.*

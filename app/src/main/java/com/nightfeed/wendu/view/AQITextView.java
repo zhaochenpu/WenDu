@@ -4,11 +4,14 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
+
 import com.nightfeed.wendu.utils.ScreenUtils;
 
-public class AQITextView extends android.support.v7.widget.AppCompatTextView {
+public class AQITextView extends AppCompatTextView {
 
     private Paint mPaint;
     private float mRadius;

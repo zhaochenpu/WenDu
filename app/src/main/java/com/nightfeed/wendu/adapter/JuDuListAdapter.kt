@@ -1,7 +1,7 @@
 package com.nightfeed.wendu.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -55,7 +55,7 @@ class JuDuListAdapter (context: Context?, datas:List<JuDu>): RecyclerView.Adapte
                 p0.hp_authors.text="——"+sentence.subheading
             }
 
-            Glide.with(mContext!!).load(sentence.image.url).into(p0.hp_iv)
+            Glide.with(mContext!!).load(sentence.pictures[0].url).into(p0.hp_iv)
 
         }else if(p0 is TextViewHolder){
 
@@ -75,7 +75,7 @@ class JuDuListAdapter (context: Context?, datas:List<JuDu>): RecyclerView.Adapte
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(position==0||TextUtils.isEmpty(datas[position].image?.url)){
+        if(position==0||TextUtils.isEmpty(datas[position].pictures[0]?.url)){
             return 0
         }
         return 1

@@ -3,10 +3,11 @@ package com.nightfeed.wendu.fragment;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
 
 import com.nightfeed.wendu.R;
 import com.nightfeed.wendu.activity.BrowsePictureActivity;

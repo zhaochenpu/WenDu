@@ -1,7 +1,7 @@
 package com.nightfeed.wendu.view
 
-import android.support.v7.widget.StaggeredGridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 
 

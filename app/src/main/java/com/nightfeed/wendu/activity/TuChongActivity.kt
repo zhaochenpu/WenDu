@@ -1,8 +1,8 @@
 package com.nightfeed.wendu.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.adapter.TuChongDetailsAdapter

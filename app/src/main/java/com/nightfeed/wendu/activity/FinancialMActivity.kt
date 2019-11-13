@@ -2,19 +2,18 @@ package com.nightfeed.wendu.activity
 
 
 import android.content.Intent
-import android.support.design.widget.TabLayout
-import android.support.v7.app.AppCompatActivity
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import com.google.android.material.tabs.TabLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import android.os.Bundle
-import android.support.v4.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.utils.ToastUtil
-import android.support.v4.view.PagerAdapter
+import androidx.viewpager.widget.PagerAdapter
 import com.nightfeed.wendu.utils.StatusBarUtil
 import android.transition.Explode
-import android.view.Menu
 import com.nightfeed.wendu.fragment.FinancialFragment
 import com.nightfeed.wendu.fragment.WoShiPMHotFragment
 import kotlinx.android.synthetic.main.activity_woshipm.*
@@ -82,7 +81,7 @@ class FinancialMActivity : AppCompatActivity() {
         }
     }
 
-    inner class ViewpagerOnPageChangeListener(tabs:TabLayout) : TabLayout.TabLayoutOnPageChangeListener(tabs){
+    inner class ViewpagerOnPageChangeListener(tabs: TabLayout) : TabLayout.TabLayoutOnPageChangeListener(tabs){
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
         }

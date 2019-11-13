@@ -6,13 +6,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
-import android.support.v4.content.ContextCompat
-import android.support.v4.widget.TextViewCompat
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.appbar.AppBarLayout
+import androidx.core.content.ContextCompat
+import androidx.core.widget.TextViewCompat
+import androidx.appcompat.app.AppCompatActivity
 import android.text.TextUtils
-import android.transition.Explode
-import android.transition.Fade
 import android.util.Log
 import android.util.TypedValue
 import android.view.View

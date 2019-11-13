@@ -1,23 +1,12 @@
 package com.nightfeed.wendu.activity
 
 import android.content.Intent
-import android.support.design.widget.TabLayout
-import android.support.v7.app.AppCompatActivity
-
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
-import android.support.v4.app.FragmentStatePagerAdapter
-import android.support.v7.widget.PopupMenu
-import android.text.Editable
+
 import android.text.TextUtils
-import android.text.TextWatcher
 import android.view.*
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import android.widget.TextView
-
 import com.nightfeed.wendu.R
 import com.nightfeed.wendu.fragment.HuaBanFragment
 import com.nightfeed.wendu.fragment.LofterFragment
@@ -28,9 +17,14 @@ import com.nightfeed.wendu.net.URLs
 import com.nightfeed.wendu.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_browse_picture.*
 import org.litepal.LitePal
-import android.widget.Toast
-import android.support.v4.view.PagerAdapter
 import android.transition.Explode
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager.widget.PagerAdapter
+import com.google.android.material.tabs.TabLayout
 import com.nightfeed.wendu.fragment.TuChongCourseFragment
 import com.nightfeed.wendu.fragment.TuChongFragment
 import com.nightfeed.wendu.model.TuChongCourse

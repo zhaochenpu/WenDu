@@ -34,7 +34,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:targetApi="n">
+        tools:targetApi="n"
+      >
 
         <!-- 适配全面屏 -->
         <meta-data
@@ -87,7 +88,7 @@
         <activity android:name=".activity.WebActivity" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.nightfeed.wendu.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
