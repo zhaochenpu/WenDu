@@ -18,6 +18,7 @@ import com.nightfeed.wendu.net.MyJSON
 import com.nightfeed.wendu.net.RequestUtils
 import com.nightfeed.wendu.net.URLs
 import kotlinx.android.synthetic.main.image_fragment.*
+import java.lang.Exception
 import java.util.*
 
 
@@ -89,8 +90,23 @@ class TuChongCourseFragment : BaseFragment() {
                 }
                 for (i in 0 until posts.length()){
                     var data=posts.getJSONObject(i)
-
-                    list.add(TuChongCourse(data.getString("url"),data.getString("title"),data.getJSONObject("title_image").getString("url")))
+                    var title_image=""
+                    try {
+                        title_image=data.getJSONObject("title_image").getString("url")
+                    }catch (e:Exception){
+                        var images= data.getJSONArray("images")
+                        if(images!=null&&images.length()>0){
+                            var image=images.getJSONObject(0)
+                            var img_id=image.getString("img_id")
+                            var user_id=image.getString("user_id")
+                            if(image.getInt("width")>image.getInt("height")){
+                                title_image=URLs.TUCHONG_IMAGE+user_id+"/m/"+img_id+".webp"
+                            }else{
+                                title_image=URLs.TUCHONG_IMAGE+user_id+"/ft640/"+img_id+".webp"
+                            }
+                        }
+                    }
+                    list.add(TuChongCourse(data.getString("url"),data.getString("title"),title_image))
                 }
 
                 if(list.size>0){

@@ -151,7 +151,7 @@ class TuChongFragment : BaseFragment() {
 
                             }
                         })
-                        image_list.adapter = mAdapter
+                        image_list?.adapter = mAdapter
                         page++
 
                     } else {
@@ -166,7 +166,7 @@ class TuChongFragment : BaseFragment() {
                         }
                     }
                 }
-                image_list_swipe_refresh.isRefreshing=false
+                image_list_swipe_refresh?.isRefreshing=false
             }
 
             override fun onError() {

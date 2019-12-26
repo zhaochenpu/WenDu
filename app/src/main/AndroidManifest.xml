@@ -72,7 +72,7 @@
             </meta-data>
         </activity>
 
-        <activity android:name=".activity.ZhiHuActivity" />
+        <activity android:name=".activity.MagazineActivity" />
         <activity android:name=".activity.OCRActivity"
             android:label="文字提取">
             <intent-filter>

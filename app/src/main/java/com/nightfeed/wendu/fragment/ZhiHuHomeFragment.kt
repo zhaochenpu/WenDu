@@ -120,7 +120,6 @@ class ZhiHuHomeFragment : BaseFragment() {
 
     private fun getBefore() {
         calendar.setTime(lastDate)
-        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 1)
 
         RequestUtils.get(URLs.ZHIHU_BEFORE+dateFormat.format(calendar.time), object : RequestUtils.OnResultListener {
             override fun onSuccess(result: String) {

@@ -4,13 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import android.text.TextUtils
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.webkit.*
+import android.view.View
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
 import com.nightfeed.wendu.R
+import com.nightfeed.wendu.view.NestedScrollWebView
 import kotlinx.android.synthetic.main.activity_lofter.*
 
 class WebActivity : AppCompatActivity() {
@@ -18,6 +21,7 @@ class WebActivity : AppCompatActivity() {
 
     var webUrl=""
     var title=""
+    var isTitleGone=true
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,8 +29,7 @@ class WebActivity : AppCompatActivity() {
         setContentView(R.layout.activity_lofter)
 
         title=intent.getStringExtra("title")
-        toolbar.title=title
-
+        toolbar.title=""
         setSupportActionBar(toolbar)
 
         val webSettings = lofter_webview.settings
@@ -50,7 +53,42 @@ class WebActivity : AppCompatActivity() {
                     return false
                 }
             }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                progressbar.visibility=View.GONE
+            }
         }
+
+        lofter_webview.webChromeClient=object :WebChromeClient(){
+            override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                if (newProgress in 1..97 ) {
+                    if(progressbar.visibility != View.VISIBLE){
+                        progressbar.visibility = View.VISIBLE
+                    }
+                    progressbar.progress = newProgress
+                }else if (newProgress>97&&progressbar.visibility == View.VISIBLE){
+                    progressbar.visibility = View.GONE
+                }
+                super.onProgressChanged(view, newProgress)
+            }
+        }
+
+        lofter_webview.setOnScrollChangeListener(object : NestedScrollWebView.OnScrollChangeListener{
+            override fun onPageTop(l: Int, t: Int, oldl: Int, oldt: Int) {
+                if(!isTitleGone){
+                    supportActionBar!!.title=""
+                    isTitleGone=true
+                }
+            }
+
+            override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
+                if (isTitleGone&&t>supportActionBar!!.height){
+                    supportActionBar!!.title=title
+                    isTitleGone=false
+                }
+            }
+        })
 
         webUrl=intent.getStringExtra("url")
         lofter_webview.loadUrl(webUrl)

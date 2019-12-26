@@ -16,7 +16,7 @@ import com.nightfeed.wendu.activity.ImageWordActivity;
 import com.nightfeed.wendu.activity.FunnyActivity;
 import com.nightfeed.wendu.activity.OCRActivity;
 import com.nightfeed.wendu.activity.WoShiPMActivity;
-import com.nightfeed.wendu.activity.ZhiHuActivity;
+import com.nightfeed.wendu.activity.MagazineActivity;
 import com.nightfeed.wendu.view.flowingdrawer.MenuFragment;
 
 
@@ -61,10 +61,10 @@ public class MainMenuFragment extends MenuFragment {
             }
         });
 
-        view.findViewById(R.id.zhihu_daily).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.magazine).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), ZhiHuActivity.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+                startActivity(new Intent(getContext(), MagazineActivity.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
         });
 

@@ -11,7 +11,7 @@ import com.nightfeed.wendu.R
 
 class ToastUtil{
     companion object {
-        fun showError(context:Context,text:String){
+        fun showError(context:Context?,text:String){
             if(context!=null) {
                 var toast = Toast(context)
                 toast.view = LayoutInflater.from(context).inflate(R.layout.toast, null)

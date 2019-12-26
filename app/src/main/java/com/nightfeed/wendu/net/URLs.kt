@@ -33,6 +33,11 @@ class URLs {
         val ZHIHU_THEME="https://news-at.zhihu.com/api/4/theme/"//+id
 //        https://news-at.zhihu.com/api/4/theme/#{theme_id}/before/#{story_id}
 
+        val QING_MANG_LIST="https://api.qingmang.me/ng/v1/timeline.explore.get?group_article=true&need_hot_post=true&need_ops_magazine=true&token=ZTgwYTRkYjAtMjZlZC0xMWVhLWI3MWQtMDAxNjNlMzI2OTg3&app_id=wx05790b1180642960&apivc=3&timeline_style=flat&platform=life_mina"
+        val QING_MANG_CONTENT="https://api.qingmang.me/ng/v1/article.get?template=raml&check_paid=false&app_id=wx05790b1180642960&token=ZTgwYTRkYjAtMjZlZC0xMWVhLWI3MWQtMDAxNjNlMzI2OTg3&pub_id=null&apivc=3&timeline_style=flat&platform=life_mina&docid="
+
+        val SOLVER_SENTENCE="https://feed.zero.qq.com/v2/feed/listbytag?page=10&tag_id=1050&filter=0&offset="
+
         val HIMAWERI8_LATES="https://himawari8-dl.nict.go.jp/himawari8/img/D531106/latest.json?uid="
         val HIMAWERI8_IMAGE4="https://himawari8-dl.nict.go.jp/himawari8/img/D531106/2d/550/"//2018/07/02/120000_1_1.png
 
@@ -42,7 +47,6 @@ class URLs {
         val JIANDAN_HOT="http://api.moyu.today/jandan/hot?category="// picture无聊图 joke段子 ooxx妹子
 
         val WEIBO_HOME_TIMELINE="https://api.weibo.com/2/statuses/home_timeline.json?access_token="
-
 
         val JU_DU="https://judouapp.com/api/v6/op/sentences/daily?page=1&per_page=30&timestamp=1543877307&app_key=2a438661-92c0-4a2d-b32e-3fd0c47a0a3c&platform=android&channel=ch_wandoujia&version_code=480&version=v3.7.1&system_version=23&device_type=A0001&device_id=61ddb2437c596909&signature=246288337e359948bc518d4adaa6e34d"
         val JU_TUI="https://judouapp.com/api/v6/op/channels/11?per_page=20&timestamp=1543877518&app_key=2a438661-92c0-4a2d-b32e-3fd0c47a0a3c&platform=android&channel=ch_wandoujia&version_code=480&version=v3.7.1&system_version=23&device_type=A0001&device_id=61ddb2437c596909&signature=6a93cdddfacab16c4eac58cc74107856&page=1"
@@ -56,6 +60,8 @@ class URLs {
         val FINANCIAL_DETAIL="https://emwap.eastmoney.com/info/detail/"
 
         val WEATHER_HUAFENG="https://mpv2.weather.com.cn/v2/?lat="//40.00968668619792&lng=116.35044596354167
+        val WEATHER_MEIZU="http://aider.meizu.com/v5/weather/citylbs?country=%E4%B8%AD%E5%9B%BD&province=%E5%8C%97%E4%BA%AC%E5%B8%82&city=%E5%8C%97%E4%BA%AC%E5%B8%82&region=%E6%B5%B7%E6%B7%80%E5%8C%BA&street=%E5%AD%A6%E6%B8%85%E8%B7%AF&bizId=aider_app&timestamp=1559626262393&sign=60a104873eabb5e03e544f1736445a61&lat="//40.009898&lon=116.35057
+
         val FEI_DI="https://app.enclavebooks.cn/v1_1/sign?page="
 
         val GAMESKY_FUNNY="http://appapi2.gamersky.com/v2/AllChannelList"

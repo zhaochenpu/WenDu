@@ -26,15 +26,15 @@
     </shortcut>
 
     <shortcut
-        android:shortcutId="zhihu"
+        android:shortcutId="magazine"
         android:enabled="true"
         android:icon="@drawable/text"
-        android:shortcutLongLabel="@string/zhihu"
-        android:shortcutShortLabel="@string/zhihu">
+        android:shortcutLongLabel="@string/magazine"
+        android:shortcutShortLabel="@string/magazine">
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.nightfeed.wendu"
-            android:targetClass="com.nightfeed.wendu.activity.ZhiHuActivity" />
+            android:targetClass="com.nightfeed.wendu.activity.MagazineActivity" />
         <categories android:name="android.shortcut.conversation"/>
     </shortcut>
 

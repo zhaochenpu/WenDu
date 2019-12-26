@@ -39,10 +39,10 @@
         android:text="搞笑"
         android:drawableLeft="@drawable/image"/>
     <TextView
-        android:id="@+id/zhihu_daily"
+        android:id="@+id/magazine"
         style="@style/mean_text"
         android:layout_width="match_parent"
-        android:text="知乎"
+        android:text="@string/magazine"
         android:drawableLeft="@drawable/image_word"
         />
     <TextView

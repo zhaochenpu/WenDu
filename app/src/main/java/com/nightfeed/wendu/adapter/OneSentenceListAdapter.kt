@@ -40,7 +40,11 @@ class OneSentenceListAdapter (context: Context?, datas:List<OneSentence>): Recyc
                 p0.hp_content.text=oneSentence.forward
             }
 
-            p0.hp_authors.text="——"+oneSentence.words_info
+            if(TextUtils.isEmpty(oneSentence.words_info)){
+                p0.hp_authors.text=""
+            }else{
+                p0.hp_authors.text="——"+oneSentence.words_info
+            }
 
             if(p1!=0&&!TextUtils.isEmpty(oneSentence.img_url)){
                 p0.hp_iv.visibility=View.VISIBLE
@@ -55,7 +59,11 @@ class OneSentenceListAdapter (context: Context?, datas:List<OneSentence>): Recyc
                 p0.hp_content.text=oneSentence.forward
             }
 
-            p0.hp_authors.text="——"+oneSentence.words_info
+            if(TextUtils.isEmpty(oneSentence.words_info)){
+                p0.hp_authors.text=""
+            }else{
+                p0.hp_authors.text="——"+oneSentence.words_info
+            }
         }
 
 

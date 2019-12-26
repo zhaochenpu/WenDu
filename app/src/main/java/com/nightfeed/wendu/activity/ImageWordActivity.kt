@@ -26,7 +26,6 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.nightfeed.wendu.fragment.*
@@ -40,7 +39,7 @@ class ImageWordActivity : AppCompatActivity() {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var viewList=ArrayList<Fragment>()
-    private var tabTitles= arrayOf("一句","飞地","诗+歌","句读","英句","单词")
+    private var tabTitles= arrayOf("一句","飞地","句读","银句子","诗+歌","英句","单词")
     private var collapsingState= CollapsingToolbarLayoutState.EXPANDED
     private var  distance=0
     private var lastImage=""
@@ -56,8 +55,9 @@ class ImageWordActivity : AppCompatActivity() {
     private fun initView() {
         viewList.add(OneSentenceFragment())
         viewList.add(FeiDiFragment())
-        viewList.add(MonoFragment())
         viewList.add(JuDuFragment().setLabel(0))
+        viewList.add(SilverSentenceFragment())
+        viewList.add(MonoFragment())
         viewList.add(DailySentenceFragment().setURL(URLs.YOUDAO_DAILY_SENTENCE))
         viewList.add(DailySentenceFragment().setURL(URLs.YOUDAO_DAILY_WORD))
 

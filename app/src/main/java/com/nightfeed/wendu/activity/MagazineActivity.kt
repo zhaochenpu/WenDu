@@ -1,29 +1,29 @@
 package com.nightfeed.wendu.activity
 
-
 import android.content.Intent
-import com.google.android.material.tabs.TabLayout
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.transition.Explode
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import android.os.Bundle
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.nightfeed.wendu.R
-import com.nightfeed.wendu.utils.ToastUtil
 import androidx.viewpager.widget.PagerAdapter
-import com.nightfeed.wendu.utils.StatusBarUtil
-import android.transition.Explode
-import com.nightfeed.wendu.fragment.WoShiPMHotFragment
+import com.google.android.material.tabs.TabLayout
+import com.nightfeed.wendu.R
+import com.nightfeed.wendu.fragment.QingMangFragment
+import com.nightfeed.wendu.fragment.ZhiHuHomeFragment
 import kotlinx.android.synthetic.main.activity_woshipm.*
+import java.util.*
 
-class WoShiPMActivity : AppCompatActivity() {
+class MagazineActivity : AppCompatActivity() {
 
     val instance by lazy { this }
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var viewList=ArrayList<Fragment>()
-    private var tabTitles= arrayOf("周热门","月热门")
+    private var tabTitles= arrayOf("知乎日报","轻芒杂志")
+    private var zhiHuHomeFragment=ZhiHuHomeFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +32,9 @@ class WoShiPMActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        toolbar.title="人人都是产品经理"
-        viewList.add(WoShiPMHotFragment().setThemes(1))
-        viewList.add(WoShiPMHotFragment().setThemes(2))
+        toolbar.title="杂志"
+        viewList.add(zhiHuHomeFragment)
+        viewList.add(QingMangFragment())
 
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
@@ -80,9 +80,21 @@ class WoShiPMActivity : AppCompatActivity() {
         }
     }
 
-    inner class ViewpagerOnPageChangeListener(tabs:TabLayout) : TabLayout.TabLayoutOnPageChangeListener(tabs){
+    inner class ViewpagerOnPageChangeListener(tabs: TabLayout) : TabLayout.TabLayoutOnPageChangeListener(tabs){
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
         }
     }
- }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==122&&resultCode==RESULT_OK){
+            if(container.currentItem==0){
+                zhiHuHomeFragment.setRead()
+            }
+        }
+    }
+
+}
+
+
