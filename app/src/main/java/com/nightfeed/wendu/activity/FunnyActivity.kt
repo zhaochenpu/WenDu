@@ -12,6 +12,7 @@ import android.text.TextUtils
 import android.transition.Explode
 import android.view.View
 import com.nightfeed.wendu.R
+import com.nightfeed.wendu.fragment.Game3DMFragment
 import com.nightfeed.wendu.fragment.GamerSkyFragment
 import com.nightfeed.wendu.fragment.JianDanFragment
 import kotlinx.android.synthetic.main.activity_funny.*
@@ -21,16 +22,17 @@ class FunnyActivity : AppCompatActivity() {
 
     val instance by lazy { this }
     private var viewList=ArrayList<Fragment>()
-    private var tabTitles= arrayOf("无聊图","妹子","游民囧图")
+    private var tabTitles= arrayOf("3dm囧图","游民囧图","无聊图","妹子")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_funny)
         setSupportActionBar(toolbar)
 
+        viewList.add(Game3DMFragment())
+        viewList.add(GamerSkyFragment())
         viewList.add(JianDanFragment().setThemes("picture"))
         viewList.add(JianDanFragment().setThemes("ooxx"))
-        viewList.add(GamerSkyFragment())
 
        var mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 

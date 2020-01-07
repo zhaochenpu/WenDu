@@ -16,7 +16,7 @@ import com.nightfeed.wendu.utils.SystemUtil
 import com.nightfeed.wendu.utils.ToastUtil
 import java.net.URL
 
-class ImagePopUpWindow (activity: Activity,parentView: View,url: String){
+class ImagePopUpWindow (activity: Activity,parentView: View?,url: String){
 
 //    interface OnEvenListener{
 //        fun onShare() {}
@@ -54,14 +54,20 @@ class ImagePopUpWindow (activity: Activity,parentView: View,url: String){
             mPopWindow.dismiss()
         }
 
-        val xy = IntArray(2)
-        parentView.getLocationOnScreen(xy)
+
 
         mPopWindow.isOutsideTouchable = true
         mPopWindow.animationStyle = R.style.pop_anim_style
         mPopWindow.setBackgroundDrawable(BitmapDrawable())
 
-        contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-        mPopWindow.showAtLocation(parentView, Gravity.NO_GRAVITY, xy[0] + (parentView.width - contentView.measuredWidth) / 2, xy[1]-contentView.measuredHeight)
+        if(parentView!=null){
+            val xy = IntArray(2)
+            parentView.getLocationOnScreen(xy)
+            contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+            mPopWindow.showAtLocation(parentView, Gravity.NO_GRAVITY, xy[0] + (parentView.width - contentView.measuredWidth) / 2, xy[1]-contentView.measuredHeight)
+        }else{
+            mPopWindow.showAtLocation(activity.window.decorView, Gravity.CENTER, 0, 0)
+        }
+
     }
 }

@@ -66,6 +66,8 @@ class URLs {
 
         val GAMESKY_FUNNY="http://appapi2.gamersky.com/v2/AllChannelList"
         val GAMESKY_FUNNY_CONTENT="https://wap.gamersky.com/news/Content-"
+
+        val GAME_3DM_AMUSEPAGE="https://my.3dmgame.com/app/amusepage2"
     }
 
 }

@@ -212,6 +212,10 @@ class RequestUtils {
                 inputStream = response!!.body()!!.byteStream()
                 val total = response.body()!!.contentLength()
                 val file = File(fileDir, name)
+                if (!file.exists()) {
+                    file.parentFile.mkdirs()
+                    file.createNewFile()
+                }
                 fos = FileOutputStream(file)
                 var sum: Long = 0
                 len = inputStream!!.read(buf);
