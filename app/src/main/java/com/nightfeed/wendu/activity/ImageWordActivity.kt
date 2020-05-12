@@ -39,7 +39,7 @@ class ImageWordActivity : AppCompatActivity() {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var viewList=ArrayList<Fragment>()
-    private var tabTitles= arrayOf("一句","飞地","句读","银句子","诗+歌","英句","单词")
+    private var tabTitles= arrayOf("一句","飞地","一言","句读","银句子","诗+歌","英句","单词")
     private var collapsingState= CollapsingToolbarLayoutState.EXPANDED
     private var  distance=0
     private var lastImage=""
@@ -55,11 +55,12 @@ class ImageWordActivity : AppCompatActivity() {
     private fun initView() {
         viewList.add(OneSentenceFragment())
         viewList.add(FeiDiFragment())
+        viewList.add(YiYanFragment())
         viewList.add(JuDuFragment().setLabel(0))
         viewList.add(SilverSentenceFragment())
         viewList.add(MonoFragment())
         viewList.add(DailySentenceFragment().setURL(URLs.YOUDAO_DAILY_SENTENCE))
-        viewList.add(DailySentenceFragment().setURL(URLs.YOUDAO_DAILY_WORD))
+//        viewList.add(DailySentenceFragment().setURL(URLs.YOUDAO_DAILY_WORD))
 
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 

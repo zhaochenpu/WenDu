@@ -103,11 +103,11 @@ class Game3DMFragment : BaseFragment() {
 
 
     override fun lazyLoad() {
-        if (!isPrepared || !isFragmentVisible||funnyList.size>0) {
+        if (!isPrepared || !isFragmentVisible||funnyList.size>0||image_list_swipe_refresh==null) {
             return
         }
 
-        image_list_swipe_refresh?.isRefreshing=true
+        image_list_swipe_refresh.isRefreshing=true
 
         getList()
     }

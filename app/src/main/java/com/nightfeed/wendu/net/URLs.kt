@@ -36,7 +36,7 @@ class URLs {
         val QING_MANG_LIST="https://api.qingmang.me/ng/v1/timeline.explore.get?group_article=true&need_hot_post=true&need_ops_magazine=true&token=ZTgwYTRkYjAtMjZlZC0xMWVhLWI3MWQtMDAxNjNlMzI2OTg3&app_id=wx05790b1180642960&apivc=3&timeline_style=flat&platform=life_mina"
         val QING_MANG_CONTENT="https://api.qingmang.me/ng/v1/article.get?template=raml&check_paid=false&app_id=wx05790b1180642960&token=ZTgwYTRkYjAtMjZlZC0xMWVhLWI3MWQtMDAxNjNlMzI2OTg3&pub_id=null&apivc=3&timeline_style=flat&platform=life_mina&docid="
 
-        val SOLVER_SENTENCE="https://feed.zero.qq.com/v2/feed/listbytag?page=10&tag_id=1050&filter=0&offset="
+        val SOLVER_SENTENCE="https://wowo.zero.qq.com/v2/feed/listbytag?page=10&tag_id=1050&filter=0&offset="
 
         val HIMAWERI8_LATES="https://himawari8-dl.nict.go.jp/himawari8/img/D531106/latest.json?uid="
         val HIMAWERI8_IMAGE4="https://himawari8-dl.nict.go.jp/himawari8/img/D531106/2d/550/"//2018/07/02/120000_1_1.png
@@ -68,6 +68,8 @@ class URLs {
         val GAMESKY_FUNNY_CONTENT="https://wap.gamersky.com/news/Content-"
 
         val GAME_3DM_AMUSEPAGE="https://my.3dmgame.com/app/amusepage2"
+
+        val YIYAN_SENTENCE="http://115.28.168.103:8080/yiyan/crosstime?v=3.35&cross=1&datetime="//http://115.28.168.103:8080/yiyan/crosstime?v=3.35&cross=1&datetime=2020-05-11%2000%3A00%3A00
     }
 
 }
