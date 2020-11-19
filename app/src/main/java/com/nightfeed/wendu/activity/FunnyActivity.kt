@@ -15,6 +15,7 @@ import com.nightfeed.wendu.R
 import com.nightfeed.wendu.fragment.Game3DMFragment
 import com.nightfeed.wendu.fragment.GamerSkyFragment
 import com.nightfeed.wendu.fragment.JianDanFragment
+import com.nightfeed.wendu.net.URLs
 import kotlinx.android.synthetic.main.activity_funny.*
 
 
@@ -31,8 +32,8 @@ class FunnyActivity : AppCompatActivity() {
 
         viewList.add(Game3DMFragment())
         viewList.add(GamerSkyFragment())
-        viewList.add(JianDanFragment().setThemes("picture"))
-        viewList.add(JianDanFragment().setThemes("ooxx"))
+        viewList.add(JianDanFragment().setThemes(URLs.JIANDAN_HOT))
+        viewList.add(JianDanFragment().setThemes(URLs.JIANDAN_MEIZI))
 
        var mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 

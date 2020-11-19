@@ -44,7 +44,8 @@ class URLs {
         val YOUDAO_DAILY_SENTENCE="http://dict.youdao.com/infoline/style?client=mobile&style=daily&order=desc&size=15&keyfrom=mdict.7.7.5.android&screen=1080x2160&lastId="
         val YOUDAO_DAILY_WORD="http://dict.youdao.com/infoline/style?client=mobile&style=youdaodaily%401632&order=desc&size=10&keyfrom=mdict.7.7.5.android&screen=1080x1920&lastId="
 
-        val JIANDAN_HOT="http://api.moyu.today/jandan/hot?category="// picture无聊图 joke段子 ooxx妹子
+        val JIANDAN_HOT="http://api.moyu.today/jandan/hot?category=picture"// 无聊图 joke段子 ooxx妹子
+        val JIANDAN_MEIZI="https://i.jandan.net/?oxwlxojflwblxbsapi=jandan.get_ooxx_comments&page=1"// 妹子图
 
         val WEIBO_HOME_TIMELINE="https://api.weibo.com/2/statuses/home_timeline.json?access_token="
 

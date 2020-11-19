@@ -24,7 +24,7 @@ class JianDanFragment : BaseFragment() {
     private var jiandanList :MutableList<String> = ArrayList<String>()
     private var mAdapter: JianDanListAdapter?=null
 
-    private var themes =""
+    private var url =""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -40,7 +40,7 @@ class JianDanFragment : BaseFragment() {
         if (savedInstanceState?.getSerializable("themes") != null) {
 
 
-            themes = savedInstanceState.getSerializable("themes") as String
+            url = savedInstanceState.getSerializable("themes") as String
         }
         if(image_list.layoutManager==null){
             mLayoutManager=LinearLayoutManager(context)
@@ -59,14 +59,14 @@ class JianDanFragment : BaseFragment() {
     }
 
     public fun setThemes(t:String):JianDanFragment{
-        themes=t
+        url=t
         val bundle = Bundle()
-        bundle.putSerializable("themes", themes)
+        bundle.putSerializable("themes", url)
         return instance
     }
 
     private fun getLatest() {
-        RequestUtils.get(URLs.JIANDAN_HOT+themes, object : RequestUtils.OnResultListener {
+        RequestUtils.get(url, object : RequestUtils.OnResultListener {
             override fun onSuccess(result: String) {
 
                 if (!TextUtils.isEmpty(result)) {
@@ -74,7 +74,7 @@ class JianDanFragment : BaseFragment() {
 
                     var list = jsonObject.getJSONArray("comments")
                     if (list != null && list.length() > 0) {
-                        if(TextUtils.equals("joke",themes)){
+                        if(TextUtils.equals("joke",url)){
                             for (i in 0..(list.length() - 1)) {
                                 jiandanList.add(list.getJSONObject(i).getString("text_content"))
                             }
