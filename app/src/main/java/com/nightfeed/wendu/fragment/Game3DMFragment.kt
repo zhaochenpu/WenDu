@@ -93,7 +93,7 @@ class Game3DMFragment : BaseFragment() {
                     activity!!.startActivity(toDetail)
                 }
             })
-            image_list.adapter=mAdapter
+            image_list?.adapter=mAdapter
         } else {
             mAdapter!!.notifyDataSetChanged()
         }

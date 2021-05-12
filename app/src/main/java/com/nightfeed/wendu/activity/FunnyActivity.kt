@@ -23,7 +23,7 @@ class FunnyActivity : AppCompatActivity() {
 
     val instance by lazy { this }
     private var viewList=ArrayList<Fragment>()
-    private var tabTitles= arrayOf("3dm囧图","游民囧图","无聊图","妹子")
+    private var tabTitles= arrayOf("3dm囧图","游民囧图","无聊图")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,7 @@ class FunnyActivity : AppCompatActivity() {
         viewList.add(Game3DMFragment())
         viewList.add(GamerSkyFragment())
         viewList.add(JianDanFragment().setThemes(URLs.JIANDAN_HOT))
-        viewList.add(JianDanFragment().setThemes(URLs.JIANDAN_MEIZI))
+//        viewList.add(JianDanFragment().setThemes(URLs.JIANDAN_MEIZI))
 
        var mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
